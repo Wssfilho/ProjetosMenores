@@ -6,8 +6,6 @@ public class Main {
         Scanner s = new Scanner(System.in);
         conta c1;
         c1 = new conta();
-
-
         do
         {
             System.out.println("Bem vindo ao banco, escolha a opcao que desejar: ");
