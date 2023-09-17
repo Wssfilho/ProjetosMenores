@@ -8,7 +8,7 @@ public class Main {
         Sala sl = new Sala();
         r1.setSala(sl);
         sl.setRobo(r1);
-
+        //print
         do
         {
             System.out.println(" Opções ");
