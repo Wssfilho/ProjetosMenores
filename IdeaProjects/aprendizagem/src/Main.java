@@ -1,17 +1,51 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.Scanner;
 public class Main {
-    public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+    public static void main(String[] args)
+    {
+        int op;
+        Scanner s = new Scanner(System.in);
+        conta c1;
+        c1 = new conta();
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
-        }
+        do
+        {
+            System.out.println("Bem vindo ao banco, escolha a opcao que desejar: ");
+            System.out.println("(1) Inserir saldo");
+            System.out.println("(2) Atualizar saldo");
+            System.out.println("(3) Imprimir saldo");
+            op = s.nextInt();
+            switch (op)
+            {
+                case 1:
+                {
+                    System.out.println("Insira sua idade e seu saldo ");
+                    c1.setIdade(s.nextInt());
+                    c1.setSaldo(s.nextDouble());
+                    break;
+                }
+                case 2:
+                {
+                    if(c1.getSaldo() == 0.0)
+                    {
+                        System.out.println("Nao eh possivel atualizar o saldo");
+                        continue;
+                    }
+                    else{
+                        System.out.println("Quanto voce quer atualizar? ");
+                        c1.At_saldo(s.nextDouble());
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    c1.imprimir();
+                    break;
+                }
+            }
+        }while (op != 9);
+
+
     }
+
 }
