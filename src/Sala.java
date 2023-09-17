@@ -1,58 +1,74 @@
 public class Sala
 {
-    private int LimitInf, LimitDir;
+    private int limDir, limInf;
     private char[][] mat;
+
     private Robo robo;
+
     public void setRobo(Robo r)
     {
         this.robo = r;
     }
+
+    public int getLimDir()
+    {
+        return limDir;
+    }
+    public int getLimInf()
+    {
+        return limInf;
+    }
     Sala()
     {
-        this.LimitDir = 5;
-        this.LimitInf = 5;
-        mat = new char[this.LimitDir][this.LimitInf];
+        this.limDir = 5;
+        this.limInf = 5;
+        mat = new char[this.limDir][this.limInf];
         int i, j;
-        for (i = 0; i <= 4; i++)
+        for(i=0; i<=4; i++)
         {
-            for (j = 0; j <=4; j++)
+            for(j=0; j<=4; j++)
             {
                 this.mat[i][j] = '.';
             }
         }
     }
-    Sala(int pdir, int pinf)
+
+    public void inserirObstaculo(int i, int j)
     {
-        this.LimitDir = pdir;
-        this.LimitInf = pinf;
-        mat = new char[this.LimitDir][this.LimitInf];
-        int i, j;
-        for (i = 0; i <= pdir; i++)
-        {
-            for (j = 0; j <= pinf; j++)
-            {
-                this.mat[i][j] = '.';
-            }
-        }
+        this.mat[i][j] = 'O';
     }
+
+    public void excluirObstaculo(int i, int j)
+    {
+        this.mat[i][j] = '.';
+    }
+
+    public Boolean ehObstaculo(int i, int j)
+    {
+        if (this.mat[i][j] == 'O')
+            return true;
+        else
+            return false;
+    }
+
     public void imprimir()
     {
-        System.out.println();
         int i, j;
-        for (i = 0; i <= 4; i++)
+        System.out.println();
+        System.out.println();
+        for(i=0; i<=4; i++)
         {
-            for (j = 0; j <= 4; j++)
+            for(j=0; j<=4; j++)
             {
-                if((robo.getX() == i) && robo.getY() == j)
+                if ( (robo.getPosX() == i)
+                        && (robo.getPosY() == j) )
                 {
                     System.out.print("R  ");
                 }
                 else
                 {
-                    System.out.print(this.mat[i][j] + " ");
+                    System.out.print(this.mat[i][j]+"  ");
                 }
-
-
             }
             System.out.println();
         }

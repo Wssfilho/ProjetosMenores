@@ -1,89 +1,112 @@
 public class Robo
 {
-    private int x, y;
+    private int posX, posY;
+    Sala sala;
 
-    Robo(int px)
+
+    Robo()
     {
-        System.out.println("Criando robo padrao: ");
-        this.x = 0;
-        this.y = 0;
+        System.out.print(" Criando robô (padrão)");
+        this.posX = 0;
+        this.posY = 0;
     }
-    Robo(int px, int py)
+
+    Robo(int pX, int pY)
     {
-        System.out.println("Criando propio");
-        this.x = px;
-        this.y = py;
+        System.out.print(" Criando robô (parâmetros)");
+        this.posX = pX;
+        this.posY = pY;
     }
 
-    public int getX() {
-        return x;
-    }
-    public void setX(int x) {
-        if(x >= 0){
-            this.x = x;
-
-        }
-        else {
-            System.out.println("Valor de x invalido");
-        }
+    public void setSala(Sala s)
+    {
+        this.sala = s;
     }
 
-    public int getY() {
-        return y;
+    public int getPosX() {
+        return posX;
     }
 
-    public void setY(int y) {
-        if(y >= 0)
+    public void setPosX(int pposX) {
+        if (pposX >= 0)
         {
-            this.y = y;
-
+            this.posX = pposX;
         }
-        else {
-            System.out.println("Valor de y invalido");
-
-        }
-
+        else
+        {   System.out.println(" Valor de X inválido.");}
     }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int pposY) {
+        if (pposY >= 0)
+        {
+            this.posY = pposY;
+        }
+        else
+        {   System.out.println(" Valor de X inválido.");}
+    }
+
+
 
     public void imprimir()
     {
         System.out.print("Robo: (");
-        System.out.print(this.x + " , ");
-        System.out.print(this.y + ")");
+        System.out.print(this.posX + " , ");
+        System.out.println(this.posY + " ) ");
     }
-    public void MoverCim()
+
+    public void MoverCima()
     {
-        System.out.println("Movendo para cima");
-        if(this.x > 0)
+        System.out.println(" Movendo para cima");
+        if ((this.posX > 0) && (!(this.sala.ehObstaculo(this.posX-1, this.posY))))
+        {   this.posX--; }
+        else
         {
-            this.x--;
+            System.out.println("Robo na posição X = zero.");
+        }
+    }
+
+    public void MoverEsq()
+    {
+        System.out.println(" Movendo para esq.");
+        if ((this.posY > 0)  && (!(this.sala.ehObstaculo(this.posX, this.posY-1))))
+        {   this.posY--; }
+        else
+        {
+            System.out.println("Robo na posição Y = zero.");
+        }
+    }
+
+    public void MoverBaixo()
+    {
+        if (this.posX < (this.sala.getLimInf()-1)) //get para saber qual o limite inferior
+        {
+            if ((!(this.sala.ehObstaculo(this.posX + 1, this.posY)))) {
+                System.out.println(" Movendo para baixo");
+                this.posX++;
+            }
         }
         else
         {
-            System.out.println("Nao eh permitido mover");
+            System.out.println("Nao pode mover");
         }
     }
-    public void MoverEsq()
+
+    public void MoverDir()
     {
-        System.out.println("Movendo para esquerda");
-        if(this.y > 0)
-        {
-            this.y--;
+        if(this.posY < (this.sala.getLimDir() -1)) {
+            if ((!(this.sala.ehObstaculo(this.posX, this.posY + 1)))) {
+                System.out.println(" Movendo para dir.");
+                this.posY++;
+            }
         }
         else {
-            System.out.println("Nao eh permitido mover");
+            System.out.println("Nao pode mover");
         }
-    }
-    public void MoverBaixo()
-    {
-        System.out.println(" Movendo para baixo");
-        this.y++;
 
     }
 
-    public void MoverDireita()
-    {
-        System.out.println(" Movendo para dir.");
-        this.y++;
-    }
 }
