@@ -26,15 +26,7 @@ public class Main {
                 }
                 case 2:
                 {
-                    if(c1.getSaldo() == 0.0)
-                    {
-                        System.out.println("Nao eh possivel atualizar o saldo");
-                        continue;
-                    }
-                    else{
-                        System.out.println("Quanto voce quer atualizar? ");
                         c1.At_saldo(s.nextDouble());
-                    }
                     break;
                 }
                 case 3:

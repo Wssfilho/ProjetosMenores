@@ -18,12 +18,12 @@ public class conta
 
     public void At_saldo(double n_saldo)
    {
-       /*if(this.saldo == 0)
+       if(this.saldo == 0)
        {
            System.out.println("Nao podemos atualizar, conta vazia");
            return;
        }
-        */
+       System.out.println("Quanto voce quer atualizar? ");
        this.saldo += n_saldo;
    }
 
