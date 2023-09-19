@@ -32,6 +32,8 @@ public class Main {
                     c1.imprimir();
                     break;
                 }
+                case 4:
+                    break;
             }
         }while (op != 9);
 
