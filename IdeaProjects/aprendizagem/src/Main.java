@@ -8,7 +8,6 @@ public class Main {
         c1 = new conta();
         do
         {
-            System.out.println("Teste de versionamento");
             System.out.println("Bem vindo ao banco, escolha a opcao que desejar: ");
             System.out.println("(1) Inserir saldo");
             System.out.println("(2) Atualizar saldo");
@@ -33,6 +32,8 @@ public class Main {
                     c1.imprimir();
                     break;
                 }
+                case 4:
+                    break;
             }
         }while (op != 9);
 
