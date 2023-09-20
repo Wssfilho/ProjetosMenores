@@ -2,6 +2,7 @@ package exercicio11;
 
 public class Candidato
 {
+
     private String nome;
     private double nota1;
     private double nota2;
