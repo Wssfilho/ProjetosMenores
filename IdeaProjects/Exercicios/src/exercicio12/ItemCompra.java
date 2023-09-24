@@ -11,7 +11,6 @@ public class ItemCompra {
         this.itemdec = desc;
         this.qtd = pqtd;
         this.valor = value;
-
     }
     public float getValor() {
         return valor;
