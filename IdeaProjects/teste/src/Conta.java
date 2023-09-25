@@ -4,7 +4,7 @@ public class Conta {
     private int Agencia;
     public String Nome;
     private double Saldo;
-    static int Qtdcont = 0;
+    private static int Qtdcont = 0; //atributo de classe pertencente a classe
     Conta(int pNumro, int pAgencia, String pNome, double pLimite)
     {
         Qtdcont++;
@@ -16,7 +16,10 @@ public class Conta {
         System.out.println("Construtor 2 invocado");
 
     }
-
+    public static int getQtdcont() //porque nos queremos encapsular
+    {
+        return Qtdcont;
+    }
     public int getAgencia()
     {
         return this.Agencia;
@@ -42,6 +45,7 @@ public class Conta {
         System.out.println(" Agência : " + this.Agencia);
         System.out.println(" Titular : " + this.Nome);
         System.out.println(" Saldo   : " + this.Saldo);
+        System.out.println(" Quantidade: " + Conta.getQtdcont()); //chamar a qtd de conta que está vinculado a classe
     }
 
 
