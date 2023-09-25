@@ -7,12 +7,14 @@ public class Conta {
     static int Qtdcont = 0;
     Conta(int pNumro, int pAgencia, String pNome, double pLimite)
     {
-        this.Numero = pNumro;
+        Qtdcont++;
+        this.Numero = Qtdcont;
+        System.out.println("Numero eh autoincrementado");
         this.Agencia = pAgencia;
         this.Nome = pNome;
         this.Saldo = pLimite;
         System.out.println("Construtor 2 invocado");
-        Qtdcont = getNumero();
+
     }
 
     public int getAgencia()
