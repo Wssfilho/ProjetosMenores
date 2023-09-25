@@ -4,16 +4,7 @@ public class Conta {
     private int Agencia;
     public String Nome;
     private double Saldo;
-    Conta()
-    {
-        //construtor
-        this.Numero = 1;
-        this.Agencia = 1;
-        this.Nome = "NOVO NOME";
-        this.Saldo = 200;
-        System.out.println("Criando objeto conta");
-        //sobrecarga de métodos
-    }
+    static int Qtdcont = 0;
     Conta(int pNumro, int pAgencia, String pNome, double pLimite)
     {
         this.Numero = pNumro;
@@ -21,21 +12,14 @@ public class Conta {
         this.Nome = pNome;
         this.Saldo = pLimite;
         System.out.println("Construtor 2 invocado");
+        Qtdcont++;
     }
 
-    public void setAgencia(int n)
-    {
-        this.Agencia = n;
-    }
     public int getAgencia()
     {
         return this.Agencia;
     }
 
-    public void setNumero(int n)
-    {
-        this.Numero = n;
-    }
     public int getNumero() {
         return this.Numero;
     }
