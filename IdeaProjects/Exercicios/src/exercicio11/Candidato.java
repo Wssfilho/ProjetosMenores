@@ -8,7 +8,6 @@ public class Candidato
     private double nota2;
     private double nota3;
     private double media;
-
     Candidato(double n1, double n2, double n3, String nome)
     {
         this.nota1 = n1;

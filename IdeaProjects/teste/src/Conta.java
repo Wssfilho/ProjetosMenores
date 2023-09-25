@@ -12,7 +12,7 @@ public class Conta {
         this.Nome = pNome;
         this.Saldo = pLimite;
         System.out.println("Construtor 2 invocado");
-        Qtdcont++;
+        Qtdcont = getNumero();
     }
 
     public int getAgencia()
