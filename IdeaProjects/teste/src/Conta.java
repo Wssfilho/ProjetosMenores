@@ -1,6 +1,6 @@
 
 public class Conta {
-    private int Numero;
+    private final int Numero;
     private int Agencia;
     public String Nome;
     private double Saldo;
