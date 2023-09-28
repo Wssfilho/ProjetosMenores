@@ -6,35 +6,56 @@ public class ItemCompra {
     private int qtd;
     private float perDesconto;
 
-    ItemCompra(String desc, int pqtd, float value)
+    ItemCompra(String desc, float valor, int pqtd, float descon)
     {
         this.itemdec = desc;
         this.qtd = pqtd;
-        this.valor = value;
-    }
-    public float getValor() {
-        return valor;
-    }
-
-    public void setValor(float valor) {
         this.valor = valor;
+        this.perDesconto = descon;
     }
 
-    public int getQtd() {
-        return qtd;
+    public void setPerDesconto(float perDesconto) {
+        this.perDesconto = perDesconto;
     }
 
     public void setQtd(int qtd) {
         this.qtd = qtd;
     }
 
-    public String getItemdec() {
-        return itemdec;
-    }
-
     public void setItemdec(String itemdec) {
         this.itemdec = itemdec;
     }
 
+    public void setValor(float valor) {
+        this.valor = valor;
+    }
 
+    public String getItemdec() {
+        return itemdec;
+    }
+
+    public float getPerDesconto() {
+        return perDesconto;
+    }
+
+    public int getQtd() {
+        return qtd;
+    }
+
+    public float getValor() {
+        return valor;
+    }
+
+    public float ValorDes()
+    {
+        float aux;
+        aux = valor * (perDesconto/100);
+        valor = valor - aux;
+        return valor;
+    }
+    public float ValorTitem()
+    {
+        valor = (valor * qtd);
+        return valor;
+    }
 }
