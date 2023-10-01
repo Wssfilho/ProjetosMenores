@@ -35,7 +35,6 @@ public class Robo
         else
         {   System.out.println(" Valor de X inválido.");}
     }
-
     public int getPosY() {
         return posY;
     }
