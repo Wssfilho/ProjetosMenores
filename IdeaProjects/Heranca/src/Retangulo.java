@@ -2,6 +2,12 @@ public class Retangulo extends Figura2D
 {
     protected double p2x, p2y;
 
+    Retangulo(double P1x, double P1y, double P2x, double P2y) {
+        super(P1x, P1y);
+        this.p2x =  P2x;
+        this.p2y = P2y;
+    }
+
     public void setP2x(double p2x) {
         this.p2x = p2x;
     }
@@ -25,7 +31,7 @@ public class Retangulo extends Figura2D
     @Override
     public void imprimir()
     {
-        System.out.println("PONTO 1: (" + px + "," + py + ")");
-        System.out.println("PONTO 2: (" + p2x + "," + p2y + ")");
+      super.imprimir();
+      System.out.println("PONTO 2: (" + p2x + "," + p2y + ")");
     }
 }
