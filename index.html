@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #plantacao {
+            width: 300px;
+            height: 30px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Agricultura 4.0</h1>
+
+    <form id="agriculturaForm">
+        <label for="plantacao">Plantacao:</label><br>
+        <input type="text" id="plantacao" name="plantacao"><br>
+        <label for="tecnologia">Tecnologia:</label><br>
+        <input type="number" id="tecnologia" name="tecnologia"><br><br>
+        <input type="button" value="Enviar" onclick="criar()">
+        <input type="button" value="Status" onclick="status()">
+    </form>
+
+    <div id="info"></div>
+
+    <script>
+        class Agricultura {
+            constructor(plantacao, tecnologia) {
+                this.plantacao = plantacao;
+                this.tecnologia = tecnologia;
+
+            }
+            
+            informacao() {
+                return `A plantação de ${this.plantacao} está utilizando a tecnologia ${this.tecnologia}.`;
+            }
+        }
+        function criar()
+        {
+            var plantacao = document.getElementById("plantacao").value;
+            var tecnologia = document.getElementById("tecnologia").value;
+        if (plantacao == "" || tecnologia == "") {
+            alert("Preencha todos os campos!");
+            return;
+        }
+        agricultura = new Agricultura(plantacao, tecnologia);
+        }
+        
+        function status() {
+            if (agricultura.tecnologia > 0 && agricultura.tecnologia <= 3) {
+                document.getElementById("info").innerHTML = "A plantação está em fase inicial.";
+            }
+            else if (agricultura.tecnologia > 3 && agricultura.tecnologia <= 6) {
+                document.getElementById("info").innerHTML = "A plantação está em fase de crescimento.";
+            }
+            else if (agricultura.tecnologia > 6 && agricultura.tecnologia <= 9) {
+                document.getElementById("info").innerHTML = "A plantação está em fase de maturação.";
+            }
+            else if (agricultura.tecnologia > 9 && agricultura.tecnologia <= 12) {
+                document.getElementById("info").innerHTML = "A plantação está em fase de colheita.";
+            }
+            else {
+                document.getElementById("info").innerHTML = "A plantação está em fase de decomposição.";
+            }
+        }
+
+        
+    </script>
+</body>
+
+</html>
