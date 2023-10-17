@@ -12,6 +12,7 @@ namespace ConsoleApp1
         private bool status;
         public Sensor(double id)
         {
+
             this.iD = id;
             this.status = false;
         }
