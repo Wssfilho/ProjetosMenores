@@ -10,6 +10,7 @@ namespace ConsoleApp1
     {
         private double iD;
         private bool status;
+        private Int64 valor;
         public Sensor(double id)
         {
             this.iD = id;
