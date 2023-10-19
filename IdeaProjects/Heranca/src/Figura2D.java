@@ -1,5 +1,11 @@
 public class Figura2D {
     protected double px, py;
+
+    Figura2D()
+    {
+        this.py = 0.0;
+        this.px = 0.0;
+    }
     Figura2D(double Px, double Py)
     {
         this.px = Px;
