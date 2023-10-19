@@ -72,6 +72,15 @@
                 document.getElementById("info").innerHTML = "A plantação está em fase de decomposição.";
             }
         }
+        class Plantacao extends Agricultura {
+            constructor(plantacao, tecnologia, plantas) {
+                super(plantacao, tecnologia);
+                this.plantas = plantas;
+            }
+            informacao() {
+                return `A plantação de ${this.plantacao} está utilizando a tecnologia ${this.tecnologia} e possui ${this.plantas} plantas.`;
+            }
+        }
 
         
     </script>
