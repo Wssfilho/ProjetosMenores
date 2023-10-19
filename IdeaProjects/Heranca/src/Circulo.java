@@ -1,10 +1,10 @@
 public class Circulo extends Figura2D
 {
     private double raio;
-    Circulo(double pp1x, double pp1y, double praio)
+    Circulo(double pp1x, double pp1y, double pRaio)
     {
         super(pp1x, pp1y);
-        this.raio = praio;
+        this.raio = pRaio;
     }
     Circulo()
     {
@@ -29,7 +29,7 @@ public class Circulo extends Figura2D
     }
 
     @Override //o que significa: significa uma diretiva que indica que voce está sobrescrevendo um
-    // metodo se existir na class pai(evitar que voce erre um método), se nao existir da erro!
+    // Método se existir na class pai(evitar que voce erre um método), se nao existir dar erro!
     public void imprimir() {
         super.imprimir();
     }
