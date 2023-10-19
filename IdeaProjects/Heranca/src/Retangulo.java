@@ -7,7 +7,6 @@ public class Retangulo extends Figura2D
         this.p2x =  P2x;
         this.p2y = P2y;
     }
-
     public void setP2x(double p2x) {
         this.p2x = p2x;
     }
