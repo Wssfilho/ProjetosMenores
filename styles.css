@@ -1,0 +1,49 @@
+body
+{
+    background-color: aqua;
+}
+#txtstart
+{
+    font-size: 14px;
+    text-align: center;
+    margin: 0 auto;
+    padding: auto;
+    width: fit-content;
+    height: 2px;
+}
+#agriculturaForm
+{
+    background-color: aqua;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+#plantacao
+{
+    padding: 4px;
+}
+#tecnologia
+{
+    padding: 4px;
+}
+#retorno
+{
+    position: relative;
+}
+#Titulo
+ {
+    font-size: 68px;
+    text-align: center;
+    margin: 0 auto;
+ }
+#img
+{
+    width: 37%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+ 

@@ -1,90 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        #plantacao {
-            width: 300px;
-            height: 30px;
-            border-radius: 5px;
-            border: 1px solid #000000;
-            padding: 5px;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agricultura 4.0 </title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+
 </head>
+<header>
+    <div id="titulo">
+        <h1 id="Titulo">Agricultura 4.0</h1>
+    </div>
+</header>
 
 <body>
-    <h1>Agricultura 4.0</h1>
-
     <form id="agriculturaForm">
-        <label for="plantacao">Plantacao:</label><br>
+        <label for="plantacao">Tipo de plantacao:</label><br>
         <input type="text" id="plantacao" name="plantacao"><br>
-        <label for="tecnologia">Tecnologia:</label><br>
+        <label for="tecnologia">Numero adaptador:</label><br>
         <input type="number" id="tecnologia" name="tecnologia"><br><br>
         <input type="button" value="Enviar" onclick="criar()">
         <input type="button" value="Status" onclick="status()">
+        <input type="reset">
+        <div id="info">
+            <input type=text required name='txtstart' id="txtstart" style='width:150px' value=''>
+        </div>
+
     </form>
 
-    <div id="info">
-
+    </div>
+    <div id="img">
+        <img id="mag" src="/magebs/Farmer-bro.svg" alt="">
     </div>
 
-    <script>
-        class Agricultura {
-            constructor(plantacao, tecnologia) {
-                this.plantacao = plantacao;
-                this.tecnologia = tecnologia;
-
-            }
-            
-            informacao() {
-                return `A plantação de ${this.plantacao} está utilizando a tecnologia ${this.tecnologia}.`;
-            }
-        }
-        function criar()
-        {
-            var plantacao = document.getElementById("plantacao").value;
-            var tecnologia = document.getElementById("tecnologia").value;
-        if (plantacao == "" || tecnologia == "") {
-            alert("Preencha todos os campos!");
-            return;
-        }
-        agricultura = new Agricultura(plantacao, tecnologia);
-        }
-        
-        function status() {
-            if (agricultura.tecnologia > 0 && agricultura.tecnologia <= 3) {
-                document.getElementById("info").innerHTML = "A plantação está em fase inicial.";
-            }
-            else if (agricultura.tecnologia > 3 && agricultura.tecnologia <= 6) {
-                document.getElementById("info").innerHTML = "A plantação está em fase de crescimento.";
-            }
-            else if (agricultura.tecnologia > 6 && agricultura.tecnologia <= 9) {
-                document.getElementById("info").innerHTML = "A plantação está em fase de maturação.";
-            }
-            else if (agricultura.tecnologia > 9 && agricultura.tecnologia <= 12) {
-                document.getElementById("info").innerHTML = "A plantação está em fase de colheita.";
-            }
-            else {
-                document.getElementById("info").innerHTML = "A plantação está em fase de decomposição.";
-            }
-        }
-        class Plantacao extends Agricultura {
-            constructor(plantacao, tecnologia, plantas) {
-                super(plantacao, tecnologia);
-                this.plantas = plantas;
-            }
-            informacao() {
-                return `A plantação de ${this.plantacao} está utilizando a tecnologia ${this.tecnologia} e possui ${this.plantas} plantas.`;
-            }
-        }
-
-        
-    </script>
 </body>
+<footer>
+    <a href="https://storyset.com/people">People illustrations by Storyset</a>
+</footer>
 
 </html>
