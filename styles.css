@@ -10,6 +10,14 @@ body
     padding: 0;
     width: fit-content;
 }
+#tipo
+{
+    font-size: 14px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    width: fit-content;
+}
 #agriculturaForm
 {
     background-color: aqua;
