@@ -13,6 +13,7 @@ public class Main {
         {
             f1[i].Bonificacao();
             f1[i].imprimir();
+
         }
         }
     }
