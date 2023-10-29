@@ -1,4 +1,4 @@
-import java.nio.channels.Pipe;
+
 
 public class Gerente extends Funcionario{
     private int ID;
@@ -18,12 +18,8 @@ public class Gerente extends Funcionario{
         return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     @Override
-    public double Bonificacao()
+    public void Bonificacao()
     {
         if(getID() >= 10)
         {
@@ -33,7 +29,6 @@ public class Gerente extends Funcionario{
         {
             this.saldo += 100.0;
         }
-        return this.saldo;
     }
     @Override
     public void imprimir()

@@ -17,7 +17,7 @@ public class caixista extends Funcionario{
     }
 
     @Override
-    public double Bonificacao()
+    public void Bonificacao()
     {
         if(getQtdHoras() >= 8)
         {
@@ -27,7 +27,6 @@ public class caixista extends Funcionario{
         {
             this.saldo += 10.00;
         }
-        return this.saldo;
     }
     @Override
     public void imprimir()

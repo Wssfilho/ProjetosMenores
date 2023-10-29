@@ -15,7 +15,7 @@ public abstract class  Funcionario {
         this.nome = pNome;
         this.saldo = pSaldo;
     }
-    public abstract double Bonificacao();
+    public abstract void Bonificacao();
     public void imprimir()
     {
         System.out.println("Nome: " + this.nome);
