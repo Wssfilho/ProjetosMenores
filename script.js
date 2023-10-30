@@ -1,75 +1,87 @@
-class Agricultura {
-    constructor(plantacao, tecnologia) {
-        this.plantacao = plantacao;
-        this.tecnologia = tecnologia;
-    }
-
-    informacao() {
-        return `Usando: Tecnologia ${this.tecnologia}`;
-    }
-    get plantacao() {
-        return this._plantacao;
-    }
-    set plantacao(value) {
-        this._plantacao = value;
-    }
-    get tecnologia() {
-        return this._tecnologia;
-    }
-    set tecnologia(value) {
-        this._tecnologia = value;
+class Sensor {
+    constructor(id, descricao, valorLeitura) {
+        this.id = id;
+        this.descricao = descricao;
+        this.valorLeitura = valorLeitura;
     }
 }
-class Motor extends Agricultura {
-    constructor(plantacao, tecnologia, tipo) {
-        super(plantacao, tecnologia);
-        this.tipo = tipo;
+
+class Bomba {
+    constructor(id, descricao, status) {
+        this.id = id;
+        this.descricao = descricao;
+        this.status = status; // true para ligada, false para desligada
     }
 
-    informacao() {
-        return `Usando: ${this.tipo}`;
+    ligar() {
+        this.status = true;
     }
 
-    get tipo() {
-        return this._tipo;
-    }
-
-    set tipo(value) {
-        this._tipo = value;
+    desligar() {
+        this.status = false;
     }
 }
-var agriculturas = []; // array para armazenar os objetos
+
+class AtuadorGeoreferenciado extends Bomba {
+    constructor(id, descricao, status, latitude, longitude) {
+        super(id, descricao, status);
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+}
+
+var atuadores = []; // array para armazenar os objetos
 
 function criar() {
-    var plantacao = document.querySelector("#plantacao").value;
-    var tecnologia = document.querySelector("#tecnologia").value;
-    if (plantacao == "" || tecnologia == "") {
+    var latitude = document.querySelector("#latitude").value;
+    var longitude = document.querySelector("#longitude").value;
+    
+    if (latitude == "" || longitude == "") {
         alert("Preencha todos os campos!");
         return;
     }
-    var novaAgricultura = new Agricultura(plantacao, tecnologia);
-    agriculturas.push(novaAgricultura); // adiciona o novo objeto ao array
+    
+    var novoAtuador = new AtuadorGeoreferenciado(1, "Atuador Principal", false, latitude, longitude);
+    
+    atuadores.push(novoAtuador); // adiciona o novo objeto ao array
 }
 
 function status() {
-    Agricultura = new Motor()
-    var Agricultura = agriculturas[agriculturas.length - 1]; // pega o último objeto adicionado
-    if (Agricultura.tecnologia > 0 && Agricultura.tecnologia <= 3) {
-        document.querySelector("[name='txtstart']").value = "Fase inicial.";
-        var motor = new Motor(Agricultura.plantacao, Agricultura.tecnologia, "Trator");
-        document.querySelector("[name='tipo']").value = motor.informacao()
-    }
-    else if (Agricultura.tecnologia > 3 && Agricultura.tecnologia <= 6) {
-        document.querySelector("[name='txtstart']").value = "Fase de crescimento.";
-    }
-    else if (Agricultura.tecnologia > 6 && Agricultura.tecnologia <= 9) {
-        document.querySelector("[name='txtstart']").value = "Fase de maturação.";
-    }
-    else if (Agricultura.tecnologia > 9 && Agricultura.tecnologia <= 12) {
-        document.querySelector("[name='txtstart']").value = "Fase de colheita.";
-    }
-    else {
-        document.querySelector("txtstart").value = "A plantação está em fase de decomposição.";
-    }
-}
+    
+   var AtuadorGeoreferenciado = atuadores[atuadores.length - 1]; // pega o último objeto adicionado
+   
+   if (AtuadorGeoreferenciado.latitude > 0 && AtuadorGeoreferenciado.longitude <= 3) {
 
+       document.querySelector("[name='txtstart']").value = "Fase inicial.";
+       AtuadorGeoreferenciado.ligar();
+       document.querySelector("[name='tipo']").value = AtuadorGeoreferenciado.status ? "Bomba Ligada" : "Bomba Desligada";
+   }
+   else if (AtuadorGeoreferenciado.latitude > 3 && AtuadorGeoreferenciado.longitude <= 6) {
+
+       document.querySelector("[name='txtstart']").value = "Fase de crescimento.";
+       AtuadorGeoreferenciado.desligar();
+       document.querySelector("[name='tipo']").value = AtuadorGeoreferenciado.status ? "Bomba Ligada" : "Bomba Desligada";
+
+   }
+   else if (AtuadorGeoreferenciado.latitude > 6 && AtuadorGeoreferenciado.longitude <= 9) {
+
+       document.querySelector("[name='txtstart']").value = "Fase de maturação.";
+       AtuadorGeoreferenciado.ligar();
+       document.querySelector("[name='tipo']").value = AtuadorGeoreferenciado.status ? "Bomba Ligada" : "Bomba Desligada";
+
+   }
+   else if (AtuadorGeoreferenciado.latitude > 9 && AtuadorGeoreferenciado.longitude <= 12) {
+
+       document.querySelector("[name='txtstart']").value = "Fase de colheita.";
+       AtuadorGeoreferenciado.desligar();
+       document.querySelector("[name='tipo']").value = AtuadorGeoreferenciado.status ? "Bomba Ligada" : "Bomba Desligada";
+
+   }
+   else {
+
+       document.querySelector("txtstart").value = "A plantação está em fase de decomposição.";
+       AtuadorGeoreferenciado.desligar();
+       document.querySelector("[name='tipo']").value = AtuadorGeoreferenciado.status ? "Bomba Ligada" : "Bomba Desligada";
+
+   }
+}

@@ -27,11 +27,11 @@ body
     padding: 0;
     text-align: center;
 }
-#plantacao
+#latitude
 {
     padding: 4px;
 }
-#tecnologia
+#longitude
 {
     padding: 4px;
 }
@@ -53,4 +53,3 @@ body
     padding: 0;
     text-align: center;
 }
- 
