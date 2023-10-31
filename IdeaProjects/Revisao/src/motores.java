@@ -2,7 +2,7 @@
 public abstract class motores {
     protected double potencia;
 
-    /*motores(double Ppotencia)
+    /* motores(double Ppotencia)
     {
         this.potencia = Ppotencia;
     }
