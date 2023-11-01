@@ -145,14 +145,14 @@
 
         }
     }
-    var j = 0;
+   
 
     function visualizarCenario() {
 
         // Cria uma nova lista
         var listaCenario = document.createElement("ul");
         // Adiciona os dados do cenário à lista
-        for (var i = j; i < bombas.length; i++) {
+        for (var i = 0; i < bombas.length; i++) {
 
             var item = document.createElement("li");
             item.textContent = `
@@ -166,7 +166,6 @@
                 Longitude: ${sensores[i].longitude}
             `;
             listaCenario.appendChild(item);
-            j++;
         }
 
         // Adiciona a lista à interface do usuário
