@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Formulário Agricultura 4.0</h2>
+
+<form id="myForm">
+  <label for="sensorId">ID do Sensor:</label><br>
+  <input type="text" id="sensorId" name="sensorId"><br>
+  <label for="sensorDesc">Descrição do Sensor:</label><br>
+  <input type="text" id="sensorDesc" name="sensorDesc"><br>
+  <label for="sensorLat">Latitude do Sensor:</label><br>
+  <input type="text" id="sensorLat" name="sensorLat"><br>
+  <label for="sensorLong">Longitude do Sensor:</label><br>
+  <input type="text" id="sensorLong" name="sensorLong"><br>
+  <label for="bombaId">ID da Bomba:</label><br>
+  <input type="text" id="bombaId" name="bombaId"><br>
+  <label for="bombaDesc">Descrição da Bomba:</label><br>
+  <input type="text" id="bombaDesc" name="bombaDesc"><br>
+  <input type="button" value="Controle Automático" onclick="controleAutomatico()">
+  <label for="mediaSensores">Média dos Sensores:</label><br>
+  <input type="text" id="mediaSensores" name="mediaSensores" readonly><br>
+  <label for="bombaStatus">Status da Bomba:</label><br>
+  <input type="text" id="bombaStatus" name="bombaStatus" readonly><br>
+  <label for="buscaId">ID para Buscar:</label><br>
+  <input type="text" id="buscaId" name="buscaId"><br>
+  <input type="button" value="Buscar por ID" onclick="buscarPorId()">
+  <textarea id="resultadoBusca"></textarea>
+</form>
+
+<script>
+class Sensor {
+    constructor(id, descricao) {
+        this.id = id;
+        this.descricao = descricao;
+        this.valorLeitura = 0;
+    }
+
+    ler() {
+        // Aqui você pode adicionar a lógica para alterar os dados do sensor
+        this.valorLeitura = Math.random(); // Valor aleatório para exemplo
+    }
+}
+
+class SensorGeorreferenciado extends Sensor {
+    constructor(id, descricao, latitude, longitude) {
+        super(id, descricao); // Aqui usamos 'super' para chamar o construtor da classe pai
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    // Aqui estamos sobrescrevendo o método 'ler' da classe pai para adicionar funcionalidade georreferenciada
+    ler() {
+        super.ler(); // Aqui usamos 'super' para chamar o método 'ler' da classe pai
+        console.log(`Leitura do sensor georreferenciado na latitude ${this.latitude} e longitude ${this.longitude}`);
+    }
+}
+
+class Bomba {
+    constructor(id, descricao) {
+        this.id = id;
+        this.descricao = descricao;
+        this.status = 'desligada';
+    }
+
+    ligar() {
+        this.status = 'ligada';
+    }
+
+    desligar() {
+        this.status = 'desligada';
+    }
+}
+
+function controleAutomatico() {
+    var sensorId = document.getElementById("sensorId").value;
+    var sensorDesc = document.getElementById("sensorDesc").value;
+    var sensorLat = document.getElementById("sensorLat").value;
+    var sensorLong = document.getElementById("sensorLong").value;
+    var bombaId = document.getElementById("bombaId").value;
+    var bombaDesc = document.getElementById("bombaDesc").value;
+
+    // Aqui você pode adicionar lógica para lidar com vários sensores
+    var sensores = [
+        new Sensor(sensorId, sensorDesc),
+        new SensorGeorreferenciado(sensorId, sensorDesc, sensorLat, sensorLong),
+        // Adicione mais sensores aqui se necessário
+    ];
+
+    var bomba = new Bomba(bombaId, bombaDesc);
+
+    var totalLeitura = 0;
+
+    for (var i = 0; i < sensores.length; i++) {
+        sensores[i].ler();
+        totalLeitura += sensores[i].valorLeitura;
+    }
+
+    var mediaLeitura = totalLeitura / sensores.length;
+
+    if (mediaLeitura > 0.5) {
+        bomba.ligar();
+    } else {
+        bomba.desligar();
+    }
+
+    document.getElementById("mediaSensores").value = mediaLeitura.toFixed(2);
+    document.getElementById("bombaStatus").value = bomba.status;
+}
+function buscarPorId() {
+    var sensorId = document.getElementById("buscaId").value || 1;
+
+    // Aqui você pode adicionar lógica para buscar o sensor pelo ID
+    for (var i = 0; i < sensores.length; i++) {
+        if (sensores[i].id == sensorId) {
+            var tipo = sensores[i] instanceof SensorGeorreferenciado ? 'Sensor Georreferenciado' : 'Sensor';
+            document.getElementById("resultadoBusca").value = `ID: ${sensores[i].id}, Descrição: ${sensores[i].descricao}, Tipo: ${tipo}\nStatus da Bomba: ${bomba.status}`;
+        }
+    }
+}
+
+</script>
+
+</body>
+</html> 

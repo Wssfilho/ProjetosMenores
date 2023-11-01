@@ -145,15 +145,15 @@
 
         }
     }
+    var j = 0;
 
-    // Função para atualizar a interface do usuário com os dados do cenário
     function visualizarCenario() {
 
         // Cria uma nova lista
         var listaCenario = document.createElement("ul");
-
         // Adiciona os dados do cenário à lista
-        for (var i = 0; i < bombas.length; i++) {
+        for (var i = j; i < bombas.length; i++) {
+
             var item = document.createElement("li");
             item.textContent = `
                 ID da bomba: ${bombas[i].id}
@@ -166,6 +166,7 @@
                 Longitude: ${sensores[i].longitude}
             `;
             listaCenario.appendChild(item);
+            j++;
         }
 
         // Adiciona a lista à interface do usuário
