@@ -14,49 +14,54 @@
 
     <form id="FormAgr">
         <div id="conteudo">
-        <label for="tamanho"> Tamanho da lavoura: </label><br>
-        <input type="number" id="Tamx"><br>
-        <input type="number" id="Tamy"><br>
-        <label for="sensorId">ID do Sensor:</label><br>
-        <input type="text" id="sensorId" name="sensorId"><br>
-        <label for="sensorDesc">Descrição do Sensor:</label><br>
-        <input type="text" id="sensorDesc" name="sensorDesc"><br>
-        <label for="sensorLat">Latitude do Sensor:</label><br>
-        <input type="text" id="sensorLat" name="sensorLat"><br>
-        <label for="sensorLong">Longitude do Sensor:</label><br>
-        <input type="text" id="sensorLong" name="sensorLong"><br>
-        <label for="bombaId">ID da Bomba:</label><br>
-        <input type="text" id="bombaId" name="bombaId"><br>
-        <label for="bombaDesc">Descrição da Bomba:</label><br>
-        <input type="text" id="bombaDesc" name="bombaDesc"><br>
-        <label for="mediaSensores">Média dos Sensores:</label><br>
-        <input type="text" id="mediaSensores" name="mediaSensores" readonly><br>
-        <label for="bombaStatus">Status da Bomba:</label><br>
-        <input type="text" id="bombaStatus" name="bombaStatus" readonly><br>
-        <label for="buscaId">ID para Buscar:</label><br>
-        <input type="text" id="buscaId" name="buscaId"><br>
-        <input type="button" value="Buscar por ID" onclick="buscarPorId()">
-        <input type="button" value="Controle Automático" onclick="controleAutomatico()"><br>
-        
+            <label for="tamanho"> Tamanho da lavoura: </label><br>
+            <input type="number" id="Tamx"><br>
+            <input type="number" id="Tamy"><br>
+            <label for="buscaId">Umidade do solo:</label><br>
+            <input type="number" id="umidademanual"><br>
+
+            <label for="sensorId">ID do Sensor:</label><br>
+            <input type="text" id="sensorId" name="sensorId"><br>
+            <label for="sensorDesc">Descrição do Sensor:</label><br>
+            <input type="text" id="sensorDesc" name="sensorDesc"><br>
+            <label for="sensorLat">Latitude do Sensor:</label><br>
+            <input type="text" id="sensorLat" name="sensorLat"><br>
+            <label for="sensorLong">Longitude do Sensor:</label><br>
+            <input type="text" id="sensorLong" name="sensorLong"><br>
+            <label for="bombaId">ID da Bomba:</label><br>
+            <input type="text" id="bombaId" name="bombaId"><br>
+            <label for="bombaDesc">Descrição da Bomba:</label><br>
+            <input type="text" id="bombaDesc" name="bombaDesc"><br>
+            <label for="mediaSensores">Média dos Sensores:</label><br>
+            <input type="text" id="mediaSensores" name="mediaSensores" readonly><br>
+            <label for="bombaStatus">Status da Bomba:</label><br>
+            <input type="text" id="bombaStatus" name="bombaStatus" readonly><br>
+            <label for="buscaId">ID para Buscar:</label><br>
+            <input type="text" id="buscaId" name="buscaId"><br>
+            <input type="button" value="Buscar por ID" onclick="buscarPorId()">
+            <input type="button" value="Controle Automático" onclick="controleAutomaticobb()"><br>
+            <input type="button" value="Controle Individual o Georef." onclick="distancia()"><br>
+
         </div>
+
         <textarea id="resultadoBusca"></textarea>
         <div id="map"></div>
+        <div id="individual"></div>
     </form>
-    <!-- <div id="imagem">
-        <img src="file:///C:/Users/wilso/OneDrive/Documentos/GitHub/JavaProjects/magebs/Farmer-bro.svg"> -->
     </div>
     <style>
         body {
-            background-color:aqua;
+            background-color: aqua;
             font-family: Arial, Helvetica, sans-serif;
             width: 100%;
         }
-        #titulo
-        {
+
+        #titulo {
             text-align: center;
             font-size: 50px;
             color: #000000;
         }
+
         #FormAgr {
             background-color: #ffffff;
             width: 100%;
@@ -69,7 +74,6 @@
             right: 504%;
 
         }
-        
     </style>
     <script>
         class Sensor {
@@ -80,8 +84,11 @@
             }
 
             ler() {
+                let max = 100;
+                let min = 0;
                 // Aqui você pode adicionar a lógica para alterar os dados do sensor
-                this.valordeleitura = Math.random(); // Valor aleatório para exemplo
+                this.valordeleitura = Math.random() * (max - min) + min; // Valor aleatório para exemplo
+                console.log(this.valordeleitura);
             }
         }
 
@@ -95,6 +102,18 @@
             // Aqui estamos sobrescrevendo o método 'ler' da classe pai para adicionar funcionalidade georreferenciada
             ler() {
                 super.ler(); // Aqui usamos 'super' para chamar o método 'ler' da classe pai
+            }
+            get latitude() {
+                return this._latitude;
+            }
+            set latitude(value) {
+                this._latitude = value;
+            }
+            get longitude() {
+                return this._longitude;
+            }
+            set longitude(value) {
+                this._longitude = value;
             }
         }
 
@@ -113,28 +132,39 @@
                 this.status = 'desligada';
             }
         }
-        var localiza;
         var sensores = []; // array para armazenar os objetos do sensor
-        function georreferenciado() {
+        function distancia() {
             var sensorId = document.getElementById("sensorId").value;
             var sensorDesc = document.getElementById("sensorDesc").value;
             var sensorLat = document.getElementById("sensorLat").value;
             var sensorLong = document.getElementById("sensorLong").value;
             var posx = document.getElementById("Tamx").value;
             var posy = document.getElementById("Tamy").value;
-            var sensor = new SensorGeorreferenciado(sensorId, sensorDesc, sensorLat, sensorLong);
-            var soma = sensor.latitude - sensor.longitude; //para saber o tamanho total da area
-            if (sensor.latitude > posx || sensor.longitude > posy) {
+            var Sen1 = new SensorGeorreferenciado(sensorId, sensorDesc, sensorLat, sensorLong);
+            var soma = Sen1.latitude - Sen1.longitude; //para saber o tamanho total da area
+            if (Sen1.latitude > posx || Sen1.longitude > posy) {
                 alert("O sensor está fora da área de plantio");
             }
-            if (sensor.latitude < posx || sensor.longitude < posy) {
+            if (Sen1.latitude < posx || Sen1.longitude < posy) {
                 //quero saber a distancia que o sensor esta das bordas
-                var distanciax = posx - sensor.latitude;
-                var distanciay = posy - sensor.longitude;
-                return document.getElementById("map").innerHTML = "O sensor está a " + distanciax + " metros da borda x e a " + distanciay + " metros da borda y";
+                var distanciax = posx - Sen1.latitude;
+                var distanciay = posy - Sen1.longitude;
+                document.getElementById("map").innerHTML = "O sensor está a " + distanciax + " metros da borda x e a " + distanciay + " metros da borda y";
             }
+            var bombatemp = new Bomba(1, "temporario");
+
+            var local = document.getElementById("umidademanual").value;
+            if (local > 30) {
+                bombatemp.desligar();
+                document.getElementById("individual").innerHTML = "O sensor está: " + bombatemp.status + " e a umidade é: " + local;
+            }
+            else {
+                bombatemp.ligar();
+                document.getElementById("individual").innerHTML = "O sensor está: " + bombatemp.status + " e a umidade é: " + local;
+            }
+
         }
-        function controleAutomatico() {
+        function controleAutomaticobb() {
             var sensorId = document.getElementById("sensorId").value;
             var sensorDesc = document.getElementById("sensorDesc").value;
             var sensorLat = document.getElementById("sensorLat").value;
@@ -143,7 +173,7 @@
             var bombaDesc = document.getElementById("bombaDesc").value;
 
 
-            sensores = [
+            sensores = [ //uso de polimorfismo de sobreposição
                 new Sensor(sensorId, sensorDesc),
                 new SensorGeorreferenciado(sensorId, sensorDesc, sensorLat, sensorLong),
             ];
@@ -159,16 +189,16 @@
 
             var mediaLeitura = totalLeitura / sensores.length;
 
-            if (mediaLeitura > 0.80) {
+            if (mediaLeitura > 50) {
                 bomba.desligar();
             }
-            if (mediaLeitura < 0.45) {
+            else {
                 bomba.ligar();
             }
 
             document.getElementById("mediaSensores").value = mediaLeitura.toFixed(2);
             document.getElementById("bombaStatus").value = bomba.status;
-            georreferenciado();
+            distancia();
         }
         function buscarPorId() {
             var buscaId = document.getElementById("buscaId").value;
