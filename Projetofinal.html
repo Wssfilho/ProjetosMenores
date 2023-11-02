@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agricutura
+    </title>
+</head>
 
 <body>
 
-    <h2>Formulário Agricultura 4.0</h2>
+    <h2 id="titulo">Agricutura 4.0</h2>
 
-    <form id="myForm">
+    <form id="FormAgr">
+        <div id="conteudo">
         <label for="tamanho"> Tamanho da lavoura: </label><br>
         <input type="number" id="Tamx"><br>
         <input type="number" id="Tamy"><br>
@@ -21,7 +29,6 @@
         <input type="text" id="bombaId" name="bombaId"><br>
         <label for="bombaDesc">Descrição da Bomba:</label><br>
         <input type="text" id="bombaDesc" name="bombaDesc"><br>
-        <input type="button" value="Controle Automático" onclick="controleAutomatico()">
         <label for="mediaSensores">Média dos Sensores:</label><br>
         <input type="text" id="mediaSensores" name="mediaSensores" readonly><br>
         <label for="bombaStatus">Status da Bomba:</label><br>
@@ -29,21 +36,52 @@
         <label for="buscaId">ID para Buscar:</label><br>
         <input type="text" id="buscaId" name="buscaId"><br>
         <input type="button" value="Buscar por ID" onclick="buscarPorId()">
+        <input type="button" value="Controle Automático" onclick="controleAutomatico()"><br>
+        
+        </div>
         <textarea id="resultadoBusca"></textarea>
         <div id="map"></div>
     </form>
+    <!-- <div id="imagem">
+        <img src="file:///C:/Users/wilso/OneDrive/Documentos/GitHub/JavaProjects/magebs/Farmer-bro.svg"> -->
+    </div>
+    <style>
+        body {
+            background-color:aqua;
+            font-family: Arial, Helvetica, sans-serif;
+            width: 100%;
+        }
+        #titulo
+        {
+            text-align: center;
+            font-size: 50px;
+            color: #000000;
+        }
+        #FormAgr {
+            background-color: #ffffff;
+            width: 100%;
+            padding: 12px;
+            margin: 45px auto;
+            background-color: aqua;
+            position: absolute;
+            left: 43%;
+            top: 10%;
+            right: 504%;
 
+        }
+        
+    </style>
     <script>
         class Sensor {
             constructor(id, descricao) {
                 this.id = id;
                 this.descricao = descricao;
-                this.valorLeitura = 0;
+                this.valordeleitura = 0;
             }
 
             ler() {
                 // Aqui você pode adicionar a lógica para alterar os dados do sensor
-                this.valorLeitura = Math.random(); // Valor aleatório para exemplo
+                this.valordeleitura = Math.random(); // Valor aleatório para exemplo
             }
         }
 
@@ -57,7 +95,6 @@
             // Aqui estamos sobrescrevendo o método 'ler' da classe pai para adicionar funcionalidade georreferenciada
             ler() {
                 super.ler(); // Aqui usamos 'super' para chamar o método 'ler' da classe pai
-                console.log(`Leitura do sensor georreferenciado na latitude ${this.latitude} e longitude ${this.longitude}`);
             }
         }
 
@@ -94,7 +131,7 @@
                 //quero saber a distancia que o sensor esta das bordas
                 var distanciax = posx - sensor.latitude;
                 var distanciay = posy - sensor.longitude;
-               return document.getElementById("map").innerHTML = "O sensor está a " + distanciax + " metros da borda x e a " + distanciay + " metros da borda y";
+                return document.getElementById("map").innerHTML = "O sensor está a " + distanciax + " metros da borda x e a " + distanciay + " metros da borda y";
             }
         }
         function controleAutomatico() {
@@ -117,7 +154,7 @@
 
             for (var i = 0; i < sensores.length; i++) {
                 sensores[i].ler();
-                totalLeitura += sensores[i].valorLeitura;
+                totalLeitura += sensores[i].valordeleitura;
             }
 
             var mediaLeitura = totalLeitura / sensores.length;
