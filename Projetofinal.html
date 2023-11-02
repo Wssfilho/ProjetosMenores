@@ -38,15 +38,15 @@
             <input type="text" id="bombaStatus" name="bombaStatus" readonly><br>
             <label for="buscaId">ID para Buscar:</label><br>
             <input type="text" id="buscaId" name="buscaId"><br>
-            <input type="button" value="Buscar por ID" onclick="buscarPorId()">
+            <input type="button" value="Buscar por ID" onclick="buscarPorId()"><br>
             <input type="button" value="Controle Automático" onclick="controleAutomaticobb()"><br>
             <input type="button" value="Controle Individual o Georef." onclick="distancia()"><br>
 
         </div>
-
-        <textarea id="Busca"></textarea>
-        <div id="map"></div>
+        <textarea id="Busca"></textarea><br>
+        <textarea id="Saida"></textarea><br>
         <div id="individual"></div>
+       
     </form>
     </div>
     <style>
@@ -69,7 +69,7 @@
             margin: 45px auto;
             background-color: aqua;
             position: absolute;
-            left: 43%;
+            left: 35%;
             top: 10%;
             right: 504%;
 
@@ -85,6 +85,12 @@
             padding: 0px;
             border: 1px solid #ccc;
         }
+        textarea {
+            width: 30%;
+            padding: 0px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
     <script>
         class Sensor {
@@ -99,7 +105,7 @@
                 let min = 0;
                 // Aqui você pode adicionar a lógica para alterar os dados do sensor
                 this.valordeleitura = Math.random() * (max - min) + min; // Valor aleatório para exemplo
-                console.log(this.valordeleitura);
+                console.log(this.valordeleitura); //teste em console
             }
         }
 
@@ -160,18 +166,18 @@
                 //quero saber a distancia que o sensor esta das bordas
                 var distanciax = posx - Sen1.latitude;
                 var distanciay = posy - Sen1.longitude;
-                document.getElementById("map").innerHTML = "O sensor está a " + distanciax + " metros da borda x e a " + distanciay + " metros da borda y";
+                document.getElementById("Saida").innerHTML = "O sensor está a " + distanciax + " metros da borda x e a " + distanciay + " metros da borda y";
             }
             var bombatemp = new Bomba(1, "temporario");
 
             var local = document.getElementById("umidademanual").value;
             if (local > 30) {
                 bombatemp.desligar();
-                document.getElementById("individual").innerHTML = "O sensor está: " + bombatemp.status + " e a umidade é: " + local;
+                document.getElementById("Busca").innerHTML = "O sensor está: " + bombatemp.status + " e a umidade é: " + local;
             }
             else {
                 bombatemp.ligar();
-                document.getElementById("individual").innerHTML = "O sensor está: " + bombatemp.status + " e a umidade é: " + local;
+                document.getElementById("Busca").innerHTML = "O sensor está: " + bombatemp.status + " e a umidade é: " + local;
             }
 
         }
