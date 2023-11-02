@@ -30,6 +30,7 @@
         <input type="text" id="buscaId" name="buscaId"><br>
         <input type="button" value="Buscar por ID" onclick="buscarPorId()">
         <textarea id="resultadoBusca"></textarea>
+        <div id="map"></div>
     </form>
 
     <script>
@@ -89,58 +90,61 @@
             if (sensor.latitude > posx || sensor.longitude > posy) {
                 alert("O sensor está fora da área de plantio");
             }
-            if (sensor.latitude < posx || sensor.longitude < posy) 
-            {
-                //quero saber a distancia que o sensor esta da borda
-                var distanciax = posx - sensor.latitude + posy - sensor.longitude;
-                localiza = distanciax;
+            if (sensor.latitude < posx || sensor.longitude < posy) {
+                //quero saber a distancia que o sensor esta das bordas
+                var distanciax = posx - sensor.latitude;
+                var distanciay = posy - sensor.longitude;
+               return document.getElementById("map").innerHTML = "O sensor está a " + distanciax + " metros da borda x e a " + distanciay + " metros da borda y";
             }
-            function controleAutomatico() {
-                var sensorId = document.getElementById("sensorId").value;
-                var sensorDesc = document.getElementById("sensorDesc").value;
-                var sensorLat = document.getElementById("sensorLat").value;
-                var sensorLong = document.getElementById("sensorLong").value;
-                var bombaId = document.getElementById("bombaId").value;
-                var bombaDesc = document.getElementById("bombaDesc").value;
+        }
+        function controleAutomatico() {
+            var sensorId = document.getElementById("sensorId").value;
+            var sensorDesc = document.getElementById("sensorDesc").value;
+            var sensorLat = document.getElementById("sensorLat").value;
+            var sensorLong = document.getElementById("sensorLong").value;
+            var bombaId = document.getElementById("bombaId").value;
+            var bombaDesc = document.getElementById("bombaDesc").value;
 
 
-                sensores = [
-                    new Sensor(sensorId, sensorDesc),
-                    new SensorGeorreferenciado(sensorId, sensorDesc, sensorLat, sensorLong),
-                ];
+            sensores = [
+                new Sensor(sensorId, sensorDesc),
+                new SensorGeorreferenciado(sensorId, sensorDesc, sensorLat, sensorLong),
+            ];
 
-                var bomba = new Bomba(bombaId, bombaDesc);
+            var bomba = new Bomba(bombaId, bombaDesc);
 
-                var totalLeitura = 0;
+            var totalLeitura = 0;
 
-                for (var i = 0; i < sensores.length; i++) {
-                    sensores[i].ler();
-                    totalLeitura += sensores[i].valorLeitura;
-                }
-
-                var mediaLeitura = totalLeitura / sensores.length;
-
-                if (mediaLeitura > 0.5) {
-                    bomba.ligar();
-                } else {
-                    bomba.desligar();
-                }
-
-                document.getElementById("mediaSensores").value = mediaLeitura.toFixed(2);
-                document.getElementById("bombaStatus").value = bomba.status;
+            for (var i = 0; i < sensores.length; i++) {
+                sensores[i].ler();
+                totalLeitura += sensores[i].valorLeitura;
             }
-            function buscarPorId() {
-                var buscaId = document.getElementById("buscaId").value;
-                var indiceSensorEncontrado = sensores.findIndex(function (sensor) {
-                    return sensor.id === buscaId;
-                });
 
-                if (indiceSensorEncontrado !== -1) {
-                    document.getElementById("resultadoBusca").innerHTML = JSON.stringify(sensores[indiceSensorEncontrado], null, 2);
-                } else {
-                    document.getElementById("resultadoBusca").innerHTML = "Sensor não encontrado";
-                }
+            var mediaLeitura = totalLeitura / sensores.length;
+
+            if (mediaLeitura > 0.80) {
+                bomba.desligar();
             }
+            if (mediaLeitura < 0.45) {
+                bomba.ligar();
+            }
+
+            document.getElementById("mediaSensores").value = mediaLeitura.toFixed(2);
+            document.getElementById("bombaStatus").value = bomba.status;
+            georreferenciado();
+        }
+        function buscarPorId() {
+            var buscaId = document.getElementById("buscaId").value;
+            var indiceSensorEncontrado = sensores.findIndex(function (sensor) {
+                return sensor.id === buscaId;
+            });
+
+            if (indiceSensorEncontrado !== -1) {
+                document.getElementById("resultadoBusca").innerHTML = JSON.stringify(sensores[indiceSensorEncontrado], null, 2);
+            } else {
+                document.getElementById("resultadoBusca").innerHTML = "Sensor não encontrado";
+            }
+        }
 
     </script>
 
