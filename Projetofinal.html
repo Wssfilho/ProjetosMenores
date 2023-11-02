@@ -44,7 +44,7 @@
 
         </div>
 
-        <textarea id="resultadoBusca"></textarea>
+        <textarea id="Busca"></textarea>
         <div id="map"></div>
         <div id="individual"></div>
     </form>
@@ -202,14 +202,14 @@
         }
         function buscarPorId() {
             var buscaId = document.getElementById("buscaId").value;
-            var indiceSensorEncontrado = sensores.findIndex(function (sensor) {
+            var ind = sensores.findIndex(function (sensor) {
                 return sensor.id === buscaId;
             });
 
-            if (indiceSensorEncontrado !== -1) {
-                document.getElementById("resultadoBusca").innerHTML = JSON.stringify(sensores[indiceSensorEncontrado], null, 2);
+            if (ind !== -1) {
+                document.getElementById("Busca").innerHTML = JSON.stringify(sensores[ind], null, 2);
             } else {
-                document.getElementById("resultadoBusca").innerHTML = "Sensor não encontrado";
+                document.getElementById("Busca").innerHTML = "Sensor não encontrado";
             }
         }
 
