@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +10,7 @@
 <body>
     <h2 id="titulo">Agricutura 4.0</h2>
     <form id="FormAgr">
-        <div id="conteudo">
+        <div id="conteudo"> 
             <label for="tamanho"> Tamanho da lavoura: </label><br>
             <input type="number" id="Tamx"><br>
             <input type="number" id="Tamy"><br>
@@ -93,7 +92,7 @@
     </style>
     <script>
         class Sensor {
-            constructor(id, descricao) {
+            constructor(id, descricao) { //classe sensor com os atributos e metodos
                 this.id = id;
                 this.descricao = descricao;
                 this.valordeleitura = 0;
@@ -101,14 +100,14 @@
 
             ler() {
                 let max = 100;
-                let min = 0;
+                let min = 0; //metodo ler para gerar um valor aleatorio
                 // Aqui você pode adicionar a lógica para alterar os dados do sensor
                 this.valordeleitura = Math.random() * (max - min) + min; // Valor aleatório para exemplo
                 console.log(this.valordeleitura); //teste em console
             }
         }
 
-        class SensorGeorreferenciado extends Sensor {
+        class SensorGeorreferenciado extends Sensor { //classe sensor georreferenciado que herda da classe sensor
             constructor(id, descricao, latitude, longitude) {
                 super(id, descricao); // Aqui usamos 'super' para chamar o construtor da classe pai
                 this.latitude = latitude;
@@ -128,7 +127,7 @@
             get longitude() {
                 return this._longitude;
             }
-            set longitude(value) {
+            set longitude(value) { //gerts e seters
                 this._longitude = value;
             }
         }
@@ -136,7 +135,7 @@
         class Bomba {
             constructor(id, descricao) {
                 this.id = id;
-                this.descricao = descricao;
+                this.descricao = descricao; //classe bomba que funciona como um ativador
                 this.status = 'desligada';
             }
 
@@ -149,19 +148,19 @@
             }
         }
         var sensores = []; // array para armazenar os objetos do sensor
-        function distancia() {
+        function distancia() { //funcao para calcular a distancia e uso manual do sensor
             var sensorId = document.getElementById("sensorId").value;
             var sensorDesc = document.getElementById("sensorDesc").value;
-            var sensorLat = document.getElementById("sensorLat").value;
+            var sensorLat = document.getElementById("sensorLat").value; //entrada de dados
             var sensorLong = document.getElementById("sensorLong").value;
             var posx = document.getElementById("Tamx").value;
             var posy = document.getElementById("Tamy").value;
-            var Sen1 = new SensorGeorreferenciado(sensorId, sensorDesc, sensorLat, sensorLong);
+            var Sen1 = new SensorGeorreferenciado(sensorId, sensorDesc, sensorLat, sensorLong); //criação do objeto
             var soma = Sen1.latitude - Sen1.longitude; //para saber o tamanho total da area
-            if (Sen1.latitude > posx || Sen1.longitude > posy) {
+            if (Sen1.latitude > posx || Sen1.longitude > posy) { //condicoes
                 alert("O sensor está fora da área de plantio");
             }
-            if (Sen1.latitude < posx || Sen1.longitude < posy) {
+            if (Sen1.latitude < posx || Sen1.longitude < posy) { //logica
                 //quero saber a distancia que o sensor esta das bordas
                 var distanciax = posx - Sen1.latitude;
                 var distanciay = posy - Sen1.longitude;
@@ -169,7 +168,7 @@
             }
             var bombatemp = new Bomba(1, "temporario");
 
-            var local = document.getElementById("umidademanual").value;
+            var local = document.getElementById("umidademanual").value; //retornos
             if (local > 30) {
                 bombatemp.desligar();
                 document.getElementById("Busca").innerHTML = "O sensor está: " + bombatemp.status + " e a umidade é: " + local;
@@ -180,7 +179,7 @@
             }
 
         }
-        function controleAutomaticobb() {
+        function controleAutomaticobb() { //funcao para realizar o controle automatico do sensor
             var sensorId = document.getElementById("sensorId").value;
             var sensorDesc = document.getElementById("sensorDesc").value;
             var sensorLat = document.getElementById("sensorLat").value;
@@ -194,13 +193,13 @@
                 new SensorGeorreferenciado(sensorId, sensorDesc, sensorLat, sensorLong),
             ];
 
-            var bomba = new Bomba(bombaId, bombaDesc);
+            var bomba = new Bomba(bombaId, bombaDesc); //um objeto bomba
 
             var totalLeitura = 0;
 
             for (var i = 0; i < sensores.length; i++) {
                 sensores[i].ler();
-                totalLeitura += sensores[i].valordeleitura;
+                totalLeitura += sensores[i].valordeleitura; //logica para saber a media de todos os sensores do vetor
             }
 
             var mediaLeitura = totalLeitura / sensores.length;
@@ -216,21 +215,21 @@
             document.getElementById("bombaStatus").value = bomba.status;
             distancia();
         }
-        function buscarPorId() {
+        function buscarPorId() { //funcao que busca no vetor os sensores que são compativeis com que o usuario colocou
             var buscaId = document.getElementById("buscaId").value;
             var ind = sensores.findIndex(function (sensor) {
                 return sensor.id === buscaId;
             });
 
             if (ind !== -1) {
-                document.getElementById("Busca").innerHTML = JSON.stringify(sensores[ind], null, 2);
+                document.getElementById("Busca").innerHTML = JSON.stringify(sensores[ind], null, 2); //funcao propia do js
             } else {
                 document.getElementById("Busca").innerHTML = "Sensor não encontrado";
             }
         }
-
+        //usamos funcoes como o findindex e o find para buscar no vetor os sensores que o usuario colocou
+        //usamos funcoes como leght para saber o tamanho do vetor.
     </script>
-
 </body>
 
 </html>
