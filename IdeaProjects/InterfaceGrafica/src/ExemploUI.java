@@ -12,7 +12,7 @@ public class ExemploUI {
 
         int s = n1 + n2;
 
-// exibe o resultado em um diálogo de mensagem JOptionPaneÿ
+        // exibe o resultado em um diálogo de mensagem JOptionPaneÿ
         JOptionPane.showMessageDialog(null, "A soma é " + s,
                 "Sum of Two Integers", JOptionPane.PLAIN_MESSAGE);
     }
