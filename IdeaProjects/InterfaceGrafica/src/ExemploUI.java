@@ -17,7 +17,7 @@ public class ExemploUI extends JFrame{
 
     Cliente cli;
     //;JFrame f ;
-    ExemploUI()
+    ExemploUI() //construtor do ExemploUi
     {
         lblCodigo = new JLabel("Código");
         txtCodigo = new JTextField();
@@ -38,7 +38,7 @@ public class ExemploUI extends JFrame{
         btnCancelar.addActionListener(handler);
     }
 
-    public void NovoCliente()
+    public void NovoCliente() //metodo do Exemplo ui para atribuir a classe cliente
     {
         // Capturar dados dos campos texto para
         // variáveis
@@ -58,7 +58,7 @@ public class ExemploUI extends JFrame{
         lblNumClientes.setText("Total clientes : 1");
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) //metodo main
     {
         JFrame f = new ExemploUI();
         f.setTitle("Primeira Janela");
@@ -68,7 +68,7 @@ public class ExemploUI extends JFrame{
     }
 
     // classe interna private para tratamento de evento
-    private class EventoHandler
+    private class EventoHandler //classe para atribuir evento a botões
             implements ActionListener
     {
         @Override
@@ -82,7 +82,7 @@ public class ExemploUI extends JFrame{
         }
     }
 
-    public class Cliente
+    public class Cliente //classe cliente
     {
         int codigo;
         String nome;
