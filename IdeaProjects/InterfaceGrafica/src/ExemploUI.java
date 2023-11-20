@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 
 public class ExemploUI extends JFrame{
 
-    JLabel      lblCodigo, lblNome;
+    JLabel      lblCodigo, lblNome, lblNumClientes;
     JTextField  txtCodigo, txtNome;
     JButton     btnSalvar, btnCancelar;
 
@@ -25,15 +25,17 @@ public class ExemploUI extends JFrame{
         txtNome = new JTextField();
         btnSalvar   = new JButton("Salvar");
         btnCancelar = new JButton("Cancelar");
+        lblNumClientes = new JLabel("Total clientes : 0");
 
-        setLayout(new GridLayout(3, 2));
+        setLayout(new GridLayout(4, 2));
         add(lblCodigo);    add(txtCodigo);
         add(lblNome);      add(txtNome);
         add(btnSalvar);    add(btnCancelar);
+        add(lblNumClientes);
 
         EventoHandler handler = new EventoHandler();
         btnSalvar.addActionListener(handler);
-        //btnCancelar.addActionListener(handler);
+        btnCancelar.addActionListener(handler);
     }
 
     public void NovoCliente()
@@ -53,6 +55,7 @@ public class ExemploUI extends JFrame{
 
         JOptionPane.showMessageDialog(rootPane,
                 "Objeto criado : " + cli.getNome());
+        lblNumClientes.setText("Total clientes : 1");
     }
 
     public static void main(String[] args)
@@ -65,13 +68,17 @@ public class ExemploUI extends JFrame{
     }
 
     // classe interna private para tratamento de evento
-    private class EventoHandler implements ActionListener
+    private class EventoHandler
+            implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent event)
         {
-            NovoCliente();
-            //JOptionPane.showMessageDialog(null, "Ops, houve um clique aqui!");
+            if (event.getSource() == btnSalvar)
+            {     NovoCliente(); }
+            if (event.getSource() == btnCancelar)
+            {     JOptionPane.showMessageDialog(null, "Cancelar"); }
+
         }
     }
 
