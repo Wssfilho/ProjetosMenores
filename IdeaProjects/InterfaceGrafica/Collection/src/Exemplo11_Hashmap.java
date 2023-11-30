@@ -15,6 +15,8 @@ public class Exemplo11_Hashmap {
    public static void main(String args[])
    {    // Variáveis e seus tipos
         Map<Integer, String> emap = new HashMap<>(); //podemos usar tree para ordenar
+       //Map<Integer, String> emap = new TreeMap<>(); //podemos usar tree para ordenar
+
         
         int ID;
         String Nome;
