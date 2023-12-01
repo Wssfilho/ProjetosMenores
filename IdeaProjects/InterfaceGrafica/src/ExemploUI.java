@@ -21,9 +21,9 @@ import javax.swing.JTextField;
 
 public class ExemploUI extends JFrame{
 
-    JLabel      lblCodigo, lblNome;
+    JLabel      lblCodigo, lblNome; //curso
     JLabel      lblNumeroClientes;
-    JTextField  txtCodigo, txtNome;
+    JTextField  txtCodigo, txtNome; //
     JButton     btnSalvar, btnCancelar;
 
     JLabel      lblListaClientes;
