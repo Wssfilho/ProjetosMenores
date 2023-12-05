@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 
 public class ExemploUI extends JFrame{
 
-    JLabel      lblCodigo, lblNome; //curso
+    JLabel      lblCodigo, lblNome; //criação de variáveis
     JLabel      lblNumeroClientes;
     JTextField  txtCodigo, txtNome; //
     JButton     btnSalvar, btnCancelar;
@@ -31,7 +31,7 @@ public class ExemploUI extends JFrame{
     DefaultListModel mdlListaClientes;
 
     //Cliente c;
-    ArrayList<Cliente> lstClientes = new ArrayList<Cliente>();
+    ArrayList<Cliente> lstClientes = new ArrayList<Cliente>(); //array
 
     ExemploUI()
     {
@@ -91,6 +91,9 @@ public class ExemploUI extends JFrame{
 
     public void NovoCliente()
     {
+        JFrame f = new JFrame();
+        f.setVisible(true);
+
         String strCodigo, strNome;
         int iCodigo;
         strCodigo = txtCodigo.getText();
@@ -118,14 +121,16 @@ public class ExemploUI extends JFrame{
             mdlListaClientes.addElement(aux.getNome());
         }
     }
+    public static JFrame a;
 
-    public static void main(String[] args)
-    {
-        JFrame f = new ExemploUI();
-        f.setTitle("Primeira Janela");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(300, 300, 400, 400);
-        f.setVisible(true);
+    public static void main(String[] args) {
+        a = new ExemploUI();
+        a.setTitle("Cadastro de cursos");
+        a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        a.setBounds(300, 300, 870, 400);
+        a.setVisible(true);
+        a.setResizable(false);
+
     }
 
     // classe interna private para tratamento de evento
@@ -138,7 +143,10 @@ public class ExemploUI extends JFrame{
 
             if (event.getSource() == btnSalvar)
             {
+                a.setVisible(false);
+
                 NovoCliente();
+
 
             }
             else if (event.getSource() == btnCancelar)
