@@ -21,87 +21,121 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import java.io.*;
+import java.nio.file. *;
 
 public class Main extends JFrame {
 
-
+    //declaração dos botoes
     JButton btnCriarDir, btnCriarArq, btnRenomear, btnCopiar;
 
 
     Main() {
 
 
-        btnCriarDir = new JButton("CriarDiretorio");
-        btnCriarArq = new JButton("CriarArquivo");
-        btnRenomear = new JButton("RenomearArquivo");
-        btnCopiar = new JButton("Copiar Arquivo");
+        btnCriarDir = new JButton("CriarDiretorio");// Cria um botão com o texto "Criar Diretório"
+        btnCriarArq = new JButton("CriarArquivo");// Cria um botão com o texto "Criar Arquivo"
+        btnRenomear = new JButton("RenomearArquivo");// Cria um botão com o texto "Renomear Arquivo"
+        btnCopiar = new JButton("Copiar Arquivo");// Cria um botão com o texto "Copiar Arquivo"
 
-
+        //Um JPanel é um componente de contêiner leve que pode ser usado para agrupar outros componentes em uma interface gráfica.
         JPanel formularioPane = new JPanel();
-        // Gerenciador de Layout
-        formularioPane.setLayout(new GridLayout(4, 2));
-        // UMa borda em volta
-        formularioPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        // Adicionando os controles
+        formularioPane.setLayout(new GridLayout(4, 2));//define o layout do painel como uma grade com 4 linhas e 2 colunas.
+        formularioPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); //Aqui, estamos definindo uma borda vazia (sem margens) para o painel.
+        // Adicionando os controles no formulario. Ou seja na tela
         formularioPane.add(btnCriarDir);
         formularioPane.add(btnCriarArq);
         formularioPane.add(btnRenomear);
         formularioPane.add(btnCopiar);
-        btnCriarDir.addActionListener(e->criarDiretorio());
-        btnCriarArq.addActionListener(e->criarArquivo());
-        btnRenomear.addActionListener(e->renomearArquivo());
-        Container contentPane = getContentPane();
-        contentPane.add(formularioPane, BorderLayout.NORTH);
+        btnCopiar.addActionListener(e->copiarArquivo());
+        btnCriarDir.addActionListener(e->criarDiretorio());// Configura um ouvinte de ação para o botão "Criar Diretório"
+        btnCriarArq.addActionListener(e->criarArquivo());// Configura um ouvinte de ação para o botão "Criar Arquivo"
+        btnRenomear.addActionListener(e->renomearArquivo());// Configura um ouvinte de ação para o botão "Renomear"
+        Container contentPane = getContentPane();// Obtém o painel de conteúdo da janela principal
+        contentPane.add(formularioPane, BorderLayout.NORTH);// Adiciona o painel do formulário ao painel de conteúdo, posicionando-o na parte superior (Norte)
 
 
     }
 
-    //RENOMEAR
-   public void renomearArquivo()
-   {
-       File antigo1 = new File("C:\\adriele\\teste.txt"); // RENOMEAR PARA C:
-       File novo1 = new File("C:\\adriele\\renomeadoteste1.txt");
-       boolean success = antigo1.renameTo(novo1);
-       File antigo2 = new File("C:\\adriele\\teste2.txt"); // RENOMEAR PARA C:
-       File novo2 = new File("C:\\adriele\\renomeadoteste2.txt");
-       boolean success2 = antigo2.renameTo(novo2);
+    public void copiarArquivo() {
+        // Define o caminho do arquivo original
+        Path arquivoOriginal = Paths.get("C:\\adriele\\renomeadoteste1.txt");
 
-   }
+        // Define o caminho do arquivo de destino
+        Path arquivoDestino = Paths.get("C:\\wilson\\renomeadoteste1.txt");
+
+        try {
+
+            // Copia o arquivo original para o destino
+            Files.copy(arquivoOriginal, arquivoDestino, StandardCopyOption.REPLACE_EXISTING);
+            JOptionPane.showMessageDialog (null, "Arquivo copiado");
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void renomearArquivo() {
+        // Cria um objeto File para o arquivo antigo "teste.txt"
+        File antigo1 = new File("C:\\adriele\\teste.txt");
+
+        // Cria um objeto File para o novo nome "renomeadoteste1.txt"
+        File novo1 = new File("C:\\adriele\\renomeadoteste1.txt");
+
+        // Renomeia o arquivo antigo para o novo nome
+        boolean success = antigo1.renameTo(novo1);
+
+        // Cria um objeto File para o arquivo antigo "teste2.txt"
+        File antigo2 = new File("C:\\adriele\\teste2.txt");
+
+        // Cria um objeto File para o novo nome "renomeadoteste2.txt"
+        File novo2 = new File("C:\\adriele\\renomeadoteste2.txt");
+
+        // Renomeia o segundo arquivo antigo para o novo nome
+        boolean success2 = antigo2.renameTo(novo2);
+    }
+
+
+    //Neste código Java, a função `renomearArquivo()` renomeia dois arquivos:
+    //"teste.txt" para "renomeadoteste1.txt" e "teste2.txt" para "renomeadoteste2.txt".
+    // O resultado da operação de renomeação é armazenado nas variáveis `success` e `success2`, que são do tipo booleano (verdadeiro ou falso).
+    //Se a renomeação for bem-sucedida, essas variáveis terão o valor `true`, caso contrário, terão o valor `false`.
+
 
     public void criarArquivo()
-    {
+    {   //cria dois objetos File para representar os arquivos “teste.txt” e “teste2.txt” no diretório “C:\adriele”.
         File arquivo = new File("C:\\adriele", "teste.txt");
         File arquivo2 = new File("C:\\adriele", "teste2.txt");
         if(arquivo.exists() || arquivo2.exists())
-        {
+        {   //Verifica se algum dos arquivos já existe. Se sim, exibe uma mensagem informando que um dos arquivos já existe
             JOptionPane.showMessageDialog (null, "Um dos arquivos já existe");
             return;
         }
 
         try
-        {
+        {   //Tenta criar os arquivos usando o método createNewFile()
             boolean statusArq = arquivo.createNewFile();
             boolean statusArq2 = arquivo2.createNewFile();
-
+            //Imprime no console se os arquivos foram criados com sucesso ou não.
             System.out.println("Arquivo criado... :" + statusArq + statusArq2);
 
-        } catch(IOException e)
+        } catch(IOException e) //Em caso de exceção (por exemplo, se houver um problema ao criar os arquivos), imprime o rastreamento da pilha de erros.
         {
             e.printStackTrace();
         }
     }
 
     public void criarDiretorio()
-    {
+    {   //Cria dois objetos File representando os diretórios “adriele” e “wilson” na unidade C do sistema de arquivos.
         File diretorio = new File("C:\\adriele");
         File diretorio2 = new File("C:\\wilson");
-
+        //Verifica se um dos diretórios já existe.
         if(diretorio.exists() || diretorio2.exists())
-        {
+        {   //Se sim, exibe uma mensagem informando que um dos diretórios já existe e encerra a função.
             JOptionPane.showMessageDialog(null, "Um dos diretórios já existe");
             return;
         }
-
+        //Caso contrário, cria os diretórios “adriele” e “wilson”.
         boolean statusDir = diretorio.mkdir();
         System.out.println("Diretorio criado..." + statusDir);
 
@@ -111,15 +145,14 @@ public class Main extends JFrame {
 
 
     public static void main(String[] args) {
-        JFrame f = new Main();
-        f.setTitle("Primeira Janela");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(300, 300, 400, 400);
-        f.setVisible(true);
+        JFrame f = new Main();// Criando uma instância de JFrame
+        f.setTitle("Primeira Janela");// Definindo o título da janela
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // Configurando a ação padrão ao fechar a janela
+        f.setBounds(300, 300, 400, 400);// Definindo as dimensões e posição da janela
+        f.setVisible(true);// Tornando a janela visível
     }
 
 
-    // classe interna private para tratamento de evento
 
 
 }
