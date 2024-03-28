@@ -23,6 +23,11 @@ import javax.swing.JTextField;
 import java.io.*;
 import java.nio.file. *;
 
+
+///////////////// As pastas aparecerão no disco C, com o nome dos componesntes da dupla////////////////
+
+
+
 public class Main extends JFrame {
 
     //declaração dos botoes
@@ -62,18 +67,48 @@ public class Main extends JFrame {
 
         // Define o caminho do arquivo de destino
         Path arquivoDestino = Paths.get("C:\\wilson\\renomeadoteste1.txt");
+        Path arquivoOriginal1 = Paths.get("C:\\adriele\\renomeadoteste2.txt");
 
-        try {
+        // Define o caminho do arquivo de destino
+        Path arquivoDestino1 = Paths.get("C:\\wilson\\renomeadoteste2.txt");
+        Path arquivoOriginal3 = Paths.get("C:\\adriele\\teste.txt");
 
-            // Copia o arquivo original para o destino
-            Files.copy(arquivoOriginal, arquivoDestino, StandardCopyOption.REPLACE_EXISTING);
-            JOptionPane.showMessageDialog (null, "Arquivo copiado");
+        // Define o caminho do arquivo de destino
+        Path arquivoDestino3 = Paths.get("C:\\wilson\\teste.txt");
+        Path arquivoOriginal4 = Paths.get("C:\\adriele\\teste2.txt");
+
+        // Define o caminho do arquivo de destino
+        Path arquivoDestino4 = Paths.get("C:\\wilson\\teste2.txt");
 
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            //tratamento para caso aperte o botao de copiar sem renomear e renomeado
+
+            // Verifica se o arquivo original existe antes de tentar copiá-lo
+            if (Files.exists(arquivoOriginal) && Files.exists(arquivoOriginal1)) {
+                // Copia o arquivo original para o destino
+                try {
+                    Files.copy(arquivoOriginal, arquivoDestino, StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(arquivoOriginal1, arquivoDestino1, StandardCopyOption.REPLACE_EXISTING);
+                    JOptionPane.showMessageDialog(null, "Arquivo copiado");
+                }catch(IOException e){
+                        throw new RuntimeException(e);
+                    }
+
+
+                }
+            //caso o nome do arquivo for anterior ao clique do botão renomear
+                if(Files.exists(arquivoOriginal3) && Files.exists(arquivoOriginal4))
+        {
+                try {
+                    Files.copy(arquivoOriginal3, arquivoDestino3, StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(arquivoOriginal4, arquivoDestino4, StandardCopyOption.REPLACE_EXISTING);
+                }catch(IOException e){
+                    throw new RuntimeException(e);
+            }
         }
+
     }
+
 
     public void renomearArquivo() {
         // Cria um objeto File para o arquivo antigo "teste.txt"
@@ -93,10 +128,12 @@ public class Main extends JFrame {
 
         // Renomeia o segundo arquivo antigo para o novo nome
         boolean success2 = antigo2.renameTo(novo2);
+        JOptionPane.showMessageDialog (null, "Arquivo(os) renomeados com sucesso!");
+
     }
 
 
-    //Neste código Java, a função `renomearArquivo()` renomeia dois arquivos:
+    //a função `renomearArquivo()` renomeia dois arquivos:
     //"teste.txt" para "renomeadoteste1.txt" e "teste2.txt" para "renomeadoteste2.txt".
     // O resultado da operação de renomeação é armazenado nas variáveis `success` e `success2`, que são do tipo booleano (verdadeiro ou falso).
     //Se a renomeação for bem-sucedida, essas variáveis terão o valor `true`, caso contrário, terão o valor `false`.
@@ -117,7 +154,8 @@ public class Main extends JFrame {
             boolean statusArq = arquivo.createNewFile();
             boolean statusArq2 = arquivo2.createNewFile();
             //Imprime no console se os arquivos foram criados com sucesso ou não.
-            System.out.println("Arquivo criado... :" + statusArq + statusArq2);
+            JOptionPane.showMessageDialog (null, "Arquivo criado com sucesso");
+
 
         } catch(IOException e) //Em caso de exceção (por exemplo, se houver um problema ao criar os arquivos), imprime o rastreamento da pilha de erros.
         {
@@ -141,6 +179,8 @@ public class Main extends JFrame {
 
         boolean statusDir2 = diretorio2.mkdir();
         System.out.println("Diretorio criado..." + statusDir2);
+        JOptionPane.showMessageDialog (null, "Diretório criado com sucesso " + diretorio + diretorio2);
+
     }
 
 
