@@ -98,6 +98,7 @@ public class Main extends JFrame {
     {
         try {
             String a = texto.getText();
+            texto.setText("");
             if (texto.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "CAMPO vazio");
             } else {
