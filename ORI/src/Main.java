@@ -70,6 +70,7 @@ public class Main extends JFrame {
 
     }
 
+    
     public void novoframe() {
         botao = new JButton("Novo botao");
         enviar = new JButton("Enviar");
@@ -101,7 +102,7 @@ public class Main extends JFrame {
                 JOptionPane.showMessageDialog(null, "CAMPO vazio");
             } else {
                 JOptionPane.showMessageDialog(rootPane, a);
-                
+            }       
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
