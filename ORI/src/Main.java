@@ -25,7 +25,7 @@ import java.nio.file. *;
 
 
 ///////////////// As pastas aparecerão no disco C, com o nome dos componesntes da dupla////////////////
-
+/////////////////// DUPLA: ADRIELLE E WILSON /////////////////////////////////////
 
 
 public class Main extends JFrame {
