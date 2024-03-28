@@ -21,43 +21,90 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import java.io.*;
-import java.nio.file. *;
-
+import java.nio.file.*;
 
 ///////////////// As pastas aparecerão no disco C, com o nome dos componesntes da dupla////////////////
 /////////////////// DUPLA: ADRIELLE E WILSON /////////////////////////////////////
 
-
 public class Main extends JFrame {
 
-    //declaração dos botoes
-    JButton btnCriarDir, btnCriarArq, btnRenomear, btnCopiar;
-
+    // declaração dos botoes
+    JButton btnCriarDir, btnCriarArq, btnRenomear, btnCopiar, enviar;
+    JButton btnnovo;
+    JPanel formularioPane;
+    JButton botao;
+    JTextField texto;
+    private static JFrame f = new Main();// Criando uma instância de JFrame
+    private static JFrame janela2;
 
     Main() {
-
 
         btnCriarDir = new JButton("CriarDiretorio");// Cria um botão com o texto "Criar Diretório"
         btnCriarArq = new JButton("CriarArquivo");// Cria um botão com o texto "Criar Arquivo"
         btnRenomear = new JButton("RenomearArquivo");// Cria um botão com o texto "Renomear Arquivo"
         btnCopiar = new JButton("Copiar Arquivo");// Cria um botão com o texto "Copiar Arquivo"
+        btnnovo = new JButton("Nova janela");
 
-        //Um JPanel é um componente de contêiner leve que pode ser usado para agrupar outros componentes em uma interface gráfica.
+        // Um JPanel é um componente de contêiner leve que pode ser usado para agrupar
+        // outros componentes em uma interface gráfica.
         JPanel formularioPane = new JPanel();
-        formularioPane.setLayout(new GridLayout(4, 2));//define o layout do painel como uma grade com 4 linhas e 2 colunas.
-        formularioPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); //Aqui, estamos definindo uma borda vazia (sem margens) para o painel.
+        formularioPane.setLayout(new GridLayout(4, 2));// define o layout do painel como uma grade com 4 linhas e 2
+                                                       // colunas.
+        formularioPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Aqui, estamos definindo uma borda
+                                                                                   // vazia (sem margens) para o painel.
         // Adicionando os controles no formulario. Ou seja na tela
         formularioPane.add(btnCriarDir);
         formularioPane.add(btnCriarArq);
         formularioPane.add(btnRenomear);
         formularioPane.add(btnCopiar);
-        btnCopiar.addActionListener(e->copiarArquivo());
-        btnCriarDir.addActionListener(e->criarDiretorio());// Configura um ouvinte de ação para o botão "Criar Diretório"
-        btnCriarArq.addActionListener(e->criarArquivo());// Configura um ouvinte de ação para o botão "Criar Arquivo"
-        btnRenomear.addActionListener(e->renomearArquivo());// Configura um ouvinte de ação para o botão "Renomear"
+        formularioPane.add(btnnovo);
+        btnnovo.addActionListener(e -> novoframe());
+        btnCopiar.addActionListener(e -> copiarArquivo());
+        btnCriarDir.addActionListener(e -> criarDiretorio());// Configura um ouvinte de ação para o botão "Criar
+                                                             // Diretório"
+        btnCriarArq.addActionListener(e -> criarArquivo());// Configura um ouvinte de ação para o botão "Criar Arquivo"
+        btnRenomear.addActionListener(e -> renomearArquivo());// Configura um ouvinte de ação para o botão "Renomear"
         Container contentPane = getContentPane();// Obtém o painel de conteúdo da janela principal
-        contentPane.add(formularioPane, BorderLayout.NORTH);// Adiciona o painel do formulário ao painel de conteúdo, posicionando-o na parte superior (Norte)
+        contentPane.add(formularioPane, BorderLayout.NORTH);// Adiciona o painel do formulário ao painel de conteúdo,
+                                                            // posicionando-o na parte superior (Norte)
 
+    }
+
+    public void novoframe() {
+        botao = new JButton("Novo botao");
+        enviar = new JButton("Enviar");
+        janela2 = new JFrame();
+        janela2.setBounds(0, 0, 400, 400);
+        janela2.setVisible(true);
+        janela2.setTitle("Primeira Janela");
+        janela2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        texto = new JTextField();
+        JPanel janelaJPanel = new JPanel();
+        janelaJPanel.setLayout(new GridLayout(1, 2));
+        janelaJPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        janelaJPanel.add(botao);
+        janelaJPanel.add(enviar);
+        janelaJPanel.add(texto);
+
+        f.dispose();
+
+        enviar.addActionListener(e -> enviar());
+        Container contentPane2 = janela2.getContentPane(); // janela dois porque é segunda janela
+        contentPane2.add(janelaJPanel, BorderLayout.NORTH);
+    }
+
+    public void enviar() 
+    {
+        try {
+            String a = texto.getText();
+            if (texto.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "CAMPO vazio");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, a);
+                
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -80,35 +127,31 @@ public class Main extends JFrame {
         // Define o caminho do arquivo de destino
         Path arquivoDestino4 = Paths.get("C:\\wilson\\teste2.txt");
 
+        // tratamento para caso aperte o botao de copiar sem renomear e renomeado
 
-            //tratamento para caso aperte o botao de copiar sem renomear e renomeado
+        // Verifica se o arquivo original existe antes de tentar copiá-lo
+        if (Files.exists(arquivoOriginal) && Files.exists(arquivoOriginal1)) {
+            // Copia o arquivo original para o destino
+            try {
+                Files.copy(arquivoOriginal, arquivoDestino, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(arquivoOriginal1, arquivoDestino1, StandardCopyOption.REPLACE_EXISTING);
+                JOptionPane.showMessageDialog(null, "Arquivo copiado");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-            // Verifica se o arquivo original existe antes de tentar copiá-lo
-            if (Files.exists(arquivoOriginal) && Files.exists(arquivoOriginal1)) {
-                // Copia o arquivo original para o destino
-                try {
-                    Files.copy(arquivoOriginal, arquivoDestino, StandardCopyOption.REPLACE_EXISTING);
-                    Files.copy(arquivoOriginal1, arquivoDestino1, StandardCopyOption.REPLACE_EXISTING);
-                    JOptionPane.showMessageDialog(null, "Arquivo copiado");
-                }catch(IOException e){
-                        throw new RuntimeException(e);
-                    }
-
-
-                }
-            //caso o nome do arquivo for anterior ao clique do botão renomear
-                if(Files.exists(arquivoOriginal3) && Files.exists(arquivoOriginal4))
-        {
-                try {
-                    Files.copy(arquivoOriginal3, arquivoDestino3, StandardCopyOption.REPLACE_EXISTING);
-                    Files.copy(arquivoOriginal4, arquivoDestino4, StandardCopyOption.REPLACE_EXISTING);
-                }catch(IOException e){
-                    throw new RuntimeException(e);
+        }
+        // caso o nome do arquivo for anterior ao clique do botão renomear
+        if (Files.exists(arquivoOriginal3) && Files.exists(arquivoOriginal4)) {
+            try {
+                Files.copy(arquivoOriginal3, arquivoDestino3, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(arquivoOriginal4, arquivoDestino4, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
 
     }
-
 
     public void renomearArquivo() {
         // Cria um objeto File para o arquivo antigo "teste.txt"
@@ -128,76 +171,67 @@ public class Main extends JFrame {
 
         // Renomeia o segundo arquivo antigo para o novo nome
         boolean success2 = antigo2.renameTo(novo2);
-        JOptionPane.showMessageDialog (null, "Arquivo(os) renomeados com sucesso!");
+        JOptionPane.showMessageDialog(null, "Arquivo(os) renomeados com sucesso!");
 
     }
 
+    // a função `renomearArquivo()` renomeia dois arquivos:
+    // "teste.txt" para "renomeadoteste1.txt" e "teste2.txt" para
+    // "renomeadoteste2.txt".
+    // O resultado da operação de renomeação é armazenado nas variáveis `success` e
+    // `success2`, que são do tipo booleano (verdadeiro ou falso).
+    // Se a renomeação for bem-sucedida, essas variáveis terão o valor `true`, caso
+    // contrário, terão o valor `false`.
 
-    //a função `renomearArquivo()` renomeia dois arquivos:
-    //"teste.txt" para "renomeadoteste1.txt" e "teste2.txt" para "renomeadoteste2.txt".
-    // O resultado da operação de renomeação é armazenado nas variáveis `success` e `success2`, que são do tipo booleano (verdadeiro ou falso).
-    //Se a renomeação for bem-sucedida, essas variáveis terão o valor `true`, caso contrário, terão o valor `false`.
-
-
-    public void criarArquivo()
-    {   //cria dois objetos File para representar os arquivos “teste.txt” e “teste2.txt” no diretório “C:\adriele”.
+    public void criarArquivo() { // cria dois objetos File para representar os arquivos “teste.txt” e
+                                 // “teste2.txt” no diretório “C:\adriele”.
         File arquivo = new File("C:\\adriele", "teste.txt");
         File arquivo2 = new File("C:\\adriele", "teste2.txt");
-        if(arquivo.exists() || arquivo2.exists())
-        {   //Verifica se algum dos arquivos já existe. Se sim, exibe uma mensagem informando que um dos arquivos já existe
-            JOptionPane.showMessageDialog (null, "Um dos arquivos já existe");
+        if (arquivo.exists() || arquivo2.exists()) { // Verifica se algum dos arquivos já existe. Se sim, exibe uma
+                                                     // mensagem informando que um dos arquivos já existe
+            JOptionPane.showMessageDialog(null, "Um dos arquivos já existe");
             return;
         }
 
-        try
-        {   //Tenta criar os arquivos usando o método createNewFile()
+        try { // Tenta criar os arquivos usando o método createNewFile()
             boolean statusArq = arquivo.createNewFile();
             boolean statusArq2 = arquivo2.createNewFile();
-            //Imprime no console se os arquivos foram criados com sucesso ou não.
-            JOptionPane.showMessageDialog (null, "Arquivo criado com sucesso");
+            // Imprime no console se os arquivos foram criados com sucesso ou não.
+            JOptionPane.showMessageDialog(null, "Arquivo criado com sucesso");
 
-
-        } catch(IOException e) //Em caso de exceção (por exemplo, se houver um problema ao criar os arquivos), imprime o rastreamento da pilha de erros.
+        } catch (IOException e) // Em caso de exceção (por exemplo, se houver um problema ao criar os arquivos),
+                                // imprime o rastreamento da pilha de erros.
         {
             e.printStackTrace();
         }
     }
 
-    public void criarDiretorio()
-    {   //Cria dois objetos File representando os diretórios “adriele” e “wilson” na unidade C do sistema de arquivos.
+    public void criarDiretorio() { // Cria dois objetos File representando os diretórios “adriele” e “wilson” na
+                                   // unidade C do sistema de arquivos.
         File diretorio = new File("C:\\adriele");
         File diretorio2 = new File("C:\\wilson");
-        //Verifica se um dos diretórios já existe.
-        if(diretorio.exists() || diretorio2.exists())
-        {   //Se sim, exibe uma mensagem informando que um dos diretórios já existe e encerra a função.
+        // Verifica se um dos diretórios já existe.
+        if (diretorio.exists() || diretorio2.exists()) { // Se sim, exibe uma mensagem informando que um dos diretórios
+                                                         // já existe e encerra a função.
             JOptionPane.showMessageDialog(null, "Um dos diretórios já existe");
             return;
         }
-        //Caso contrário, cria os diretórios “adriele” e “wilson”.
+        // Caso contrário, cria os diretórios “adriele” e “wilson”.
         boolean statusDir = diretorio.mkdir();
         System.out.println("Diretorio criado..." + statusDir);
 
         boolean statusDir2 = diretorio2.mkdir();
         System.out.println("Diretorio criado..." + statusDir2);
-        JOptionPane.showMessageDialog (null, "Diretório criado com sucesso " + diretorio + diretorio2);
+        JOptionPane.showMessageDialog(null, "Diretório criado com sucesso " + diretorio + diretorio2);
 
     }
 
-
     public static void main(String[] args) {
-        JFrame f = new Main();// Criando uma instância de JFrame
+
         f.setTitle("Primeira Janela");// Definindo o título da janela
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // Configurando a ação padrão ao fechar a janela
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Configurando a ação padrão ao fechar a janela
         f.setBounds(300, 300, 400, 400);// Definindo as dimensões e posição da janela
         f.setVisible(true);// Tornando a janela visível
     }
 
-
-
-
 }
-
-
-
-
-
