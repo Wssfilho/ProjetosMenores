@@ -1,29 +1,9 @@
-import java.io.File;
-import java.awt.BorderLayout;
-import static java.awt.Component.LEFT_ALIGNMENT;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import java.io.*;
+import java.awt.*;
 import java.nio.file.*;
-
+import javax.swing.*;
 public class Main extends JFrame {
+
 
     // declaração dos botoes
     JButton btnCriarDir, btnCriarArq, btnRenomear, btnCopiar, enviar;
@@ -159,7 +139,7 @@ public class Main extends JFrame {
         // Cria um objeto File para o novo nome "renomeadoteste1.txt"
         File novo1 = new File("C:\\adriele\\renomeadoteste1.txt");
 
-        // Renomeia o arquivo antigo para o novo nome
+        /* Renomeia o arquivo antigo para o novo nome */
         boolean success = antigo1.renameTo(novo1);
 
         // Cria um objeto File para o arquivo antigo "teste2.txt"
