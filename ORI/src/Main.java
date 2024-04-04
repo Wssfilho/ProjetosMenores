@@ -23,9 +23,6 @@ import javax.swing.JTextField;
 import java.io.*;
 import java.nio.file.*;
 
-///////////////// As pastas aparecerão no disco C, com o nome dos componesntes da dupla////////////////
-/////////////////// DUPLA: ADRIELLE E WILSON /////////////////////////////////////
-
 public class Main extends JFrame {
 
     // declaração dos botoes
@@ -93,7 +90,7 @@ public class Main extends JFrame {
         Container contentPane2 = janela2.getContentPane(); // janela dois porque é segunda janela
         contentPane2.add(janelaJPanel, BorderLayout.NORTH);
     }
-
+    //retirar
     public void enviar() 
     {
         try {
