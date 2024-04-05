@@ -15,7 +15,7 @@ public class Main extends JFrame {
     private static JFrame janela2;
 
     Main() {
-
+//        /*Isso será um novo método, pois terá um programa de início na qual irá chamar os outros programas*/
         btnCriarDir = new JButton("CriarDiretorio");// Cria um botão com o texto "Criar Diretório"
         btnCriarArq = new JButton("CriarArquivo");// Cria um botão com o texto "Criar Arquivo"
         btnRenomear = new JButton("RenomearArquivo");// Cria um botão com o texto "Renomear Arquivo"
