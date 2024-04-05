@@ -11,7 +11,7 @@ public class Main extends JFrame {
     JPanel formularioPane;
     JButton botao;
     JTextField texto;
-    private static JFrame f = new Main();// Criando uma instância de JFrame
+    private static final JFrame f = new Main();// Criando uma instância de JFrame
     private static JFrame janela2;
 
     Main() {
@@ -63,7 +63,6 @@ public class Main extends JFrame {
         janelaJPanel.add(botao);
         janelaJPanel.add(enviar);
         janelaJPanel.add(texto);
-
         f.dispose();
 
         enviar.addActionListener(e -> enviar());
@@ -76,7 +75,7 @@ public class Main extends JFrame {
         try {
             String a = texto.getText();
             texto.setText("");
-            if (texto.getText().isEmpty()) {
+            if (a.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "CAMPO vazio");
             } else {
                 JOptionPane.showMessageDialog(rootPane, a);
@@ -157,35 +156,38 @@ public class Main extends JFrame {
     // a função `renomearArquivo()` renomeia dois arquivos:
     // "teste.txt" para "renomeadoteste1.txt" e "teste2.txt" para
     // "renomeadoteste2.txt".
-    // O resultado da operação de renomeação é armazenado nas variáveis `success` e
+    // O resultado da operação de renomeação é armazenado nas variáveis "success" e
     // `success2`, que são do tipo booleano (verdadeiro ou falso).
-    // Se a renomeação for bem-sucedida, essas variáveis terão o valor `true`, caso
+    // Se a renomeação for bem-sucedida, essas variáveis terão o valor "true", caso
     // contrário, terão o valor `false`.
 
     public void criarArquivo() { // cria dois objetos File para representar os arquivos “teste.txt” e
                                  // “teste2.txt” no diretório “C:\adriele”.
         File arquivo = new File("C:\\adriele", "teste.txt");
         File arquivo2 = new File("C:\\adriele", "teste2.txt");
-        if (arquivo.exists() || arquivo2.exists()) { // Verifica se algum dos arquivos já existe. Se sim, exibe uma
+        if (arquivo.exists() || arquivo2.exists())
+        { // Verifica se algum dos arquivos já existe. Se sim, exibe uma
                                                      // mensagem informando que um dos arquivos já existe
             JOptionPane.showMessageDialog(null, "Um dos arquivos já existe");
             return;
         }
 
-        try { // Tenta criar os arquivos usando o método createNewFile()
-            boolean statusArq = arquivo.createNewFile();
-            boolean statusArq2 = arquivo2.createNewFile();
+        try
+        { // Tenta criar os arquivos usando o método createNewFile()
+            arquivo.createNewFile();
+            arquivo2.createNewFile();
             // Imprime no console se os arquivos foram criados com sucesso ou não.
             JOptionPane.showMessageDialog(null, "Arquivo criado com sucesso");
 
-        } catch (IOException e) // Em caso de exceção (por exemplo, se houver um problema ao criar os arquivos),
+        } catch (IOException ex) // Em caso de exceção (por exemplo, se houver um problema ao criar os arquivos),
                                 // imprime o rastreamento da pilha de erros.
         {
-            e.printStackTrace();
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Arquivo não criado");
         }
     }
 
-    public void criarDiretorio() { // Cria dois objetos File representando os diretórios “adriele” e “wilson” na
+    private void criarDiretorio() { // Cria dois objetos File representando os diretórios “adriele” e “wilson” na
                                    // unidade C do sistema de arquivos.
         File diretorio = new File("C:\\adriele");
         File diretorio2 = new File("C:\\wilson");
