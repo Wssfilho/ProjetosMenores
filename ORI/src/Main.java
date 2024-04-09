@@ -56,7 +56,7 @@ public class Main extends JFrame {
     }
     public void status() {
         File arquivo = new File("C:\\adriele", "dados.csv");
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); // usada para criar e manipular strings dinamicamente.
         sb.append("Tamanho do arquivo: ").append(length(arquivo)).append(" bytes\n");
         sb.append("Última modificação: ").append(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date(lastModified(arquivo)))).append("\n");
         sb.append("Caminho do arquivo: ").append(toString(arquivo)).append("\n");
