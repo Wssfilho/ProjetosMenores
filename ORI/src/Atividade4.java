@@ -8,9 +8,10 @@ import java.util.Date;
 public class Atividade4 {
     public static File diretorio;
     public static void main(String[] args) {
-
-        criarDiretorio();
-        criarArquivos();
+//        questao2();
+//        criarDiretorio();
+//        criarArquivos();
+        deletar();
 
     }
     //QUESTAO 1
@@ -38,6 +39,27 @@ public class Atividade4 {
 
         JOptionPane.showMessageDialog(null, "Subdiretórios criados com sucesso: " + subDiretorio1 + ", " + subDiretorio2);
     }
+    public static void questao2()
+    {
+        // Obter informações do usuário
+        String caminho = JOptionPane.showInputDialog(null, "Informe o caminho do diretório:");
+        String nomeDiretorio = JOptionPane.showInputDialog(null, "Informe o nome do diretório:");
+        String nomeSubdiretorio = JOptionPane.showInputDialog(null, "Informe o nome do subdiretório:");
+
+        // Verificar se o subdiretório existe
+        boolean existeSubdiretorio = verificarSubdiretorioExiste(caminho, nomeDiretorio, nomeSubdiretorio);
+
+        // Mostrar resultado ao usuário
+        String mensagem = existeSubdiretorio ? "O subdiretório " + nomeSubdiretorio + " existe dentro do diretório " + nomeDiretorio :
+                "O subdiretório " + nomeSubdiretorio + " não existe dentro do diretório " + nomeDiretorio;
+        JOptionPane.showMessageDialog(null, mensagem);
+    }
+    private static boolean verificarSubdiretorioExiste(String caminho, String nomeDiretorio, String nomeSubdiretorio) {
+        File diretorio = new File(caminho, nomeDiretorio);
+        File subdiretorio = new File(diretorio, nomeSubdiretorio);
+        return subdiretorio.exists();
+    }
+
 
     public static void criarArquivos() {
         // Diretórios
@@ -113,9 +135,9 @@ public class Atividade4 {
     //QUESTAO 5
     public static void deletar()
     {
-        File diretorio = new File("diretorio");
-        File arq1 = new File(diretorio, "a.txt");
-        File ar1 = new File(diretorio, "in.txt");
+        File diretorio = new File("Diretorio\\SubDiretorio1"); //quando quiser acessar o subdiretorio, nome do diretorio e o nome do sub
+        File arq1 = new File(diretorio, "arquivo1.csv");
+        File ar1 = new File(diretorio, "arquivo1.txt");
         if(arq1.exists())
         {
             boolean delete = arq1.delete();
