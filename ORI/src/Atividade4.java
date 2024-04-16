@@ -130,19 +130,17 @@ public class Atividade4 {
 
     }
     //QUESTAO 5
-    public static void deletar()
-    {
+    public static void deletar() {
         File diretorio = new File("Diretorio\\SubDiretorio1"); //quando quiser acessar o subdiretorio, nome do diretorio e o nome do sub
         File arq1 = new File(diretorio, "arquivo1.csv");
         File ar1 = new File(diretorio, "arquivo1.txt");
-        if(arq1.exists())
-        {
+        if (arq1.exists()) {
             boolean delete = arq1.delete();
             boolean delete2 = ar1.delete();
-            JOptionPane.showMessageDialog(null, delete);
-        }
-        else
+            JOptionPane.showMessageDialog(null, String.valueOf(delete) + String.valueOf(delete2));
+        } else {
             JOptionPane.showMessageDialog(null, "nao existe");
+        }
     }
     //QUESTAO 7
     public static void criarArq() throws IOException {

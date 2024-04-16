@@ -236,7 +236,7 @@ public class Main extends JFrame {
 
         // Renomeia o segundo arquivo antigo para o novo nome
         boolean success2 = antigo2.renameTo(novo2);
-        JOptionPane.showMessageDialog(null, "Arquivo(os) renomeados com sucesso!");
+        JOptionPane.showMessageDialog(null, "Arquivo(os) renomeados com sucesso!" + success + success2);
 
     }
 
