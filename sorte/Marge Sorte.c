@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+//definicao de estrutura
 typedef struct {
     char primerio[100];
     int segundo;
