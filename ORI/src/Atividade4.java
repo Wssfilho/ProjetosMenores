@@ -1,9 +1,5 @@
 import java.io.*;
-import java.awt.*;
-import java.nio.file.*;
 import javax.swing.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Atividade4 {
     public static File diretorio;
