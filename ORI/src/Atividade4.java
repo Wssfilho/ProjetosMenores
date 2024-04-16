@@ -35,6 +35,7 @@ public class Atividade4 {
 
         JOptionPane.showMessageDialog(null, "Subdiretórios criados com sucesso: " + subDiretorio1 + ", " + subDiretorio2);
     }
+    //questao 2
     public static void questao2()
     {
         // Obter informações do usuário
