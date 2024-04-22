@@ -6,7 +6,7 @@ typedef struct {
     char primerio[100];
     int segundo;
 } Sorte;
-
+//comeco da funcao marge
 void merge(Sorte vetor[], int p, int q, int r) {
     int n1 = q - p + 1;
     int n2 = r - q;
