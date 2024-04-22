@@ -1,19 +1,18 @@
 // Incluindo as bibliotecas necessárias
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 // Definindo a estrutura Intervalo
 typedef struct {
-    char cor[50]; // Nome da cor
-    int inicio;   // Início do intervalo
-    int fim;      // Fim do intervalo
+    char* cor;   // Campo para armazenar o nome da cor
+    int inicio;  // Campo para armazenar o início do intervalo
+    int fim;     // Campo para armazenar o fim do intervalo
 } Intervalo;
 
 // Função para ordenar os intervalos em ordem crescente de tempo de início
 void ordenarIntervalos(Intervalo* intervalos, int n) {
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
+    for (int i = 0; i < n; i++) {  // Loop para cada intervalo
+        for (int j = i + 1; j < n; j++) {  // Loop para cada intervalo não ordenado
             // Se o início do intervalo atual é maior que o início do próximo intervalo, troca os intervalos
             if (intervalos[i].inicio > intervalos[j].inicio) {
                 Intervalo temp = intervalos[i];
@@ -24,41 +23,47 @@ void ordenarIntervalos(Intervalo* intervalos, int n) {
     }
 }
 
+// Função para verificar se um intervalo se sobrepõe a qualquer intervalo anterior com a mesma cor
+int sobreposicao(Intervalo * intervalos, int atual) {
+    for (int i = 0; i < atual; i++) {  // Loop para cada intervalo anterior
+        // Se a cor atual já foi atribuída a um intervalo que se sobrepõe ao intervalo atual, retorna 1
+        if (intervalos[i].cor == intervalos[atual].cor && intervalos[i].fim > intervalos[atual].inicio) {
+            return 1;
+        }
+    }
+    return 0;  // Se não houver sobreposição, retorna 0
+}
+
 // Função para atribuir cores aos intervalos
 void colorirIntervalos(Intervalo* intervalos, char** cores, int n, int num_cores) {
-    // Ordena os intervalos
-    ordenarIntervalos(intervalos, n);
+    ordenarIntervalos(intervalos, n);  // Ordena os intervalos
 
-    // Atribui cores aos intervalos
-    for (int i = 0; i < n; i++) {
-        // Atribui a cor atual ao intervalo
-        strcpy(intervalos[i].cor, cores[i % num_cores]);
-        for (int j = 0; j < i; j++) {
-            // Se a cor atual já foi atribuída a um intervalo que se sobrepõe ao intervalo atual, atribui a próxima cor
-            if (strcmp(intervalos[j].cor, intervalos[i].cor) == 0 && intervalos[j].fim > intervalos[i].inicio) {
-                strcpy(intervalos[i].cor, cores[(i+1) % num_cores]);
+    for (int i = 0; i < n; i++) {  // Loop para cada intervalo
+        for (int j = 0; j < num_cores; j++) {  // Loop para cada cor
+            intervalos[i].cor = cores[j];  // Atribui a cor atual ao intervalo
+            // Se não houver sobreposição, interrompe o loop
+            if (!sobreposicao(intervalos, i)) {
+                break;
             }
         }
     }
 }
 
 // Função principal
-int main() {
-    // Define o número de intervalos e cria um array de intervalos
-    int n = 4;
-    Intervalo intervalos[] = {{"", 1, 6}, {"", 3, 5}, {"",7, 9}, {"", 5, 8}};
-
+int main(void) {
+    int n = 8;  // Define o número de intervalos
+    // Cria um array de intervalos
+    Intervalo intervalos[] = {{"", 0, 6}, {"", 1, 4}, {"", 3, 5}, {"", 3, 8}, {"", 4, 7}, {"",5, 9}, {"", 6, 10}, {"", 7, 11}};
     // Define o número de cores e cria um array de cores
-    char* cores[] = {"azul", "verde", "vermelho", "amarelo", "laranja", "roxo"};
+    char* cores[] =  {"vermelho", "amarelo", "azul", "verde"};
     int num_cores = sizeof(cores) / sizeof(char*);
 
-    // Chama a função para colorir os intervalos
-    colorirIntervalos(intervalos, cores, n, num_cores);
+    colorirIntervalos(intervalos, cores, n, num_cores);  // Chama a função para colorir os intervalos
 
     // Imprime os intervalos e suas cores
     for (int i = 0; i < n; i++) {
         printf("Intervalo %d: cor = %s, inicio = %d, fim = %d\n", i, intervalos[i].cor, intervalos[i].inicio, intervalos[i].fim);
     }
 
-    return 0;
+    return 0;  // Termina o programa
 }
