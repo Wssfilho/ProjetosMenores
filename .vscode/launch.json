@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": ".",
-      "program": "build/Debug/outDebug",
+      "cwd": "c:/Users/wilso/OneDrive/Documentos/GitHub/JavaProjects/sorte",
+      "program": "c:/Users/wilso/OneDrive/Documentos/GitHub/JavaProjects/sorte/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
