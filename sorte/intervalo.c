@@ -1,58 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct 
-{
-    int comeco;
-    int final;
-}Intervalo;
+typedef struct {
+    char* cor;
+    int inicio;
+    int fim;
+} Intervalo;
 
-void ordenar(Intervalo *inter, const int n)
-{
-    int i, j;
-    for(i = 0; i < n; i++)
-    {
-        for(j = i + 1; j < n; j++)
-        {
-            if(inter[i].comeco > inter[j].comeco)
-            {
-                Intervalo temp = inter[i];
-                inter[i] = inter[j];
-                inter[j] = temp;
+void verificarSobreposicao(Intervalo* intervalos, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (intervalos[i].fim > intervalos[j].inicio && intervalos[i].inicio <= intervalos[j].inicio) {
+                printf("%s primeira cor sobrepõe %s segunda cor nos intervalos %d a %d\n", intervalos[i].cor, intervalos[j].cor, intervalos[i].inicio, intervalos[i].fim);
             }
         }
     }
 }
-void colorirIntervalos(Intervalo* inter, int * cores, const int n) {
-    ordenar(inter, n);
 
-    for (int i = 0; i < n; i++) {
-        int cor = 1;
-        for (int j = 0; j < i; j++) {
-            if (inter[j].final <= inter[i].final) {
-                if (cores[j] == cor) {
-                    cor++;
-                    j = -1;
-                }
-            }
-        }
-        cores[i] = cor;
-    }
-}
+int main() {
+    Intervalo intervalos[] = {{"azul", 1, 6}, {"verde", 3, 5}};
+    int tamanho = sizeof(intervalos) / sizeof(Intervalo);
 
-int main()
-{
-    int n = 4;
-    Intervalo intervalos[] = {{1, 4}, {2, 3}, {5, 8}, {7, 9}};
-    int * cores = (int*)malloc(n * sizeof(int));
+    verificarSobreposicao(intervalos, tamanho);
 
-    colorirIntervalos(intervalos, cores, n);
-
-    for (int i = 0; i < n; i++) {
-        printf("Intervalo %d: inicio = %d, fim = %d, cor = %d\n", i, intervalos[i].comeco, intervalos[i].final, cores[i]);
-    }
-
-    free(cores);
     return 0;
-
 }
