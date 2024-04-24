@@ -9,8 +9,7 @@ import java.util.Date;
 public class Main extends JFrame {
     // declaração dos botoes
     JButton btnCriarDir, btnCriarArq, btnRenomear, btnCopiar;
-    JButton btnarquivos, btnarquivos2, mostrar, verificar, criar;
-    JTextField texto;
+    JButton btnarquivos, btnarquivos2, mostrar;
     File arquivo;
     JFrame manipulacao, f;
     JPanel formularioPane3, formularioPane;
@@ -34,19 +33,7 @@ public class Main extends JFrame {
         Container contentPane = getContentPane();// Obtém o painel de conteúdo da janela principal
         contentPane.add(janelaJPanel, BorderLayout.NORTH);
     }
-    private JFrame criarjanela()
-    {
-        JFrame f = new JFrame();
-        f.setBounds(0, 0, 400, 400);
-        f.setVisible(true);
-        f.setTitle("Primeira Janela");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel formularioPane = new JPanel();
-        formularioPane.setLayout(new GridLayout(4, 2));// define o layout do painel como uma grade com 4 linhas e 2
-        // colunas.
-        formularioPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        return f;
-    }
+
     private void janela3()
     {
 
@@ -195,10 +182,10 @@ public class Main extends JFrame {
         };
         // Cria as ações
         ActionListener[] acoes = {
-                e -> copiarArquivo(),
                 e -> criarDiretorio(),
                 e -> criarArquivo(),
                 e -> renomearArquivo(),
+                e -> copiarArquivo(),
         };
 
         // Cria o painel com os botões
