@@ -5,7 +5,6 @@ import java.nio.file.*;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 public class Main extends JFrame {
     // declaração dos botoes
     JButton btnCriarDir, btnCriarArq, btnRenomear, btnCopiar;
@@ -265,16 +264,7 @@ public class Main extends JFrame {
 
     }
 
-    // a função `renomearArquivo()` renomeia dois arquivos:
-    // "teste.txt" para "renomeadoteste1.txt" e "teste2.txt" para
-    // "renomeadoteste2.txt".
-    // O resultado da operação de renomeação é armazenado nas variáveis "success" e
-    // `success2`, que são do tipo booleano (verdadeiro ou falso).
-    // Se a renomeação for bem-sucedida, essas variáveis terão o valor "true", caso
-    // contrário, terão o valor `false`.
-
     public void criarArquivo() { // cria dois objetos File para representar os arquivos “teste.txt” e
-                                 // “teste2.txt” no diretório “C:\adriele”.
         File arquivo = new File("C:\\adriele", "teste.txt");
         File arquivo2 = new File("C:\\adriele", "teste2.txt");
         if (arquivo.exists() || arquivo2.exists())
@@ -300,12 +290,10 @@ public class Main extends JFrame {
     }
 
     private void criarDiretorio() { // Cria dois objetos File representando os diretórios “adriele” e “wilson” na
-                                   // unidade C do sistema de arquivos.
         File diretorio = new File("C:\\adriele");
         File diretorio2 = new File("C:\\wilson");
         // Verifica se um dos diretórios já existe.
         if (diretorio.exists() || diretorio2.exists()) { // Se sim, exibe uma mensagem informando que um dos diretórios
-                                                         // já existe e encerra a função.
             JOptionPane.showMessageDialog(null, "Um dos diretórios já existe");
             return;
         }
