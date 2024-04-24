@@ -29,17 +29,26 @@ public class Main extends JFrame {
         Container contentPane = getContentPane();// Obtém o painel de conteúdo da janela principal
         contentPane.add(janelaJPanel, BorderLayout.NORTH);
     }
-
+    private JFrame criarjanela()
+    {
+        JFrame f = new JFrame();
+        f.setBounds(0, 0, 400, 400);
+        f.setVisible(true);
+        f.setTitle("Primeira Janela");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel formularioPane = new JPanel();
+        formularioPane.setLayout(new GridLayout(4, 2));// define o layout do painel como uma grade com 4 linhas e 2
+        // colunas.
+        formularioPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        return f;
+    }
     private void janela3()
     {
         mostrar = new JButton("Mostrar arquivos");
         criar = new JButton("Criar CSV");
         verificar = new JButton("Verificar");
         JFrame manipulacao = new JFrame();
-        manipulacao.setBounds(0, 0, 400, 400);
-        manipulacao.setVisible(true);
-        manipulacao.setTitle("Primeira Janela");
-        manipulacao.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        criarjanela(manipulacao);
         JPanel formularioPane3 = new JPanel();
         formularioPane3.setLayout(new GridLayout(4, 2));// define o layout do painel como uma grade com 4 linhas e 2
         // colunas.
@@ -54,6 +63,7 @@ public class Main extends JFrame {
         contentPane3.add(formularioPane3, BorderLayout.NORTH);
 
     }
+
     public void status() {
         File arquivo = new File("C:\\adriele", "dados.csv");
         StringBuilder sb = new StringBuilder(); // usada para criar e manipular strings dinamicamente.
@@ -102,7 +112,14 @@ public class Main extends JFrame {
         JOptionPane.showMessageDialog(null, sb.toString());
 
     }
-
+    private JFrame criarjanela(JFrame f)
+    {
+        f.setBounds(0, 0, 400, 400);
+        f.setVisible(true);
+        f.setTitle("Primeira Janela");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        return f;
+    }
     private void io() {
         // Cria um objeto File para o arquivo CSV
         File arquivoCSV = new File("C:\\adriele\\dados.csv");
@@ -145,10 +162,7 @@ public class Main extends JFrame {
         btnRenomear = new JButton("RenomearArquivo");// Cria um botão com o texto "Renomear Arquivo"
         btnCopiar = new JButton("Copiar Arquivo");// Cria um botão com o texto "Copiar Arquivo"
         JFrame f = new JFrame();
-        f.setBounds(0, 0, 400, 400);
-        f.setVisible(true);
-        f.setTitle("Primeira Janela");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        criarjanela(f);
         JPanel formularioPane = new JPanel();
         formularioPane.setLayout(new GridLayout(4, 2));// define o layout do painel como uma grade com 4 linhas e 2
         // colunas.
