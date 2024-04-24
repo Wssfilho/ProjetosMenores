@@ -1,3 +1,4 @@
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.awt.*;
 import java.nio.file.*;
@@ -10,6 +11,10 @@ public class Main extends JFrame {
     JButton btnCriarDir, btnCriarArq, btnRenomear, btnCopiar;
     JButton btnarquivos, btnarquivos2, mostrar, verificar, criar;
     JTextField texto;
+    File arquivo;
+    JFrame manipulacao, f;
+    JPanel formularioPane3, formularioPane;
+    StringBuilder sb;
     private static final JFrame janela2 = new Main();// Criando uma instância de JFrame
 
     Main()
@@ -44,29 +49,33 @@ public class Main extends JFrame {
     }
     private void janela3()
     {
-        mostrar = new JButton("Mostrar arquivos");
-        criar = new JButton("Criar CSV");
-        verificar = new JButton("Verificar");
-        JFrame manipulacao = new JFrame();
+
+        manipulacao = new JFrame();
         criarjanela(manipulacao);
-        JPanel formularioPane3 = new JPanel();
-        formularioPane3.setLayout(new GridLayout(4, 2));// define o layout do painel como uma grade com 4 linhas e 2
-        // colunas.
-        formularioPane3.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Aqui, estamos definindo uma borda
-        formularioPane3.add(mostrar);
-        formularioPane3.add(criar);
-        formularioPane3.add(verificar);
-        mostrar.addActionListener(e->mostrarCSV());
-        criar.addActionListener(e->io());
-        verificar.addActionListener(e->status());
+        formularioPane3 = new JPanel();
+        JButton[] botoes = {
+                new JButton("Mostrar"),
+                new JButton("Criar"),
+                new JButton("Verificar")
+        };
+
+        // Cria as ações
+        ActionListener[] acoes = {
+                e -> mostrarCSV(),
+                e -> io(),
+                e -> status()
+        };
+
+        // Cria o painel com os botões
+        formularioPane3 = criarPainelComBotoes(botoes, acoes);
         Container contentPane3 = manipulacao.getContentPane();// Obtém o painel de conteúdo da janela principal
         contentPane3.add(formularioPane3, BorderLayout.NORTH);
 
     }
 
     public void status() {
-        File arquivo = new File("C:\\adriele", "dados.csv");
-        StringBuilder sb = new StringBuilder(); // usada para criar e manipular strings dinamicamente.
+        arquivo = new File("C:\\adriele", "dados.csv");
+        sb = new StringBuilder(); // usada para criar e manipular strings dinamicamente.
         sb.append("Tamanho do arquivo: ").append(length(arquivo)).append(" bytes\n");
         sb.append("Última modificação: ").append(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date(lastModified(arquivo)))).append("\n");
         sb.append("Caminho do arquivo: ").append(toString(arquivo)).append("\n");
@@ -155,36 +164,51 @@ public class Main extends JFrame {
         // Exibe uma mensagem de sucesso
         JOptionPane.showMessageDialog(null, "Dados gravados com sucesso no arquivo " + arquivoCSV.getPath());
     }
+    private JPanel criarPainelComBotoes(JButton[] botoes, ActionListener[] acoes) {
+        JPanel painel = new JPanel();
+        painel.setLayout(new GridLayout(botoes.length, 2)); // Define o layout do painel como uma grade com o número de linhas igual ao número de botões e 2 colunas.
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Aqui, estamos definindo uma borda
+
+        // Adiciona os botões ao painel e as ações aos botões
+        for (int i = 0; i < botoes.length; i++) {
+            painel.add(botoes[i]);
+            botoes[i].addActionListener(acoes[i]);
+        }
+
+        return painel;
+    }
+
     private void novoframe() {
         /*Isso será um novo método, pois terá um programa de início na qual irá chamar os outros programas*/
         btnCriarDir = new JButton("CriarDiretorio");// Cria um botão com o texto "Criar Diretório"
         btnCriarArq = new JButton("CriarArquivo");// Cria um botão com o texto "Criar Arquivo"
         btnRenomear = new JButton("RenomearArquivo");// Cria um botão com o texto "Renomear Arquivo"
         btnCopiar = new JButton("Copiar Arquivo");// Cria um botão com o texto "Copiar Arquivo"
-        JFrame f = new JFrame();
+        f = new JFrame();
         criarjanela(f);
-        JPanel formularioPane = new JPanel();
-        formularioPane.setLayout(new GridLayout(4, 2));// define o layout do painel como uma grade com 4 linhas e 2
-        // colunas.
-        formularioPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Aqui, estamos definindo uma borda
-        // vazia (sem margens) para o painel.
-        // Adicionando os controles no formulario. Ou seja na tela
-        formularioPane.add(btnCriarDir);
-        formularioPane.add(btnCriarArq);
-        formularioPane.add(btnRenomear);
-        formularioPane.add(btnCopiar);
-        btnCopiar.addActionListener(e -> copiarArquivo());
-        btnCriarDir.addActionListener(e -> criarDiretorio());// Configura um ouvinte de ação para o botão "Criar
-        // Diretório"
-        btnCriarArq.addActionListener(e -> criarArquivo());// Configura um ouvinte de ação para o botão "Criar Arquivo"
-        btnRenomear.addActionListener(e -> renomearArquivo());// Configura um ouvinte de ação para o botão "Renomear"
+        formularioPane = new JPanel();
+        JButton[] botoes = {
+                new JButton("CriarDiretorio"),
+                new JButton("CriarArquivo"),
+                new JButton("RenomearArquivo"),
+                new JButton("Copiar Arquivo"),
+        };
+        // Cria as ações
+        ActionListener[] acoes = {
+                e -> copiarArquivo(),
+                e -> criarDiretorio(),
+                e -> criarArquivo(),
+                e -> renomearArquivo(),
+        };
+
+        // Cria o painel com os botões
+        formularioPane = criarPainelComBotoes(botoes, acoes);
         Container contentPane2 = f.getContentPane();// Obtém o painel de conteúdo da janela principal
         contentPane2.add(formularioPane, BorderLayout.NORTH);
         // posicionando-o na parte superior (Norte)
         //janela2.dispose();
 
     }
-    //retirar
 
 
     public void copiarArquivo() {
