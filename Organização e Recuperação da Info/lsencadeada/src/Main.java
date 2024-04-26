@@ -38,7 +38,7 @@ public class Main extends JFrame
   public static void main(String[] args) {
       frame.setTitle("Lista encadeada");// Definindo o título da janela
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Configurando a ação padrão ao fechar a janela
-      frame.setBounds(300, 300, 400, 100);// Definindo as dimensões e posição da janela
+      frame.setBounds(200, 300, 700, 110);// Definindo as dimensões e posição da janela
       frame.setVisible(true);// Tornando a janela visível
     }
 
