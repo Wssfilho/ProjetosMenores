@@ -23,12 +23,11 @@ public class Main extends JFrame
         contentPane.add(Jpjanela, BorderLayout.NORTH);
 
     }
-    private class NoB {
+    private static class NoB {
         public int chave;
         public NoB pagina;
         public NoB proximo;
         public NoB anterior;
-        //construtor padrao
         protected NoB(int chave, NoB pagina, NoB proximo, NoB anterior) {
             this.chave = chave;
             this.pagina = pagina;
