@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/wilso/OneDrive/Documentos/GitHub/ProjetosMenores/Resolução do problema 5 & 6 PAA",
-      "program": "c:/Users/wilso/OneDrive/Documentos/GitHub/ProjetosMenores/Resolução do problema 5 & 6 PAA/build/Debug/outDebug",
+      "cwd": ".",
+      "program": "build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
