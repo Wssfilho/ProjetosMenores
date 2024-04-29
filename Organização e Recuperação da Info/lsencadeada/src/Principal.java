@@ -1,11 +1,14 @@
+// Importando as classes necessárias para a interface gráfica e manipulação de eventos.
 import javax.swing.*;
 import java.awt.*;
 
+// Classe No representa um nó em uma lista ligada. Cada nó tem um valor e referências para o próximo e o nó anterior.
 class No {
     int valor;
     No proximo;
     No anterior;
 
+    // Construtor para a classe No.
     No(int valor) {
         this.valor = valor;
         this.proximo = null;
@@ -13,9 +16,11 @@ class No {
     }
 }
 
+// Classe ListaLigada representa uma lista ligada. Ela tem um nó cabeça e métodos para inserir nós no início e no fim, exibir a lista e buscar um nó.
 class ListaLigada {
     No cabeca;
 
+    // Método para inserir um nó no início da lista.
     public void insereNoInicio(No novoNo) {
         if (cabeca != null) {
             novoNo.proximo = cabeca;
@@ -24,6 +29,7 @@ class ListaLigada {
         cabeca = novoNo;
     }
 
+    // Método para inserir um nó no fim da lista.
     public void insereNoFim(No novoNo) {
         if (cabeca == null) {
             cabeca = novoNo;
@@ -37,6 +43,7 @@ class ListaLigada {
         }
     }
 
+    // Método para exibir a lista na área de texto.
     public void exibe(JTextArea areaTexto) {
         No temp = cabeca;
         while (temp != null) {
@@ -45,6 +52,7 @@ class ListaLigada {
         }
     }
 
+    // Método para buscar um nó na lista.
     public int buscarNo(int valor) {
         No alvo = cabeca;
         while (alvo != null && alvo.valor != valor) {
@@ -55,15 +63,19 @@ class ListaLigada {
     }
 }
 
+// Classe Principal contém o método main e cria a interface gráfica.
 public class Principal {
     public static void main(String[] args) {
+        // Criação dos componentes da interface gráfica.
         JButton botaoInicio, botaoFim, botaobusca;
         JTextField campoTexto, campoBusca;
+        JLabel lbl;
         JTextArea areaTexto;
         JScrollPane painelRolagem;
         JFrame quadro = new JFrame();
+        quadro.setTitle("Lista encadeada");
         quadro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        quadro.setSize(400, 300);
+        quadro.setSize(400, 440);
         quadro.setLayout(new GridLayout(10, 2)); // Define o layout do painel como uma grade com o número de linhas igual ao número de botões e 2 colunas.
         botaoInicio = new JButton("Inserir no Início");
         botaoFim = new JButton("Inserir no Fim");
@@ -77,7 +89,7 @@ public class Principal {
         painelRolagem = new JScrollPane(areaTexto);
         quadro.add(painelRolagem);
 
-
+        // Adicionando ações aos botões.
         botaoInicio.addActionListener(e -> {
             if (campoTexto.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Campo vazio");
@@ -89,16 +101,18 @@ public class Principal {
                 campoTexto.setText("");
                 lista.exibe(areaTexto);
             }
-
-
         });
         botaoFim.addActionListener(e -> {
-            int valor = Integer.parseInt(campoTexto.getText());
-            No novoNo = new No(valor);
-            lista.insereNoFim(novoNo);
-            areaTexto.setText("");
-            campoTexto.setText("");
-            lista.exibe(areaTexto);
+            if (campoTexto.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Campo vazio");
+            } else {
+                int valor = Integer.parseInt(campoTexto.getText());
+                No novoNo = new No(valor);
+                lista.insereNoFim(novoNo);
+                areaTexto.setText("");
+                campoTexto.setText("");
+                lista.exibe(areaTexto);
+            }
         });
         quadro.setVisible(true);
         botaobusca = new JButton("Buscar elemento");
@@ -116,6 +130,8 @@ public class Principal {
             }
 
         });
+        lbl = new JLabel("Buscar: ");
+        quadro.add(lbl);
         quadro.add(campoBusca);
         quadro.add(botaobusca);
 
