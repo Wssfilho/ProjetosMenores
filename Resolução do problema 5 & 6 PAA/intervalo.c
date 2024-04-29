@@ -55,7 +55,7 @@ int main(void) {
     // Cria um array de intervalos
     Intervalo intervalos[] = {{"", 0, 6}, {"", 1, 4}, {"", 3, 5}, {"", 3, 8}, {"", 4, 7}, {"",5, 9}, {"", 6, 10}, {"", 7, 11}};
     // Define o número de cores e cria um array de cores
-    char* cores[] =  {"amarelo", "vermelho", "azul", "verde"};
+    char* cores[] =  {"vermelho", "amarelo", "azul", "verde"};
     int num_cores = sizeof(cores) / sizeof(char*);
 
     colorirIntervalos(intervalos, cores, n, num_cores);  // Chama a função para colorir os intervalos
