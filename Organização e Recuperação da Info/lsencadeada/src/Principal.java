@@ -1,6 +1,7 @@
 // Importando as classes necessárias para a interface gráfica e manipulação de eventos.
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 // Classe No representa um nó em uma lista ligada. Cada nó tem um valor e referências para o próximo e o nó anterior.
 class No {
@@ -59,7 +60,7 @@ class ListaLigada {
             alvo = alvo.proximo;
         }
 
-        return alvo.valor;
+        return Objects.requireNonNull(alvo).valor;
     }
 }
 
