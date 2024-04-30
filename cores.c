@@ -9,19 +9,11 @@ typedef struct {
     int fim;     // Campo para armazenar o fim do intervalo
 } Intervalo;
 
-
-// Função para ordenar os intervalos em ordem crescente de tempo de início
-void ordenarIntervalos(Intervalo* intervalos, int n) {
-    for (int i = 0; i < n; i++) {  // Loop para cada intervalo
-        for (int j = i + 1; j < n; j++) {  // Loop para cada intervalo não ordenado
-            // Se o início do intervalo atual é maior que o início do próximo intervalo, troca os intervalos
-            if (intervalos[i].inicio > intervalos[j].inicio) {
-                Intervalo temp = intervalos[i];
-                intervalos[i] = intervalos[j];
-                intervalos[j] = temp;
-            }
-        }
-    }
+// Função de comparação para qsort
+int comparar(const void *a, const void *b) {
+    Intervalo *intervalo1 = (Intervalo *)a;
+    Intervalo *intervalo2 = (Intervalo *)b;
+    return intervalo1->inicio - intervalo2->inicio;
 }
 
 // Função para verificar se um intervalo se sobrepõe a qualquer intervalo anterior com a mesma cor
@@ -37,7 +29,7 @@ int sobreposicao(Intervalo * intervalos, int atual) {
 
 // Função para atribuir cores aos intervalos
 void colorirIntervalos(Intervalo* intervalos, char** cores, int n, int num_cores) {
-    ordenarIntervalos(intervalos, n);  // Ordena os intervalos
+    qsort(intervalos, n, sizeof(Intervalo), comparar);  // Ordena os intervalos
 
     for (int i = 0; i < n; i++) {  // Loop para cada intervalo
         for (int j = 0; j < num_cores; j++) {  // Loop para cada cor
