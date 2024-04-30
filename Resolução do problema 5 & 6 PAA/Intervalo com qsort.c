@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct {
     char* cor;
@@ -7,36 +8,44 @@ typedef struct {
     int fim;
 } Intervalo;
 
-int compararIntervalos(const void *a, const void *b) {
-    Intervalo *intervaloA = (Intervalo *)a;
-    Intervalo *intervaloB = (Intervalo *)b;
-    int tamanhoA = intervaloA->fim - intervaloA->inicio;
-    int tamanhoB = intervaloB->fim - intervaloB->inicio;
-
-    if (tamanhoA < tamanhoB) return -1;
-    if (tamanhoA > tamanhoB) return 1;
-
-    if (intervaloA->inicio < intervaloB->inicio) return -1;
-    if (intervaloA->inicio > intervaloB->inicio) return 1;
-
-    return 0;
-}
-
-int sobreposicao(Intervalo * intervalos, int atual) {
-    for (int i = 0; i < atual; i++) {
-        if (intervalos[i].cor == intervalos[atual].cor && intervalos[i].fim > intervalos[atual].inicio) {
-            return 1;
+void ordenarIntervalosPorTamanho(Intervalo* intervalos, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int duracaoI = intervalos[i].fim - intervalos[i].inicio;
+            int duracaoJ = intervalos[j].fim - intervalos[j].inicio;
+            if (duracaoI > duracaoJ) {
+                Intervalo temp = intervalos[i];
+                intervalos[i] = intervalos[j];
+                intervalos[j] = temp;
+            }
         }
     }
-    return 0;
 }
 
 void colorirIntervalos(Intervalo* intervalos, char** cores, int n, int num_cores) {
-    qsort(intervalos, n, sizeof(Intervalo), compararIntervalos);
+    ordenarIntervalosPorTamanho(intervalos, n);
+    int tempo_maximo = 0;
+    for (int i = 0; i < n; i++) {
+        if (intervalos[i].fim > tempo_maximo) {
+            tempo_maximo = intervalos[i].fim;
+        }
+    }
+    int usos_de_cor[tempo_maximo + 1][num_cores];
+    memset(usos_de_cor, 0, sizeof(usos_de_cor));
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < num_cores; j++) {
-            intervalos[i].cor = cores[j];
-            if (!sobreposicao(intervalos, i)) {
+            int pode_usar = 1;
+            for (int t = intervalos[i].inicio; t < intervalos[i].fim; t++) {
+                if (usos_de_cor[t][j]) {
+                    pode_usar = 0;
+                    break;
+                }
+            }
+            if (pode_usar) {
+                intervalos[i].cor = cores[j];
+                for (int t = intervalos[i].inicio; t < intervalos[i].fim; t++) {
+                    usos_de_cor[t][j] = 1;
+                }
                 break;
             }
         }
