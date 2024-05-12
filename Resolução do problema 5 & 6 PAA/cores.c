@@ -19,7 +19,8 @@ int comparar(const void *a, const void *b)
     {
         return intervalo1->fim - intervalo2 ->fim;
     }
-    else{
+    else
+    {
         return intervalo1->inicio - intervalo2->inicio;
         
     }
