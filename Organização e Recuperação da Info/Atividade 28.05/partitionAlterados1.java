@@ -1,10 +1,10 @@
 // Classe que gerencia um array de longos e oferece métodos para inserir elementos, exibir o array e particionar o array.
-class ArrayParticao {
+class ArrayParticao1 {
     private long[] oArray; // Array para armazenar os elementos
     private int numElementos; // Número de elementos no array
 
     // Construtor da classe
-    public ArrayParticao(int max) {
+    public ArrayParticao1(int max) {
         oArray = new long[max]; // Cria o array com o tamanho máximo fornecido
         numElementos = 0; // Inicializa o número de elementos como 0
     }
@@ -63,10 +63,10 @@ class ArrayParticao {
 }
 
 // Classe principal que usa a classe ArrayParticao
-class PartitionApp {
+class PartitionApp1 {
     public static void main(String[] args) {
         int tamanhoMax = 16; // Tamanho máximo do array
-        ArrayParticao arr = new ArrayParticao(tamanhoMax); // Cria o array
+        ArrayParticao1 arr = new ArrayParticao1(tamanhoMax); // Cria o array
 
         // Preenche o array com números aleatórios
         for(int j=0; j<tamanhoMax; j++) {

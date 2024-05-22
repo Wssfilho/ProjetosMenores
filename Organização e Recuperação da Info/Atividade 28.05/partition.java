@@ -67,8 +67,8 @@ class PartitionApp
    public static void main(String[] args)
       {
       int tamanhoMax = 16;          // tamanho do array
-      ArrayParticao arr;            // referência para o array
-      arr = new ArrayParticao(tamanhoMax); // cria o array
+      ArrayParticao1 arr;            // referência para o array
+      arr = new ArrayParticao1(tamanhoMax); // cria o array
 
       for(int j=0; j<tamanhoMax; j++) // preenche o array com
          {                            // números aleatórios

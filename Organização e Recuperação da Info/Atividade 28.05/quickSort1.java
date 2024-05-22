@@ -2,12 +2,12 @@
 // demonstra a versão simples do quick sort
 // para executar este programa: C>java QuickSort1App
 ////////////////////////////////////////////////////////////////
-class OrdenacaoArray
+class OrdenacaoArraycomment
    {
    private long[] arranjo;          // referência para o array arranjo
    private int numElementos;        // número de itens de dados
 //--------------------------------------------------------------
-   public OrdenacaoArray(int max)   // construtor
+   public OrdenacaoArraycomment(int max)   // construtor
       {
       arranjo = new long[max];      // cria o array
       numElementos = 0;             // ainda sem itens
@@ -81,8 +81,8 @@ class QuickSort1App
    public static void main(String[] args)
       {
       int tamanhoMax = 16;            // tamanho do array
-      OrdenacaoArray arr;
-      arr = new OrdenacaoArray(tamanhoMax); // cria array
+      OrdenacaoArraycomment arr;
+      arr = new OrdenacaoArraycomment(tamanhoMax); // cria array
 
       for(int j=0; j<tamanhoMax; j++) // preenche array com
          {                            // números aleatórios

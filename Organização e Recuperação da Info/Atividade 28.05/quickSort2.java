@@ -119,8 +119,8 @@ class QuickSort2App
    public static void main(String[] args)
       {
       int tamanhoMax = 16;             // tamanho do array
-      OrdenacaoArray arr;                 // referência para o array
-      arr = new OrdenacaoArray(tamanhoMax);  // cria o array
+      OrdenacaoArraycomment arr;                 // referência para o array
+      arr = new OrdenacaoArraycomment(tamanhoMax);  // cria o array
 
       for(int j=0; j<tamanhoMax; j++)  // preenche o array com
          {                          // números aleatórios
