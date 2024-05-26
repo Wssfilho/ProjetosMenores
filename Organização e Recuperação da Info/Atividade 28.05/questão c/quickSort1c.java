@@ -119,3 +119,10 @@ class QuickSort1App {
    } // fim main()
 } // fim da classe QuickSort1App
 ////////////////////////////////////////////////////////////////
+/*
+ O QuickSort tem um comportamento de 𝑂(𝑛log⁡𝑛)
+O(nlogn) na maioria dos casos, mas pode cair para 𝑂(𝑛2)
+O(n2) no pior caso, principalmente devido à escolha do pivô. No código fornecido, a escolha do pivô como o elemento mais à direita pode 
+levar a partições desequilibradas, aumentando o número de comparações e trocas. Para melhorar o desempenho no pior caso, técnicas como a 
+escolha de um pivô aleatório ou o uso da mediana de três elementos podem ser implementadas.
+ */
