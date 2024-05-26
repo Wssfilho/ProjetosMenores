@@ -108,3 +108,8 @@ class PartitionApp {
         System.out.println("Número de trocas: " + arr.getTrocas());
     }
 }
+/*
+ * O código demonstra a operação de partição do QuickSort com uma escolha simples de pivô (último elemento). A complexidade assintótica da partição é 
+𝑂(𝑛) e é demonstrada pela contagem de comparações e trocas. Esta implementação é básica e pode ser melhorada com técnicas como a
+ mediana de três para escolher um pivô mais eficiente, reduzindo a probabilidade de partições desbalanceadas e, consequentemente, melhorando a eficiência geral do algoritmo.
+ */
