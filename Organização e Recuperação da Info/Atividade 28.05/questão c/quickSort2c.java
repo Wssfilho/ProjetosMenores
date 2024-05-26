@@ -164,4 +164,10 @@ class QuickSort2App {
        System.out.println("Número de trocas: " + arr.getTrocas());
    } // fim main()
 } // fim da classe QuickSort2App
-////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+/*
+ A utilização da mediana de três como método para escolher o pivô no QuickSort melhora o comportamento geral do algoritmo, 
+ especialmente reduzindo a chance de partições desbalanceadas que podem levar ao pior caso.
+  A complexidade no melhor e no caso médio continua sendo 𝑂(𝑛log𝑛), enquanto o pior caso 
+O(n^2) se torna menos frequente.
+ */
