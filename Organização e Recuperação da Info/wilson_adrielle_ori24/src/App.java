@@ -15,7 +15,7 @@ public class App extends JFrame {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
             Statement stm = c.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM autor");
+            ResultSet rs = stm.executeQuery("SELECT * FROM cliente;");
             while (rs.next()) {
                 JOptionPane.showMessageDialog(
                         null,
