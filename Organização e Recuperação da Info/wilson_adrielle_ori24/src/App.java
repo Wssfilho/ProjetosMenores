@@ -1,4 +1,5 @@
 import java.sql.*;
+
 import javax.swing.*;
 
 public class App extends JFrame {
@@ -11,17 +12,21 @@ public class App extends JFrame {
     }
 
     public static void main(String args[]) {
-        new App();
+        
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
             Statement stm = c.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM cliente;");
+            //Statement sts = c.createStatement();
+
+            ResultSet rs = stm.executeQuery("SELECT * FROM cliente");
+            //ResultSet rss2 = sts.executeQuery("SELECT * FROM medicamentos");
+            //System.out.println(rss2.getInt("cod_med"));
             while (rs.next()) {
                 JOptionPane.showMessageDialog(
                         null,
-                        rs.getInt("id") + "\n" +
-                                rs.getString("nome") + "\n" +
-                                rs.getString("telefone") + "\n");
+                        rs.getInt("Id") + "\n" +
+                                rs.getString("Nome") + "\n" +
+                                rs.getString("Telefone") + "\n");
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
