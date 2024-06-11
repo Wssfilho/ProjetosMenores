@@ -3,22 +3,38 @@ import javax.swing.*;
 import java.awt.*;
 
 public class App extends JFrame {
-    private JTextArea textArea;
-
+    private JTextArea textArea1, textArea2, textArea3, textArea4, textArea5;
+    private JLabel label1, label2, label3, label4, label5;
     public App() {
-        setSize(600, 500);
+        setSize(800, 600);
         setTitle("Exemplo Java - SQLite - VSCode");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        JPanel panelEsquerdo = new JPanel();
+        panelEsquerdo.setLayout(new BoxLayout(panelEsquerdo, BoxLayout.Y_AXIS));
+        textArea1 = new JTextArea(5, 1);
+        textArea2 = new JTextArea(5, 10);
+        textArea3 = new JTextArea(5, 10);
+        panelEsquerdo.add(new JLabel("Informações do Banco de Dados:"));
+        panelEsquerdo.add(new JScrollPane(textArea1));
+        panelEsquerdo.add(new JLabel("Em breve..."));
+        panelEsquerdo.add(new JScrollPane(textArea2));
+        panelEsquerdo.add(new JLabel("Em breve..."));
+        panelEsquerdo.add(new JScrollPane(textArea3));
 
-        textArea = new JTextArea(20, 30);
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(scrollPane, gbc);
+        JPanel panelDireito = new JPanel();
+        panelDireito.setLayout(new BoxLayout(panelDireito, BoxLayout.Y_AXIS));
+        textArea4 = new JTextArea(5, 10);
+        textArea5 = new JTextArea(5, 10);
+        panelDireito.add(new JLabel("Em breve..."));
+        panelDireito.add(new JScrollPane(textArea4));
+        panelDireito.add(new JLabel("Em breve..."));
+        panelDireito.add(new JScrollPane(textArea5));
+
+        add(panelEsquerdo);
+        add(panelDireito);
 
         setVisible(true);
         exibirInformacoes();
@@ -40,7 +56,7 @@ public class App extends JFrame {
                   .append("Tipo: ").append(rs.getString("tipo")).append("\n")
                   .append("cod_fk: ").append(rs.getString("cod_fk")).append("\n\n");
             }
-            textArea.setText(sb.toString());
+            textArea1.setText(sb.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
