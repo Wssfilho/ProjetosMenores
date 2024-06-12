@@ -13,10 +13,15 @@ public class App extends JFrame {
         setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 
         JPanel panelEsquerdo = new JPanel();
-        panelEsquerdo.setLayout(new BoxLayout(panelEsquerdo, BoxLayout.Y_AXIS));
-        textArea1 = new JTextArea(5, 1);
-        textArea2 = new JTextArea(5, 10);
-        textArea3 = new JTextArea(5, 10);
+        //panelEsquerdo.setLayout(new GridLayout(7, 1));
+        panelEsquerdo.setLayout(new BoxLayout(panelEsquerdo, BoxLayout.PAGE_AXIS));
+        panelEsquerdo.setBorder(BorderFactory.createEmptyBorder(1, 10, 50, 10));
+        textArea1 = new JTextArea();
+        textArea1.setEditable(false);
+        textArea2 = new JTextArea();
+        textArea2.setEditable(false);
+        textArea3 = new JTextArea();
+        textArea3.setEditable(false);
         panelEsquerdo.add(new JLabel("Informações do Banco de Dados:"));
         panelEsquerdo.add(new JScrollPane(textArea1));
         panelEsquerdo.add(new JLabel("Em breve..."));
@@ -25,16 +30,20 @@ public class App extends JFrame {
         panelEsquerdo.add(new JScrollPane(textArea3));
 
         JPanel panelDireito = new JPanel();
-        panelDireito.setLayout(new BoxLayout(panelDireito, BoxLayout.Y_AXIS));
-        textArea4 = new JTextArea(5, 10);
-        textArea5 = new JTextArea(5, 10);
+        panelDireito.setLayout(new BoxLayout(panelDireito, BoxLayout.PAGE_AXIS));
+        textArea4 = new JTextArea();
+        textArea4.setEditable(false);
+        textArea5 = new JTextArea();
+        textArea5.setEditable(false);
         panelDireito.add(new JLabel("Em breve..."));
         panelDireito.add(new JScrollPane(textArea4));
         panelDireito.add(new JLabel("Em breve..."));
         panelDireito.add(new JScrollPane(textArea5));
-
-        add(panelEsquerdo);
-        add(panelDireito);
+        Container contentPane = getContentPane();
+        contentPane.add(panelEsquerdo, BorderLayout.EAST);
+        contentPane.add(panelDireito, BorderLayout.WEST);
+        // add(panelEsquerdo);
+        // add(panelDireito);
 
         setVisible(true);
         exibirInformacoes();
