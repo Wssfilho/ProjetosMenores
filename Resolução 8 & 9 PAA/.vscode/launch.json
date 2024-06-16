@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "ColoracaoTabuleiro",
+      "request": "launch",
+      "mainClass": "ColoracaoTabuleiro",
+      "projectName": "Resolução 8 & 9 PAA_47dcbd5b"
+    },
+    {
+      "type": "java",
       "name": "SolucionadorTbcol",
       "request": "launch",
       "mainClass": "SolucionadorTbcol",

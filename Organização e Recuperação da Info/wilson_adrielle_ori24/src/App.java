@@ -4,7 +4,6 @@ import java.awt.*;
 
 public class App extends JFrame {
     private JTextArea textArea1, textArea2, textArea3, textArea4, textArea5;
-    private JLabel label1, label2, label3, label4, label5;
     public App() {
         setSize(800, 600);
         setTitle("Exemplo Java - SQLite - VSCode");
