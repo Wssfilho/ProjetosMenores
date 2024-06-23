@@ -2,27 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "java",
-      "name": "ColorirTabuleiro",
-      "request": "launch",
-      "mainClass": "ColorirTabuleiro",
-      "projectName": "Resolução 8 & 9 PAA_47dcbd5b"
-    },
-    {
-      "type": "java",
-      "name": "ColoracaoTabuleiro",
-      "request": "launch",
-      "mainClass": "ColoracaoTabuleiro",
-      "projectName": "Resolução 8 & 9 PAA_47dcbd5b"
-    },
-    {
-      "type": "java",
-      "name": "SolucionadorTbcol",
-      "request": "launch",
-      "mainClass": "SolucionadorTbcol",
-      "projectName": "Resolução 8 & 9 PAA_47dcbd5b"
-    },
-    {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
