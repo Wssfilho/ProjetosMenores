@@ -1,69 +1,63 @@
 def subtabuleiro_valido(tabuleiro, linha, coluna):
     """Verifica se um subtabuleiro 2x2 tem todas as cores diferentes."""
-    cores = set()  # Cria um conjunto (set) para armazenar as cores encontradas
-    for i in range(linha, linha + 2):      # Itera pelas linhas do subtabuleiro (2 linhas)
-        for j in range(coluna, coluna + 2):  # Itera pelas colunas do subtabuleiro (2 colunas)
-            cores.add(tabuleiro[i][j])     # Adiciona a cor da célula atual ao conjunto
-    return len(cores) == 4                 # Retorna True se o conjunto tiver 4 cores (todas diferentes)
-
+    cores = set()
+    for i in range(linha, linha + 2):
+        for j in range(coluna, coluna + 2):
+            cores.add(tabuleiro[i][j])
+    return len(cores) == 4
 
 def posicao_valida(tabuleiro, linha, coluna, cor):
     """Verifica se uma cor pode ser colocada em uma posição,
     considerando adjacências e subtabuleiros 2x2."""
 
-    # Verifica se a posição está dentro dos limites do tabuleiro e se a célula está vazia
+    # Verifica se a posição está dentro dos limites do tabuleiro e se está vazia
     if not (0 <= linha < len(tabuleiro) and 0 <= coluna < len(tabuleiro[0]) and tabuleiro[linha][coluna] == ""):
         return False
 
-    # Verifica cores adjacentes (cima, baixo, esquerda, direita)
+    # Verifica se a cor não está presente nas células adjacentes (cima, baixo, esquerda, direita)
     for l, c in [(linha - 1, coluna), (linha + 1, coluna), (linha, coluna - 1), (linha, coluna + 1)]:
         if 0 <= l < len(tabuleiro) and 0 <= c < len(tabuleiro[0]) and tabuleiro[l][c] == cor:
             return False
 
-    # Verifica subtabuleiro 2x2 se aplicável (a posição não está na borda)
+    # Verifica se a inserção da cor não invalida o subtabuleiro 2x2
     if linha < len(tabuleiro) - 1 and coluna < len(tabuleiro[0]) - 1:
         if not subtabuleiro_valido(tabuleiro, linha, coluna):
             return False
 
-    return True  # Se passou por todas as verificações, a posição é válida
+    return True
 
+def resolver(tabuleiro, cores, linha=0, coluna=0, solucoes=0):
+    """Resolve o tabuleiro recursivamente com backtracking, contando as soluções."""
 
-def resolver(tabuleiro, cores, linha=0, coluna=0):
-    """Resolve o tabuleiro recursivamente com backtracking."""
+    # Caso base: Se a linha for igual ao comprimento do tabuleiro, encontrou uma solução completa
+    if linha == len(tabuleiro):
+        return solucoes + 1  # Incrementa o número de soluções
 
-    if linha == len(tabuleiro):  # Caso base: todas as linhas foram preenchidas
-        return True
-
-    # Calcula a próxima posição a ser preenchida (passa para a próxima linha se a coluna for a última)
+    # Calcula a próxima posição no tabuleiro
     proxima_linha = linha + 1 if coluna == len(tabuleiro[0]) - 1 else linha
     proxima_coluna = (coluna + 1) % len(tabuleiro[0])
 
-    # Preenchimento simultâneo das diagonais
-    if linha == coluna:  # Diagonal principal
-        for cor in cores:  # Tenta todas as cores na posição atual
-            if posicao_valida(tabuleiro, linha, coluna, cor):
-                tabuleiro[linha][coluna] = cor          # Preenche a diagonal principal
-                tabuleiro[linha][-coluna - 1] = cor    # Preenche a diagonal secundária
-                if resolver(tabuleiro, cores, proxima_linha, proxima_coluna):  # Chama recursivamente
-                    return True                        # Se encontrar solução, retorna True
-                tabuleiro[linha][coluna] = ""          # Backtracking: desfaz a escolha
-                tabuleiro[linha][-coluna - 1] = ""    # Backtracking: desfaz a escolha
-        return False  # Nenhuma cor funcionou na diagonal principal
-    elif linha == len(tabuleiro) - coluna - 1:  # Diagonal secundária (já preenchida)
-        return resolver(tabuleiro, cores, proxima_linha, proxima_coluna)  # Pula para próxima posição
+    # Se a célula está na diagonal principal
+    if linha == coluna:
+        for cor in cores:  # Tenta cada cor
+            if posicao_valida(tabuleiro, linha, coluna, cor):  # Verifica se a cor é válida na posição
+                tabuleiro[linha][coluna] = cor  # Atribui a cor à posição
+                tabuleiro[linha][-coluna - 1] = cor  # Atribui a mesma cor na posição simétrica
+                solucoes = resolver(tabuleiro, cores, proxima_linha, proxima_coluna, solucoes)  # Chama recursivamente
+                tabuleiro[linha][coluna] = ""  # Backtrack: remove a cor
+                tabuleiro[linha][-coluna - 1] = ""  # Backtrack: remove a cor da posição simétrica
+        return solucoes  # Retorna o número de soluções encontradas até agora
+    # Se a célula está na diagonal secundária
+    elif linha == len(tabuleiro) - coluna - 1:
+        return resolver(tabuleiro, cores, proxima_linha, proxima_coluna, solucoes)
 
-    # Para as demais posições
-    for cor in cores:
-        if posicao_valida(tabuleiro, linha, coluna, cor):
-            tabuleiro[linha][coluna] = cor
-            if resolver(tabuleiro, cores, proxima_linha, proxima_coluna):
-                return True
-            tabuleiro[linha][coluna] = ""  # Backtracking
+    for cor in cores:  # Tenta cada cor
+        if posicao_valida(tabuleiro, linha, coluna, cor):  # Verifica se a cor é válida na posição
+            tabuleiro[linha][coluna] = cor  # Atribui a cor à posição
+            solucoes = resolver(tabuleiro, cores, proxima_linha, proxima_coluna, solucoes)  # Chama recursivamente
+            tabuleiro[linha][coluna] = ""  # Backtrack: remove a cor
 
-    return False  # Nenhuma cor funcionou nesta posição
-
-
-# ... (resto do código - imprimir_tabuleiro e main - sem alterações) ...
+    return solucoes  # Retorna o número de soluções encontradas até agora
 
 def imprimir_tabuleiro(tabuleiro):
     """Imprime o tabuleiro de forma legível."""
@@ -71,14 +65,15 @@ def imprimir_tabuleiro(tabuleiro):
         print(" ".join(linha))
 
 def main():
-    cores = ["1", "2", "3", "4", "5"]  # Cores disponíveis
-    tamanho = 6  # Tamanho do tabuleiro (6x6)
-    tabuleiro = [[" " for _ in range(tamanho)] for _ in range(tamanho)]  # Tabuleiro vazio
+    cores = ["1", "2", "3", "4", "5"]
+    tamanho = 6
+    tabuleiro = [[" " for _ in range(tamanho)] for _ in range(tamanho)]
 
-    if resolver(tabuleiro, cores):
+    num_solucoes = resolver(tabuleiro, cores)  # Chama resolver para obter o número de soluções
+    if num_solucoes > 0:
         imprimir_tabuleiro(tabuleiro)
     else:
-        print("Não há solução.")
+        print("A quantidade de soluções é:", num_solucoes)  # Imprime o número de soluções
 
 if __name__ == "__main__":
     main()

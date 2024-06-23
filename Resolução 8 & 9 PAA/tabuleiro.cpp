@@ -1,55 +1,103 @@
 #include <iostream>
 #include <vector>
+#include <set>
+#include <string>
 
 using namespace std;
 
-const int N = 6; // Tamanho do tabuleiro
-const int K = 5; // Número de cores
+bool subtabuleiroValido(const vector<vector<string>>& tabuleiro, int linha, int coluna) {
+    set<string> cores;
+    for (int i = linha; i < linha + 2; ++i) {
+        for (int j = coluna; j < coluna + 2; ++j) {
+            cores.insert(tabuleiro[i][j]);
+        }
+    }
+    return cores.size() == 4;
+}
 
-vector<vector<int>> board(N, vector<int>(N, -1)); // Tabuleiro inicializado com -1 (vazio)
-int solutions = 0; // Contador de soluções
-
-// Função para verificar se a cor 'color' é válida na posição (row, col)
-bool isValid(int row, int col, int color) {
-    // Verificar adjacências horizontais e verticais
-    if (row > 0 && board[row - 1][col] == color) return false;
-    if (col > 0 && board[row][col - 1] == color) return false;
-
-    // Verificar subtabuleiros 2x2
-    if (row > 0 && col > 0 && board[row - 1][col - 1] == color && board[row - 1][col] == color && board[row][col - 1] == color) 
+bool posicaoValida(const vector<vector<string>>& tabuleiro, int linha, int coluna, const string& cor) {
+    if (!(0 <= linha && linha < tabuleiro.size() && 0 <= coluna && coluna < tabuleiro[0].size() && tabuleiro[linha][coluna] == "")) {
         return false;
+    }
 
-    // Verificar diagonais (se aplicável)
-    if (row == col && row > 0 && board[row - 1][col - 1] == color) return false;
-    if (row + col == N - 1 && row > 0 && board[row - 1][col + 1] == color) return false;
+    for (const auto& direcao : vector<pair<int, int>>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
+        int l = linha + direcao.first;
+        int c = coluna + direcao.second;
+        if (0 <= l && l < tabuleiro.size() && 0 <= c && c < tabuleiro[0].size() && tabuleiro[l][c] == cor) {
+            return false;
+        }
+    }
+
+    if (linha < tabuleiro.size() - 1 && coluna < tabuleiro[0].size() - 1) {
+        if (!subtabuleiroValido(tabuleiro, linha, coluna)) {
+            return false;
+        }
+    }
 
     return true;
 }
 
-// Função recursiva para explorar as possibilidades de coloração
-void backtrack(int row, int col) {
-    // Caso base: todas as posições foram preenchidas
-    if (row == N - 1 && col == N) {
-        solutions++;
-        return;
+// Variável global para contar as soluções
+int numSolucoes = 0;
+
+bool resolver(vector<vector<string>>& tabuleiro, const vector<string>& cores, int linha = 0, int coluna = 0) {
+    if (linha == tabuleiro.size()) {
+        numSolucoes++;  // Incrementa o contador de soluções
+        return true;  // Encontrou uma solução
     }
 
-    // Próxima posição a ser preenchida
-    int nextRow = (col == N - 1) ? row + 1 : row;
-    int nextCol = (col == N - 1) ? 0 : col + 1;
+    int proximaLinha = (coluna == tabuleiro[0].size() - 1) ? linha + 1 : linha;
+    int proximaColuna = (coluna + 1) % tabuleiro[0].size();
 
-    // Iterar sobre as cores possíveis
-    for (int color = 0; color < K; color++) {
-        if (isValid(row, col, color)) {
-            board[row][col] = color;
-            backtrack(nextRow, nextCol);
-            board[row][col] = -1; // Desfazer a escolha (backtracking)
+    if (linha == coluna) {
+        for (const string& cor : cores) {
+            if (posicaoValida(tabuleiro, linha, coluna, cor)) {
+                tabuleiro[linha][coluna] = cor;
+                tabuleiro[linha][tabuleiro[0].size() - coluna - 1] = cor;
+                if (resolver(tabuleiro, cores, proximaLinha, proximaColuna)) {
+                    return true; // Encontrou uma solução, não precisa continuar
+                }
+                tabuleiro[linha][coluna] = "";
+                tabuleiro[linha][tabuleiro[0].size() - coluna - 1] = "";
+            }
         }
+        return false; 
+    } else if (linha == tabuleiro.size() - coluna - 1) {
+        return resolver(tabuleiro, cores, proximaLinha, proximaColuna);
+    }
+
+    for (const string& cor : cores) {
+        if (posicaoValida(tabuleiro, linha, coluna, cor)) {
+            tabuleiro[linha][coluna] = cor;
+            if (resolver(tabuleiro, cores, proximaLinha, proximaColuna)) {
+                return true; // Encontrou uma solução, não precisa continuar
+            }
+            tabuleiro[linha][coluna] = "";
+        }
+    }
+
+    return false; // Nenhuma cor funcionou nesta posição
+}
+
+void imprimirTabuleiro(const vector<vector<string>>& tabuleiro) {
+    for (const auto& linha : tabuleiro) {
+        for (const string& celula : linha) {
+            cout << celula << " ";
+        }
+        cout << endl;
     }
 }
 
 int main() {
-    backtrack(0, 0); // Começar a busca a partir da primeira posição
-    cout << "Número de soluções: " << solutions << endl;
+    vector<string> cores = {"1", "2", "3", "4", "5"};
+    int tamanho = 6;
+    vector<vector<string>> tabuleiro(tamanho, vector<string>(tamanho, ""));
+
+    if (resolver(tabuleiro, cores)) {
+        imprimirTabuleiro(tabuleiro);
+    } else {
+        cout << "A quantidade de soluções é: " << numSolucoes << endl; 
+    }
+
     return 0;
 }
