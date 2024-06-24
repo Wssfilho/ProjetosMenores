@@ -1,54 +1,69 @@
-def encontrar_melhor_rota(distancias, orcamento):
-    n = len(distancias)
-    inf = float('inf')
+def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
+    """
+    Encontra as melhores rotas que visitam a cidade A e outras duas cidades, respeitando o orçamento.
 
-    # Inicializa a tabela de memoização
-    dp = [[inf] * (1 << n) for _ in range(n)]
-    dp[0][1] = 0  # Custo para visitar apenas a cidade A
+    Args:
+        distancias: Matriz de distâncias entre as cidades.
+        custos_cidades: Lista com os custos de cada cidade.
+        orcamento: Orçamento máximo para a viagem.
 
-    # Itera sobre todas as máscaras
-    for mask in range(1, 1 << n):
-        for cidade in range(n):
-            if mask & (1 << cidade):  # Verifica se a cidade está na máscara
-                for proxima_cidade in range(n):
-                    if proxima_cidade != cidade and mask & (1 << proxima_cidade):
-                        nova_mascara = mask ^ (1 << proxima_cidade)
-                        dp[cidade][mask] = min(dp[cidade][mask], distancias[cidade][proxima_cidade] + dp[proxima_cidade][nova_mascara])
+    Returns:
+        Uma lista de tuplas (rota, custo_viagem, custo_total) ordenadas por custo total.
+        Cada rota é uma lista de cidades (em letras) e os custos são valores numéricos.
+        Retorna uma lista vazia se não houver rotas válidas.
+    """
 
-    # Encontra a melhor rota
-    melhor_rota = []
-    menor_custo_total = inf
-    for cidade in range(1, n):
-        custo_viagem = distancias[cidade][0] + dp[cidade][(1 << n) - 1]
-        if custo_viagem <= orcamento and custo_viagem < menor_custo_total:
-            menor_custo_total = custo_viagem
-            melhor_rota = []
-            mask = (1 << n) - 1
-            while mask:
-                for proxima_cidade in range(n):
-                    if mask & (1 << proxima_cidade) and dp[cidade][mask] == distancias[cidade][proxima_cidade] + dp[proxima_cidade][mask ^ (1 << proxima_cidade)]:
-                        melhor_rota.append(chr(cidade + ord('A')))
-                        mask ^= (1 << cidade)
-                        cidade = proxima_cidade
-                        break
-            melhor_rota.append('A')
-            melhor_rota.reverse()
+    from itertools import permutations  # Para gerar permutações de cidades
 
-    return melhor_rota, menor_custo_total
+    n = len(distancias)  # Número de cidades
+    #all_visited = (1 << n) - 1  # Representação binária para todas as cidades visitadas
+    tabela = [[float('inf')] * n for _ in range(1 << n)]  # Tabela para programação dinâmica
+    tabela[1][0] = 0  # Custo inicial para chegar à cidade A é zero
 
-# Dados do problema
+    # Programação Dinâmica para calcular custos mínimos
+    for ponto in range(1 << n):  # Itera sobre todos os estados de visitação
+        for cidade in range(n):  # Para cada cidade 'u'
+            if ponto & (1 << cidade):  # Se a cidade 'u' foi visitada no estado atual
+                for cidade2 in range(n):  # Para cada cidade 'v'
+                    if not ponto & (1 << cidade2):  # Se a cidade 'v' não foi visitada
+                        n_point = ponto | (1 << cidade2)  # Novo estado com 'v' visitada
+                        # Atualiza o custo mínimo para chegar a 'v' no novo estado
+                        tabela[n_point][cidade2] = min(tabela[n_point][cidade2], tabela[ponto][cidade] + distancias[cidade][cidade2])
+
+    rotas_validas = []  # Lista para armazenar as rotas válidas
+
+    # Geração e Filtragem de Rotas
+    for perm in permutations(range(1, n), 2):  # Gera permutações de duas cidades (excluindo A)
+        rota = [0] + list(perm) + [0]  # Adiciona a cidade A no início e no fim da rota
+        custo_viagem = sum(distancias[rota[i]][rota[i + 1]] for i in range(len(rota) - 1))  # Calcula o custo da viagem
+        custo_cidades = sum(custos_cidades[cidade] for cidade in rota if cidade != 0)  # Calcula o custo das cidades
+        #inclua o custo da cidade a no custo total somado com o custo cidades
+        custo_total = custo_cidades + custos_cidades[0] # Calcula o custo total (de todas as cidades até o retorno da cidade A)
+
+        if custo_viagem <= orcamento:  # Verifica se a rota respeita o orçamento
+            rotas_validas.append((rota, custo_viagem, custo_total))  # Adiciona a rota válida
+
+    rotas_validas.sort(key=lambda x: x[2])  # Ordena as rotas pelo custo total
+    # Impressão das Rotas Válidas
+    for rota, custo_viagem, custo_total in rotas_validas:
+        rota_letras = [chr(cidade + ord('A')) for cidade in rota]  # Converte os números das cidades em letras
+        print("Rota:", rota_letras)
+        print("Custo de Viagem:", custo_viagem)
+        print("Custo Total (com cidades):", custo_total)
+        print("----")
+
+    return rotas_validas  # Retorna a lista de rotas válidas
+
+
+# Dados do problema (exemplo)
 distancias = [
-    [0, 1, 2, 5],  # Distâncias da cidade A para as outras
-    [1, 0, 6, 4],  # Distâncias da cidade B para as outras
-    [2, 6, 0, 4],  # Distâncias da cidade C para as outras
-    [5, 4, 4, 0]   # Distâncias da cidade D para as outras
+    [0, 1, 2, 5],
+    [1, 0, 6, 4],
+    [2, 6, 0, 4],
+    [5, 4, 4, 0]
 ]
-orcamento = 10  # Orçamento máximo para a viagem
+custos_cidades = [10, 20, 30, 40]
+orcamento = 10
 
-# Encontrar a melhor rota
-resultado = encontrar_melhor_rota(distancias, orcamento)
-
-# Imprimir o resultado
-
-print("Melhor Rota:", resultado[0])
-print("Custo Mínimo de Viagem:", resultado[1])
+# Encontra e imprime as rotas válidas
+encontrar_melhor_rota(distancias, custos_cidades, orcamento)
