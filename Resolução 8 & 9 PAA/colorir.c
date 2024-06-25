@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define N 5 // Tamanho do tabuleiro (7x7)
+#define N 10 // Tamanho do tabuleiro (7x7)
 int cont = 0;
-int C = 5;
+int C = 10;
 
 bool verificacoes(int board[N][N], int x, int y, int color) {
     // Verifica se a cor já está presente na mesma linha ou coluna
@@ -13,19 +13,19 @@ bool verificacoes(int board[N][N], int x, int y, int color) {
         }
     }
 
- // Verificação da diagonal secundária
-    if (x + y == N - 1) {
-        for (int i = 0; i < x; i++) {
-            if (board[i][N - 1 - i] != 0 && board[i][N - 1 - i] != color) {
+
+    // Verificação se a diagonal principal é igual à diagonal secundária
+    if (x == y) {
+        for (int i = 0; i < N; i++) {
+            if (board[i][i] != 0 && board[i][i] != color) {
                 return false;
             }
         }
     }
-
-    // Verificação se a diagonal principal é igual à diagonal secundária
-    if (x == y && x + y == N - 1) {
-        for (int i = 0; i < N; i++) {
-            if (board[i][i] != board[i][N - 1 - i]) {
+ // Verificação da diagonal secundária
+    if (x + y == N - 1) {
+        for (int i = 0; i < x; i++) {
+            if (board[i][N - 1 - i] != 0 && board[i][N - 1 - i] != color) {
                 return false;
             }
         }
