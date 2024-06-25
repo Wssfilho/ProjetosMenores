@@ -33,7 +33,7 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
                 custo_cidades = custos_cidades[cidade1] + custos_cidades[cidade2]
 
                 # Calcula o custo total da viagem (viagem + cidades)
-                custo_total = custo_viagem + custo_cidades
+                custo_total = custos_cidades[0] + custo_cidades
 
                 # Verifica se a rota é válida (custo de viagem dentro do orçamento) e se é melhor que a atual
                 if custo_viagem <= orcamento and (

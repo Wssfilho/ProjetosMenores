@@ -16,7 +16,6 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
     from itertools import permutations  # Para gerar permutações de cidades
 
     n = len(distancias)  # Número de cidades
-    #all_visited = (1 << n) - 1  # Representação binária para todas as cidades visitadas
     tabela = [[float('inf')] * n for _ in range(n)]  # Tabela para programação dinâmica
     tabela[1][0] = 0  # Custo inicial para chegar à cidade A é zero
 
@@ -87,6 +86,5 @@ distancias = [
 ]
 custos_cidades = [10, 20, 30, 40]
 orcamento = 10
-
 # Encontra e imprime as rotas válidas
 encontrar_melhor_rota(distancias, custos_cidades, orcamento)

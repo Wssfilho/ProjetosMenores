@@ -65,8 +65,8 @@ def imprimir_tabuleiro(tabuleiro):
         print(" ".join(linha))
 
 def main():
-    cores = ["1", "2", "3", "4", "5"]
-    tamanho = 6
+    cores = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    tamanho = 7
     tabuleiro = [[" " for _ in range(tamanho)] for _ in range(tamanho)]
 
     num_solucoes = resolver(tabuleiro, cores)  # Chama resolver para obter o número de soluções
