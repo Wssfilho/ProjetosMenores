@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "ColorBoardSolver",
+      "request": "launch",
+      "mainClass": "ColorBoardSolver",
+      "projectName": "Resolução 8 & 9 PAA_47dcbd5b"
+    },
+    {
+      "type": "java",
       "name": "Main",
       "request": "launch",
       "mainClass": "Main",
