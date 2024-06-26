@@ -1,8 +1,9 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class ColorGridSolver {
+public class colorir {
     static int[][] directions = {{-1, 0}, {0, -1}, {-1, -1}, {0, 0}};
+    static int[][] adjDirections = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     
     public static void addSubgrid(int[][] grid, int row, int col, Set<String> subgrids) {
         if (row > 0 && col > 0) {
@@ -44,7 +45,6 @@ public class ColorGridSolver {
     }
     
     public static boolean isPlacementValid(int[][] grid, int color, int row, int col, int size, Set<String> subgrids) {
-        int[][] adjDirections = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         
         for (int[] dir : adjDirections) {
             int adjRow = row + dir[0];
@@ -106,8 +106,8 @@ public class ColorGridSolver {
     }
     
     public static void main(String[] args) {
-        int size = 3;
-        int numColors = 3;
+        int size = 5;
+        int numColors = 5;
         int[] colors = new int[numColors];
         for (int i = 0; i < numColors; i++) {
             colors[i] = i + 1;
