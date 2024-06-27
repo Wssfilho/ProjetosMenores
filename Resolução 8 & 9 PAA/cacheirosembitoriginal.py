@@ -65,15 +65,15 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
             rotas_validas.append((rota, custo_viagem, custo_total))  # Adiciona a rota válida
             
 
-    rotas_validas.sort(key=lambda x: x[2])  # Ordena as rotas pelo custo total
-    # Impressão das Rotas Válidas
+    rotas_validas.sort(key=lambda x: x[0], reverse=True)  # Ordena decrescentemente pelo custo total
 
+    # Encontra a rota com o maior custo total sem exceder o orçamento
     for rota, custo_viagem, custo_total in rotas_validas:
-        rota_letras = [chr(cidade + ord('A')) for cidade in rota]  # Converte os números das cidades em letras
-        print("Rota:", rota_letras)
-        print("Custo de Viagem:", custo_viagem)
-        print("Custo Total (com cidades):", custo_total)
-        print("----")
+        if custo_viagem <= orcamento:
+            rota_letras = [chr(cidade + ord('A')) for cidade in rota]
+            print("Rota:", rota_letras)
+            print("Custo Total (com cidades):", custo_total)
+            break  # Interrompe após encontrar a primeira rota válida com o maior custo total
 
     return rotas_validas  # Retorna a lista de rotas válidas
 
