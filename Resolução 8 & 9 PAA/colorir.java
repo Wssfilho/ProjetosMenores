@@ -1,32 +1,46 @@
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 public class colorir {
-    static int[][] directions = {{-1, 0}, {0, -1}, {-1, -1}, {0, 0}};
-    static int[][] adjDirections = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-    
-    public static void addSubgrid(int[][] grid, int row, int col, Set<String> subgrids) {
-        if (row > 0 && col > 0) {
-            String subgrid = createSubgridString(grid, row, col);
-            subgrids.add(subgrid);
+    static int tamanho;
+    static int numCores;
+    static boolean primeiraSolucaoEncontrada;
+
+    public static void adicionarSubgrade(int[][] grade, int linha, int coluna, Set<String> subgrades) {
+        if (linha > 0 && coluna > 0) {
+            String subgrade = criarStringSubgrade(grade, linha, coluna);
+            subgrades.add(subgrade);
         }
     }
-    
-    public static void removeSubgrid(int[][] grid, int row, int col, Set<String> subgrids) {
-        if (row > 0 && col > 0) {
-            String subgrid = createSubgridString(grid, row, col);
-            subgrids.remove(subgrid);
+
+    public static void removerSubgrade(int[][] grade, int linha, int coluna, Set<String> subgrades) {
+        if (linha > 0 && coluna > 0) {
+            String subgrade = criarStringSubgrade(grade, linha, coluna);
+            subgrades.remove(subgrade);
         }
     }
-    
-    public static String createSubgridString(int[][] grid, int row, int col) {
-        return grid[row - 1][col] + "," + grid[row][col - 1] + "," + grid[row - 1][col - 1] + "," + grid[row][col];
+
+    public static String criarStringSubgrade(int[][] grade, int linha, int coluna) {
+        return obterCima(grade, linha, coluna) + "," + obterEsquerda(grade, linha, coluna) + "," + obterDiagonal(grade, linha, coluna) + "," + grade[linha][coluna];
     }
-    
-    public static int[] findEmptyCell(int[][] grid, int size) {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (grid[i][j] == 0) {
+
+    private static int obterCima(int[][] grade, int linha, int coluna) {
+        return grade[linha - 1][coluna];
+    }
+
+    private static int obterEsquerda(int[][] grade, int linha, int coluna) {
+        return grade[linha][coluna - 1];
+    }
+
+    private static int obterDiagonal(int[][] grade, int linha, int coluna) {
+        return grade[linha - 1][coluna - 1];
+    }
+
+    public static int[] encontrarCelulaVazia(int[][] grade, int tamanho) {
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = 0; j < tamanho; j++) {
+                if (grade[i][j] == 0) {
                     return new int[]{i, j};
                 }
             }
@@ -34,36 +48,37 @@ public class colorir {
         return new int[]{-1, -1};
     }
     
-    public static void displayGrid(int[][] grid) {
-        for (int[] row : grid) {
-            for (int cell : row) {
-                System.out.print(cell + " ");
+    public static void exibirGrade(int[][] grade) {
+        for (int[] linha : grade) {
+            for (int celula : linha) {
+                System.out.print(celula + " ");
             }
             System.out.println();
         }
         System.out.println();
     }
     
-    public static boolean isPlacementValid(int[][] grid, int color, int row, int col, int size, Set<String> subgrids) {
+    public static boolean ehColocacaoValida(int[][] grade, int cor, int linha, int coluna, int tamanho, Set<String> subgrades) {
+        int[][] direcoesAdjacentes = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         
-        for (int[] dir : adjDirections) {
-            int adjRow = row + dir[0];
-            int adjCol = col + dir[1];
-            if (0 <= adjRow && adjRow < size && 0 <= adjCol && adjCol < size && grid[adjRow][adjCol] == color) {
+        for (int[] direcao : direcoesAdjacentes) {
+            int linhaAdj = linha + direcao[0];
+            int colunaAdj = coluna + direcao[1];
+            if (0 <= linhaAdj && linhaAdj < tamanho && 0 <= colunaAdj && colunaAdj < tamanho && grade[linhaAdj][colunaAdj] == cor) {
                 return false;
             }
         }
         
-        if ((row == col && grid[row][size - 1 - row] != color && grid[row][size - 1 - row] != 0) ||
-            (row + col == size - 1 && grid[row][row] != color && grid[row][row] != 0)) {
+        if ((linha == coluna && grade[linha][tamanho - 1 - linha] != cor && grade[linha][tamanho - 1 - linha] != 0) ||
+            (linha + coluna == tamanho - 1 && grade[linha][linha] != cor && grade[linha][linha] != 0)) {
             return false;
         }
         
-        if (row > 0 && col > 0) {
-            grid[row][col] = color;
-            String subgrid = createSubgridString(grid, row, col);
-            grid[row][col] = 0;
-            if (!subgrid.equals("0,0,0,0") && subgrids.contains(subgrid)) {
+        if (linha > 0 && coluna > 0) {
+            grade[linha][coluna] = cor;
+            String subgrade = criarStringSubgrade(grade, linha, coluna);
+            grade[linha][coluna] = 0;
+            if (!subgrade.equals("0,0,0,0") && subgrades.contains(subgrade)) {
                 return false;
             }
         }
@@ -71,49 +86,59 @@ public class colorir {
         return true;
     }
     
-    public static void fillGrid(int[][] grid, int[] colors, int[] solutions, int size, Set<String> subgrids) {
-        int[] emptyCell = findEmptyCell(grid, size);
-        int row = emptyCell[0];
-        int col = emptyCell[1];
+    public static void preencherGrade(int[][] grade, int[] cores, int[] solucoes, int tamanho, Set<String> subgrades) {
+        int[] celulaVazia = encontrarCelulaVazia(grade, tamanho);
+        int linha = celulaVazia[0];
+        int coluna = celulaVazia[1];
         
-        if (row == -1 && col == -1) {
-            solutions[0]++;
-            System.out.println("Solution " + solutions[0] + ":");
-            displayGrid(grid);
+        if (linha == -1 && coluna == -1) {
+            solucoes[0]++;
+            if ((tamanho == 5 || tamanho == 7) && !primeiraSolucaoEncontrada) { // Passo 2
+                System.out.println("Primeira solução para tamanho " + tamanho + ":");
+                exibirGrade(grade);
+                primeiraSolucaoEncontrada = true; // Passo 3
+            }
             return;
         }
         
-        for (int color : colors) {
-            if (isPlacementValid(grid, color, row, col, size, subgrids)) {
-                grid[row][col] = color;
-                addSubgrid(grid, row, col, subgrids);
-                
-                fillGrid(grid, colors, solutions, size, subgrids);
-                
-                removeSubgrid(grid, row, col, subgrids);
-                grid[row][col] = 0;
+       
+        
+        for (int cor : cores) {
+            if (ehColocacaoValida(grade, cor, linha, coluna, tamanho, subgrades)) {
+                grade[linha][coluna] = cor;
+                adicionarSubgrade(grade, linha, coluna, subgrades);
+                preencherGrade(grade, cores, solucoes, tamanho, subgrades);
+                removerSubgrade(grade, linha, coluna, subgrades);
+                grade[linha][coluna] = 0;
             }
         }
+
     }
     
-    public static int calculateTotalSolutions(int size, int[] colors) {
-        int[][] grid = new int[size][size];
-        int[] solutions = {0};
-        Set<String> subgrids = new HashSet<>();
+    public static int calcularTotalSolucoes(int tamanho, int[] cores) {
+        int[][] grade = new int[tamanho][tamanho];
+        int[] solucoes = {0};
+        Set<String> subgrades = new HashSet<>();
         
-        fillGrid(grid, colors, solutions, size, subgrids);
-        return solutions[0];
+        preencherGrade(grade, cores, solucoes, tamanho, subgrades);
+        return solucoes[0];
     }
-    
     
     public static void main(String[] args) {
-        int size = 5;
-        int numColors = 5;
-        int[] colors = new int[numColors];
-        for (int i = 0; i < numColors; i++) {
-            colors[i] = i + 1;
+        Scanner scanner = new Scanner(System.in); 
+
+        System.out.print("Digite o tamanho da grade (NxN): ");
+        tamanho = scanner.nextInt();
+        System.out.print("Digite o número de cores: ");
+        numCores = scanner.nextInt();
+        scanner.close();
+
+        int[] cores = new int[numCores];
+        for (int i = 0; i < numCores; i++) {
+            cores[i] = i + 1;
         }
-        int totalSolutions = calculateTotalSolutions(size, colors);
-        System.out.println("Total solutions found for a " + size + "x" + size + " grid with " + numColors + " colors: " + totalSolutions);
+
+        int totalSolucoes = calcularTotalSolucoes(tamanho, cores);
+        System.out.println("Total de soluções encontradas para uma grade de " + tamanho + "x" + tamanho + " com " + numCores + " cores: " + totalSolucoes);
     }
 }

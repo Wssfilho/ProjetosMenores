@@ -19,7 +19,7 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
     tabela = [[float('inf')] * n for _ in range(n)]  # Tabela para programação dinâmica
     tabela[1][0] = 0  # Custo inicial para chegar à cidade A é zero
 
-    # Programação Dinâmica para calcular custos mínimos sem usar bits
+    # Gerar tabelas
     def gerar_estados(n, estado_atual=[], pos=0):
         if pos == n:
             return [estado_atual]
@@ -43,15 +43,14 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
     for estado in estados:
         estado_idx = estado_para_indice[tuple(estado)]
         for cidade in range(n):  # Para cada cidade 'u'
-            if estado[cidade]:  # Se a cidade 'u' foi visitada no estado atual
-                for cidade2 in range(n):  # Para cada cidade 'v'
-                    if not estado[cidade2]:  # Se a cidade 'v' não foi visitada
+            if estado[cidade]:  # Se a cidade foi visitada no estado atual
+                for cidade2 in range(n):  # Para cada cidade 
+                    if not estado[cidade2]:  # Se a cidade não foi visitada
                         novo_estado = list(estado)
-                        novo_estado[cidade2] = True  # Marca 'v' como visitada
+                        novo_estado[cidade2] = True  # Marca como visitada
                         novo_estado_idx = estado_para_indice[tuple(novo_estado)]
-                        # Atualiza o custo mínimo para chegar a 'v' no novo estado
+                        # Atualiza o custo mínimo para chegar a no novo estado
                         tabela[novo_estado_idx][cidade2] = min(tabela[novo_estado_idx][cidade2], tabela[estado_idx][cidade] + distancias[cidade][cidade2])
-
     rotas_validas = []  # Lista para armazenar as rotas válidas
 
     # Geração e Filtragem de Rotas
@@ -64,17 +63,17 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
 
         if custo_viagem <= orcamento:  # Verifica se a rota respeita o orçamento
             rotas_validas.append((rota, custo_viagem, custo_total))  # Adiciona a rota válida
+            
 
     rotas_validas.sort(key=lambda x: x[2])  # Ordena as rotas pelo custo total
     # Impressão das Rotas Válidas
-    print(rotas_validas)
 
-    # for rota, custo_viagem, custo_total in rotas_validas:
-    #     rota_letras = [chr(cidade + ord('A')) for cidade in rota]  # Converte os números das cidades em letras
-    #     print("Rota:", rota_letras)
-    #     print("Custo de Viagem:", custo_viagem)
-    #     print("Custo Total (com cidades):", custo_total)
-    #     print("----")
+    for rota, custo_viagem, custo_total in rotas_validas:
+        rota_letras = [chr(cidade + ord('A')) for cidade in rota]  # Converte os números das cidades em letras
+        print("Rota:", rota_letras)
+        print("Custo de Viagem:", custo_viagem)
+        print("Custo Total (com cidades):", custo_total)
+        print("----")
 
     return rotas_validas  # Retorna a lista de rotas válidas
 

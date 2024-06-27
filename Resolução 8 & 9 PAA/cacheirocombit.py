@@ -35,6 +35,7 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
     # Geração e Filtragem de Rotas
     for perm in permutations(range(1, n), 2):  # Gera permutações de duas cidades (excluindo A)
         rota = [0] + list(perm) + [0]  # Adiciona a cidade A no início e no fim da rota
+        print(rota)
         custo_viagem = sum(distancias[rota[i]][rota[i + 1]] for i in range(len(rota) - 1))  # Calcula o custo da viagem
         custo_cidades = sum(custos_cidades[cidade] for cidade in rota if cidade != 0)  # Calcula o custo das cidades
         #inclua o custo da cidade a no custo total somado com o custo cidades
