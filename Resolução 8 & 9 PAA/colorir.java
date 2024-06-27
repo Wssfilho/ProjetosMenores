@@ -105,9 +105,10 @@ public class colorir {
         return solutions[0];
     }
     
+    
     public static void main(String[] args) {
-        int size = 3;
-        int numColors = 3;
+        int size = 5;
+        int numColors = 5;
         int[] colors = new int[numColors];
         for (int i = 0; i < numColors; i++) {
             colors[i] = i + 1;
