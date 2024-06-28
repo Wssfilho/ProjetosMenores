@@ -78,7 +78,6 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
 
     return rotas_validas  # Retorna a lista de rotas válidas
 
-
 # Dados do problema (exemplo)
 distancias = [
     [0, 1, 2, 5],
@@ -87,6 +86,6 @@ distancias = [
     [5, 4, 4, 0]
 ]
 custos_cidades = [10, 20, 30, 40]
-orcamento = 100
+orcamento = 10
 # Encontra e imprime as rotas válidas
 encontrar_melhor_rota(distancias, custos_cidades, orcamento)
