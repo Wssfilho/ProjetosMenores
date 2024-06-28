@@ -93,7 +93,7 @@ public class colorir {
         
         if (linha == -1 && coluna == -1) {
             solucoes[0]++;
-            if ((tamanho == 5 || tamanho == 7) && !primeiraSolucaoEncontrada) { // Passo 2
+            if ((tamanho == 5 || tamanho == 7 || tamanho == 3) && !primeiraSolucaoEncontrada) { // Passo 2
                 System.out.println("Primeira solução para tamanho " + tamanho + ":");
                 exibirGrade(grade);
                 primeiraSolucaoEncontrada = true; // Passo 3
