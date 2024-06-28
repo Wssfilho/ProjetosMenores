@@ -1,0 +1,3 @@
+def encontrar_rota(distancia, custo_cidades, orcamento):
+    #inicializar tabela pra a progrmação dinamica
+    
