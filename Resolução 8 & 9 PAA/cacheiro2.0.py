@@ -1,18 +1,4 @@
 def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
-    """
-    Encontra as melhores rotas que visitam a cidade A e outras duas cidades, respeitando o orçamento.
-
-    Args:
-        distancias: Matriz de distâncias entre as cidades.
-        custos_cidades: Lista com os custos de cada cidade.
-        orcamento: Orçamento máximo para a viagem.
-
-    Returns:
-        Uma lista de tuplas (rota, custo_viagem, custo_total) ordenadas por custo total.
-        Cada rota é uma lista de cidades (em letras) e os custos são valores numéricos.
-        Retorna uma lista vazia se não houver rotas válidas.
-    """
-
     from itertools import permutations  # Para gerar permutações de cidades
 
     n = len(distancias)  # Número de cidades
@@ -51,7 +37,7 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
                         novo_estado_idx = estado_para_indice[tuple(novo_estado)]
                         # Atualiza o custo mínimo considerando o novo estado
                         tabela[novo_estado_idx][prox_cidade] = min(tabela[novo_estado_idx][prox_cidade], tabela[estado_idx][cidade_atual] + distancias[cidade_atual][prox_cidade])
-    rotas_validas = []  # Lista para armazenar as rotas válidas
+    rotas_validas = []  # Lista para armazenar as rotas válidas 
 
     # Geração e Filtragem de Rotas
     for perm in permutations(range(1, n), 2):  # Gera permutações de duas cidades (excluindo A)
