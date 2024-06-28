@@ -1,71 +1,87 @@
+# Importa a função permutations do módulo itertools para gerar permutações de cidades
+from itertools import permutations
+
+# Define a função encontrar_melhor_rota que calcula a melhor rota dado um orçamento
 def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
-    from itertools import permutations  # Para gerar permutações de cidades
+    # Número de cidades baseado no tamanho da matriz de distâncias
+    n = len(distancias)
+    # Tabela para armazenar os custos mínimos de viagem entre cidades usando programação dinâmica
+    tabela = [[float('inf')] * n for _ in range(n)]
+    # Define o custo inicial para chegar à primeira cidade como zero
+    tabela[1][0] = 0
 
-    n = len(distancias)  # Número de cidades
-    tabela = [[float('inf')] * n for _ in range(n)]  # Tabela para programação dinâmica
-    tabela[1][0] = 0  # Custo inicial para chegar à cidade A é zero
-
-    # Gerar tabelas
+    # Função interna para gerar todos os estados possíveis de visitação das cidades
     def gerar_estados(n, estado_atual=[], pos=0):
+        # Caso base: se todas as cidades foram consideradas, retorna o estado atual
         if pos == n:
             return [estado_atual]
         estados = []
-        # Cidade não visitada
+        # Gera estados onde a cidade atual não é visitada
         estados.extend(gerar_estados(n, estado_atual + [False], pos + 1))
-        # Cidade visitada
+        # Gera estados onde a cidade atual é visitada
         estados.extend(gerar_estados(n, estado_atual + [True], pos + 1))
         return estados
 
-    # Inicializa os estados de visitação
+    # Gera todos os estados possíveis de visitação
     estados = gerar_estados(n)
 
-    # Mapeia cada estado para um índice
+    # Mapeia cada estado para um índice único para facilitar o acesso
     estado_para_indice = {tuple(estado): idx for idx, estado in enumerate(estados)}
 
-    # Inicializa a tabela de custos mínimos
+    # Inicializa a tabela de custos mínimos com infinito para todos os estados e cidades
     tabela = [[float('inf')] * n for _ in estados]
 
-    # Para cada estado de visitação
+    # Itera sobre todos os estados possíveis
     for estado in estados:
         estado_idx = estado_para_indice[tuple(estado)]
+        # Itera sobre todas as cidades para o estado atual
         for cidade_atual in range(n):
             if estado[cidade_atual]:  # Se a cidade atual foi visitada
+                # Itera sobre todas as cidades possíveis para visitar a seguir
                 for prox_cidade in range(n):
                     if not estado[prox_cidade]:  # Se a próxima cidade não foi visitada
                         novo_estado = list(estado)
                         novo_estado[prox_cidade] = True  # Marca a próxima cidade como visitada
                         novo_estado_idx = estado_para_indice[tuple(novo_estado)]
-                        # Atualiza o custo mínimo considerando o novo estado
+                        # Atualiza o custo mínimo para o novo estado
                         tabela[novo_estado_idx][prox_cidade] = min(tabela[novo_estado_idx][prox_cidade], tabela[estado_idx][cidade_atual] + distancias[cidade_atual][prox_cidade])
-    rotas_validas = []  # Lista para armazenar as rotas válidas 
 
-    # Geração e Filtragem de Rotas
-    for perm in permutations(range(1, n), 2):  # Gera permutações de duas cidades (excluindo A)
-        rota = [0] + list(perm) + [0]  # Adiciona a cidade A no início e no fim da rota
-        custo_viagem = sum(distancias[rota[i]][rota[i + 1]] for i in range(len(rota) - 1))  # Calcula o custo da viagem
-        custo_cidades = sum(custos_cidades[cidade] for cidade in rota if cidade != 0)  # Calcula o custo das cidades
-        #inclua o custo da cidade a no custo total somado com o custo cidades
-        custo_total = custo_cidades + custos_cidades[0] # Calcula o custo total (de todas as cidades até o retorno da cidade A)
+    # Lista para armazenar as rotas válidas dentro do orçamento
+    rotas_validas = []
 
-        if custo_viagem <= orcamento:  # Verifica se a rota respeita o orçamento
-            rotas_validas.append((rota, custo_viagem, custo_total))  # Adiciona a rota válida
-            
+    # Gera permutações de todas as cidades exceto a primeira para encontrar rotas possíveis
+    for perm in permutations(range(1, n), 2):
+        # Constrói a rota adicionando a primeira cidade no início e no fim
+        rota = [0] + list(perm) + [0]
+        # Calcula o custo da viagem somando as distâncias entre as cidades consecutivas na rota
+        custo_viagem = sum(distancias[rota[i]][rota[i + 1]] for i in range(len(rota) - 1))
+        # Calcula o custo total incluindo o custo de visitação das cidades
+        custo_cidades = sum(custos_cidades[cidade] for cidade in rota if cidade != 0)
+        # Adiciona o custo da primeira cidade ao custo total
+        custo_total = custo_cidades + custos_cidades[0]
 
-    rotas_validas.sort(key=lambda x: x[2], reverse=True)  # Ordena decrescentemente pelo custo total
+        # Se o custo da viagem está dentro do orçamento, adiciona a rota à lista de rotas válidas
+        if custo_viagem <= orcamento:
+            rotas_validas.append((rota, custo_viagem, custo_total))
 
-    # Encontra a rota com o maior custo total sem exceder o orçamento
+    # Ordena as rotas válidas pelo custo total de forma decrescente
+    rotas_validas.sort(key=lambda x: x[2], reverse=True)
+
+    # Encontra a rota com o maior custo total que ainda está dentro do orçamento
     for rota, custo_viagem, custo_total in rotas_validas:
         if custo_viagem <= orcamento:
+            # Converte os índices das cidades para letras para melhor visualização
             rota_letras = [chr(cidade + ord('A')) for cidade in rota]
+            # Imprime a rota, o custo mínimo da viagem e o custo total
             print("Rota:", rota_letras)
             print("Custo mínimo", custo_viagem)
             print("Custo Total (com cidades):", custo_total)
-            break  # Interrompe após encontrar a primeira rota válida com o maior custo total
+            break  # Interrompe após encontrar a primeira rota válida
 
-    return rotas_validas  # Retorna a lista de rotas válidas
+    # Retorna a lista de rotas válidas
+    return rotas_validas
 
-
-# Dados do problema (exemplo)
+# Dados de exemplo para testar a função
 distancias = [
     [0, 1, 2, 5],
     [1, 0, 6, 4],
@@ -74,5 +90,6 @@ distancias = [
 ]
 custos_cidades = [10, 20, 30, 40]
 orcamento = 10
-# Encontra e imprime as rotas válidas
+
+# Chama a função com os dados de exemplo e imprime as rotas válidas
 encontrar_melhor_rota(distancias, custos_cidades, orcamento)
