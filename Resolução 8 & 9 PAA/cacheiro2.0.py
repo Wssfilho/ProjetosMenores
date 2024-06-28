@@ -39,18 +39,18 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
     # Inicializa a tabela de custos mínimos
     tabela = [[float('inf')] * n for _ in estados]
 
-    # Itera sobre todos os estados de visitação
+    # Para cada estado de visitação
     for estado in estados:
         estado_idx = estado_para_indice[tuple(estado)]
-        for cidade in range(n):  # Para cada cidade
-            if estado[cidade]:  # Se a cidade foi visitada no estado atual
-                for cidade2 in range(n):  # Para cada cidade 
-                    if not estado[cidade2]:  # Se a cidade não foi visitada
+        for cidade_atual in range(n):
+            if estado[cidade_atual]:  # Se a cidade atual foi visitada
+                for prox_cidade in range(n):
+                    if not estado[prox_cidade]:  # Se a próxima cidade não foi visitada
                         novo_estado = list(estado)
-                        novo_estado[cidade2] = True  # Marca como visitada
+                        novo_estado[prox_cidade] = True  # Marca a próxima cidade como visitada
                         novo_estado_idx = estado_para_indice[tuple(novo_estado)]
-                        # Atualiza o custo mínimo para chegar a no novo estado
-                        tabela[novo_estado_idx][cidade2] = min(tabela[novo_estado_idx][cidade2], tabela[estado_idx][cidade] + distancias[cidade][cidade2])
+                        # Atualiza o custo mínimo considerando o novo estado
+                        tabela[novo_estado_idx][prox_cidade] = min(tabela[novo_estado_idx][prox_cidade], tabela[estado_idx][cidade_atual] + distancias[cidade_atual][prox_cidade])
     rotas_validas = []  # Lista para armazenar as rotas válidas
 
     # Geração e Filtragem de Rotas
@@ -87,6 +87,6 @@ distancias = [
     [5, 4, 4, 0]
 ]
 custos_cidades = [10, 20, 30, 40]
-orcamento = 100
+orcamento = 10
 # Encontra e imprime as rotas válidas
 encontrar_melhor_rota(distancias, custos_cidades, orcamento)
