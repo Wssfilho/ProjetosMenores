@@ -42,7 +42,7 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
     # Itera sobre todos os estados de visitação
     for estado in estados:
         estado_idx = estado_para_indice[tuple(estado)]
-        for cidade in range(n):  # Para cada cidade 'u'
+        for cidade in range(n):  # Para cada cidade
             if estado[cidade]:  # Se a cidade foi visitada no estado atual
                 for cidade2 in range(n):  # Para cada cidade 
                     if not estado[cidade2]:  # Se a cidade não foi visitada
@@ -72,6 +72,7 @@ def encontrar_melhor_rota(distancias, custos_cidades, orcamento):
         if custo_viagem <= orcamento:
             rota_letras = [chr(cidade + ord('A')) for cidade in rota]
             print("Rota:", rota_letras)
+            print("Custo mínimo", custo_viagem)
             print("Custo Total (com cidades):", custo_total)
             break  # Interrompe após encontrar a primeira rota válida com o maior custo total
 
