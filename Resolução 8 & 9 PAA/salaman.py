@@ -14,7 +14,7 @@ def menor_custo_dp(custos, V_ertices, valores, orcamento):
         for vertice_atual in range(num_vertices):
             for vertice_anterior in range(num_vertices):
                 # Verifica se há um caminho de vertice_anterior para vertice_atual com custo dentro do orçamento
-                if vertice_anterior != vertice_atual and custos[vertice_anterior][vertice_atual] <= custo_atual:
+                if custos[vertice_anterior][vertice_atual] <= custo_atual:
                     # Calcula o novo custo para chegar em vertice_atual via vertice_anterior
                     novo_custo = dp[vertice_anterior][custo_atual - custos[vertice_anterior][vertice_atual]][0] + valores[vertice_atual]
                     # Atualiza dp se o novo custo for menor
