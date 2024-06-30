@@ -35,7 +35,7 @@ def menor_custo_dp(custos, V_ertices, valores, orcamento):
             # Atualiza se encontrar um lucro melhor
             if lucro_total > melhor_lucro:
                 melhor_lucro = lucro_total
-                melhor_caminho = dp[vertice][orcamento - custos[vertice][0]][1] + ["a"]  # Inclui 'a' no final
+                melhor_caminho = dp[vertice][orcamento - custos[vertice][0]][1] + [V_ertices[0]]  # Inclui 'a' no final
     print(melhor_caminho)
     # Retorna o melhor lucro e o melhor caminho
     return melhor_lucro, melhor_caminho
