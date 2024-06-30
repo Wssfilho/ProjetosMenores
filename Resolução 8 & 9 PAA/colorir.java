@@ -102,7 +102,13 @@ public class colorir {
         }
         
        
-        
+        /*Resumo do Processo:
+            Tentar colocar uma cor em uma célula.
+            Verificar se essa colocação é válida.
+            Se válida, adicionar a subgrade correspondente ao conjunto e chamar a função recursiva para preencher o restante da grade.
+            Após a recursão, reverter a colocação (backtrack) removendo a subgrade e restaurando a célula vazia.
+            Este processo permite explorar todas as combinações possíveis de preenchimento da grade, garantindo que todas as soluções válidas sejam encontradas. 
+            Aqui está o trecho de código comentado com estas explicações: */
         for (int cor : cores) {
             if (ehColocacaoValida(grade, cor, linha, coluna, tamanho, subgrades)) {
                 grade[linha][coluna] = cor;
