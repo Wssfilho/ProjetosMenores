@@ -43,8 +43,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/wilso/OneDrive/Documentos/GitHub/ProjetosMenores/Resolução 8 & 9 PAA",
-      "program": "c:/Users/wilso/OneDrive/Documentos/GitHub/ProjetosMenores/Resolução 8 & 9 PAA/build/Debug/outDebug",
+      "cwd": ".",
+      "program": "build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -8,7 +8,7 @@ def menor_custo(C, vertices, valores, orcamento):
 
     for i in range(1, len(vertices)):
         print()
-        vertice_inicial = vertices[i]
+        vertice_inicial = vertices[i] #verticie recebe 1
         caminhos = [[vertice_inicial]]
         custos = [paths[(vertices[0], vertice_inicial)]]
         lucros = [valores[vertices.index(vertice_inicial)]]
