@@ -5,7 +5,7 @@ import java.util.Set;
 public class colorir {
     static int tamanho;
     static int numCores;
-    static boolean primeiraSolucaoEncontrada;
+    static int primeiraSolucaoEncontrada;
 
     public static void adicionarSubgrade(int[][] grade, int linha, int coluna, Set<String> subgrades) {
         if (linha > 0 && coluna > 0) {
@@ -90,13 +90,12 @@ public class colorir {
         int[] celulaVazia = encontrarCelulaVazia(grade, tamanho);
         int linha = celulaVazia[0];
         int coluna = celulaVazia[1];
-        
         if (linha == -1 && coluna == -1) {
             solucoes[0]++;
-            if ((tamanho == 5 || tamanho == 7 || tamanho == 3) && !primeiraSolucaoEncontrada) { // Passo 2
+            if ((tamanho == 5 || tamanho == 7 || tamanho == 3) && primeiraSolucaoEncontrada < 10) { // Passo 2
                 System.out.println("Primeira solução para tamanho " + tamanho + ":");
                 exibirGrade(grade);
-                primeiraSolucaoEncontrada = true; // Passo 3
+                primeiraSolucaoEncontrada++; // Passo 3
             }
             return;
         }
