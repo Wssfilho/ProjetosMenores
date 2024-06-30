@@ -10,7 +10,7 @@ def menor_custo_dp(custos, V_ertices, valores, orcamento):
         dp[v][0][0] = 0
 
     # Itera sobre cada valor de orçamento de 1 até o orçamento total
-    for custo_atual in range(1, orcamento + 1): #
+    for custo_atual in range(1, orcamento + 1):
         for vertice_atual in range(num_vertices):
             for vertice_anterior in range(num_vertices):
                 # Verifica se há um caminho de vertice_anterior para vertice_atual com custo dentro do orçamento
@@ -19,8 +19,8 @@ def menor_custo_dp(custos, V_ertices, valores, orcamento):
                     novo_custo = dp[vertice_anterior][custo_atual - custos[vertice_anterior][vertice_atual]][0] + valores[vertice_atual]
                     # Atualiza dp se o novo custo for menor
                     if novo_custo <= dp[vertice_atual][custo_atual][0]:
-                        dp[vertice_atual][custo_atual][1] = dp[vertice_anterior][custo_atual - custos[vertice_anterior][vertice_atual]][1] + [V_ertices[vertice_atual]]
                         dp[vertice_atual][custo_atual][0] = novo_custo
+                        dp[vertice_atual][custo_atual][1] = dp[vertice_anterior][orcamento - custos[vertice_anterior][vertice_atual]][1] + [V_ertices[vertice_atual]]
                     
 
     print(dp, end = "\n")
@@ -35,7 +35,7 @@ def menor_custo_dp(custos, V_ertices, valores, orcamento):
             # Atualiza se encontrar um lucro melhor
             if lucro_total > melhor_lucro:
                 melhor_lucro = lucro_total
-                melhor_caminho = ["a"] + dp[vertice][orcamento - custos[vertice][0]][1] + ["a"]  # Inclui 'a' no final
+                melhor_caminho = dp[vertice][orcamento - custos[vertice][0]][1] + ["a"]  # Inclui 'a' no final
     print(melhor_caminho)
     # Retorna o melhor lucro e o melhor caminho
     return melhor_lucro, melhor_caminho
@@ -51,7 +51,7 @@ def main():
     # Nomes dos vértices
     vertices = ['a', 'b', 'c', 'd']
     # Solicita o valor do orçamento ao usuário
-    orcamento = int(input("Digite o valor do orçamento: "))
+    orcamento = 10
 
     # Calcula o lucro e o caminho com menor custo
     lucro, caminho = menor_custo_dp(custos, vertices, valores, orcamento)
