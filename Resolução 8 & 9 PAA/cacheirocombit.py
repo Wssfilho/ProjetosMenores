@@ -64,7 +64,7 @@ distancias = [
     [5, 4, 4, 0]
 ]
 custos_cidades = [10, 20, 30, 40]
-orcamento = 10
+orcamento = 100
 
 # Encontra e imprime as rotas válidas
 encontrar_melhor_rota(distancias, custos_cidades, orcamento)

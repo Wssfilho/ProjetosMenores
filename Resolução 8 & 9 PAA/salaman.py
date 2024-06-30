@@ -31,7 +31,6 @@ def menor_custo_dp(custos, V_ertices, valores, orcamento):
                         dp[vertice_atual][custo_atual][0] = novo_custo
                         # Armazena o novo caminho
                         dp[vertice_atual][custo_atual][1] = dp[vertice_anterior][custo_atual - custos[vertice_anterior][vertice_atual]][1] + [V_ertices[vertice_atual]]  
-    print(dp)
     # Encontra o melhor caminho que termina no vértice inicial (0)
     melhor_lucro = float('-inf')
     melhor_caminho = []
