@@ -11,7 +11,7 @@ def menor_custo_dp(custos, vertices, valores, orcamento):
             for vertice_anterior in range(num_vertices):
                 if custos[vertice_anterior][vertice_atual] <= custo_atual:
                     novo_custo = dp[vertice_anterior][custo_atual - custos[vertice_anterior][vertice_atual]][0] + custos[vertice_anterior][vertice_atual]
-                    novo_valor = dp[vertice_anterior][custo_atual - custos[vertice_anterior][vertice_atual]][2] 
+                    novo_valor = dp[vertice_anterior][custo_atual - custos[vertice_anterior][vertice_atual]][2]
                     # Verifica se o novo custo não excede o orçamento
                     if novo_custo <= orcamento and novo_valor > dp[vertice_atual][custo_atual][2]:
                         dp[vertice_atual][custo_atual] = ([novo_custo, dp[vertice_anterior][custo_atual - custos[vertice_anterior][vertice_atual]][1] + [vertices[vertice_atual]], novo_valor])

@@ -17,13 +17,15 @@ def menor_custo_dp(custos, V_ertices, valores, orcamento):
                 if custos[vertice_anterior][vertice_atual] <= custo_atual:
                     # Calcula o novo custo para chegar em vertice_atual via vertice_anterior
                     novo_custo = dp[vertice_anterior][custo_atual - custos[vertice_anterior][vertice_atual]][0] + valores[vertice_atual]
+                    #novo_valor = dp[vertice_anterior][custo_atual - custos[vertice_anterior][vertice_atual]][1] + custos[vertice_anterior][vertice_atual]
+                    
                     # Atualiza dp se o novo custo for menor
                     if novo_custo <= dp[vertice_atual][custo_atual][0]:
                         dp[vertice_atual][custo_atual][0] = novo_custo
                         dp[vertice_atual][custo_atual][1] = dp[vertice_anterior][orcamento - custos[vertice_anterior][vertice_atual]][1] + [V_ertices[vertice_atual]]
                     
 
-    print(dp, end = "\n")
+    
     # Encontra o melhor caminho de volta ao vértice inicial 'a'
     melhor_lucro = float(30)
     melhor_caminho = []
