@@ -29,17 +29,16 @@ public class sysfarm extends JFrame {
         // Definindo o tamanho preferido do comboBoxMenu
         comboBoxMenu.setPreferredSize(new Dimension(128, 25));
         // Adicionando ActionListener ao JComboBox
-        comboBoxMenu.addActionListener(new ActionListener()
-        {
+        comboBoxMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selecionado = (String) comboBoxMenu.getSelectedItem();
                 // Implementada a lógica baseada na seleção
                 if ("Máx de Clientes".equals(selecionado)) {
-                    //System.out.println("Calculando o máximo de clientes...");
+                    // System.out.println("Calculando o máximo de clientes...");
                     infomaxcli();
                 } else if ("Máx de Medicamentos".equals(selecionado)) {
-                    //System.out.println("Calculando o máximo de medicamentos...");
+                    // System.out.println("Calculando o máximo de medicamentos...");
                     infomaxmed();
                 }
             }
@@ -55,10 +54,10 @@ public class sysfarm extends JFrame {
                 String selecionado = (String) comboBoxMenumin.getSelectedItem();
                 // Implementada a lógica baseada na seleção
                 if ("Mín de Clientes".equals(selecionado)) {
-                    //System.out.println("Calculando o máximo de clientes...");
+                    // System.out.println("Calculando o máximo de clientes...");
                     infomincli();
                 } else if ("Mín de Medicamentos".equals(selecionado)) {
-                    //System.out.println("Calculando o máximo de medicamentos...");
+                    // System.out.println("Calculando o máximo de medicamentos...");
                     infominmed();
                 }
             }
@@ -92,8 +91,8 @@ public class sysfarm extends JFrame {
         botaosoma.addActionListener(e -> sumcli());
         botaocontar.addActionListener(e -> contarcli());
     }
-    protected void contarcli()
-    {
+
+    protected void contarcli() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
             Statement stm = c.createStatement();
@@ -107,6 +106,7 @@ public class sysfarm extends JFrame {
             e.printStackTrace();
         }
     }
+
     private void vertodoscli() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
@@ -123,8 +123,8 @@ public class sysfarm extends JFrame {
 
         }
     }
-    protected void sumcli()
-    {
+
+    protected void sumcli() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
             Statement stm = c.createStatement();
@@ -137,7 +137,7 @@ public class sysfarm extends JFrame {
         } catch (Exception e) {
 
         }
-        
+
     }
 
     private void vertodosmed() {
@@ -201,6 +201,7 @@ public class sysfarm extends JFrame {
             e.printStackTrace();
         }
     }
+
     private void infomincli() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
