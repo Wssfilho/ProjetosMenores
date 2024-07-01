@@ -2,13 +2,13 @@ def menor_custo(C, vertices, valores, orcamento):
     n = len(vertices)
     # Inicializa a tabela de DP (Programação Dinâmica) com -1
     tabela = [[-1 for _ in range(orcamento + 1)] for _ in range(n)]
-    # Inicializa a matriz 'parent' para rastrear os pais dos vértices no caminho ótimo
+    # Inicializa a matriz 'pai' para rastrear os pais dos vértices no caminho ótimo
     pai = [[-1 for _ in range(orcamento + 1)] for _ in range(n)]
 
     # Inicializa o lucro do vértice inicial 'a'
     tabela[0][0] = valores[0]
 
-    # Preenchimento da tabela DP
+    # Preenchimento da tabela DP 
     for origem in range(n):  # Itera sobre todos os vértices 'origem'
         for orcamento_atual in range(orcamento + 1):  # Itera sobre todos os orçamentos possíveis 'orcamento_atual'
             if tabela[origem][orcamento_atual] == -1:
@@ -26,7 +26,7 @@ def menor_custo(C, vertices, valores, orcamento):
                         # Atualiza a tabela DP se o lucro encontrado for maior do que o existente
                         if lucro_atual > tabela[destino][orcamento_atual + custo_viagem]:
                             tabela[destino][orcamento_atual + custo_viagem] = lucro_atual
-                            pai[destino][orcamento_atual + custo_viagem] = origem
+                            pai[destino][orcamento_atual + custo_viagem] = origem # Atualiza o pai de 'destino' no caminho ótimo
 
     # Encontrar o melhor lucro, considerando a volta para 'a'
     melhor_lucro = tabela[0][0]  # Inicializa com o lucro do vértice inicial
@@ -39,13 +39,13 @@ def menor_custo(C, vertices, valores, orcamento):
             melhor_custo = orcamento_atual
 
     # Reconstrução do caminho ótimo
-    caminho_otimo = []
-    destino_atual = melhor_destino_final
-    orcamento_atual = melhor_custo
-    while destino_atual != -1:
+    caminho_otimo = [] # Inicializa a lista para armazenar o caminho ótimo
+    destino_atual = melhor_destino_final # Inicializa o destino atual com o último vértice do caminho ótimo
+    orcamento_atual = melhor_custo # Inicializa o orçamento atual com o melhor custo encontrado
+    while destino_atual != -1: # Itera até chegar ao vértice inicial 'a'
         caminho_otimo.append(vertices[destino_atual])  # Adiciona o vértice atual ao caminho
         origem_atual = pai[destino_atual][orcamento_atual]  # Obtém o pai do vértice atual no caminho
-        if origem_atual == -1:
+        if origem_atual == -1: # Se chegou ao vértice inicial,
             break
         orcamento_atual -= C[origem_atual][destino_atual]  # Reduz o orçamento considerando o custo de 'origem_atual' para 'destino_atual'
         destino_atual = origem_atual  # Move para o vértice pai
