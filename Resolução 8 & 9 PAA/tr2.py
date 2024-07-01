@@ -3,7 +3,7 @@ def menor_custo(C, vertices, valores, orcamento):
     # Inicializa a tabela de DP (Programação Dinâmica) com -1
     tabela = [[-1 for _ in range(orcamento + 1)] for _ in range(n)]
     # Inicializa a matriz 'parent' para rastrear os pais dos vértices no caminho ótimo
-    vizinho = [[-1 for _ in range(orcamento + 1)] for _ in range(n)]
+    pai = [[-1 for _ in range(orcamento + 1)] for _ in range(n)]
 
     # Inicializa o lucro do vértice inicial 'a'
     tabela[0][0] = valores[0]
@@ -26,7 +26,7 @@ def menor_custo(C, vertices, valores, orcamento):
                         # Atualiza a tabela DP se o lucro encontrado for maior do que o existente
                         if lucro_atual > tabela[destino][orcamento_atual + custo_viagem]:
                             tabela[destino][orcamento_atual + custo_viagem] = lucro_atual
-                            vizinho[destino][orcamento_atual + custo_viagem] = origem
+                            pai[destino][orcamento_atual + custo_viagem] = origem
 
     # Encontrar o melhor lucro, considerando a volta para 'a'
     melhor_lucro = tabela[0][0]  # Inicializa com o lucro do vértice inicial
@@ -44,13 +44,13 @@ def menor_custo(C, vertices, valores, orcamento):
     orcamento_atual = melhor_custo
     while destino_atual != -1:
         caminho_otimo.append(vertices[destino_atual])  # Adiciona o vértice atual ao caminho
-        origem_atual = vizinho[destino_atual][orcamento_atual]  # Obtém o pai do vértice atual no caminho
+        origem_atual = pai[destino_atual][orcamento_atual]  # Obtém o pai do vértice atual no caminho
         if origem_atual == -1:
             break
         orcamento_atual -= C[origem_atual][destino_atual]  # Reduz o orçamento considerando o custo de 'origem_atual' para 'destino_atual'
         destino_atual = origem_atual  # Move para o vértice pai
 
-    caminho_otimo.reverse()  # Inverte o caminho para obter a ordem correta de 'a' a 'v'
+    #caminho_otimo.reverse()  # Inverte o caminho para obter a ordem correta de 'a' a 'v'
     return melhor_lucro, caminho_otimo, melhor_custo
 
 def main():
@@ -61,7 +61,7 @@ def main():
          [5, 4, 4, 0]]
     valores = [10, 20, 30, 40]
     vertices = ['a', 'b', 'c', 'd']
-    orcamento = int(input("Digite o valor do orçamento: "))  # Recebe o valor do orçamento do usuário
+    orcamento = 10 # Recebe o valor do orçamento do usuário
 
     # Chama a função para calcular o caminho ótimo e o lucro máximo
     lucro_maximo, caminho_otimo, custo_caminho = menor_custo(C, vertices, valores, orcamento)
