@@ -72,9 +72,9 @@ public class colorir {
         int[][] direcoesAdjacentes = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};  // Direções adjacentes
 
         for (int[] direcao : direcoesAdjacentes) {  // Itera sobre as direções adjacentes
-            int linhaAdj = linha + direcao[0];  // Calcula a linha adjacente
-            int colunaAdj = coluna + direcao[1];  // Calcula a coluna adjacente
-            if (0 <= linhaAdj && linhaAdj < tamanho && 0 <= colunaAdj && colunaAdj < tamanho && grade[linhaAdj][colunaAdj] == cor) {
+            int adjl = linha + direcao[0];  // Calcula a linha adjacente
+            int adjc = coluna + direcao[1];  // Calcula a coluna adjacente
+            if (0 <= adjl && adjl < tamanho && 0 <= adjc && adjc < tamanho && grade[adjl][adjc] == cor) { // Verifica se a célula adjacente está dentro dos limites e tem a mesma cor
                 return false;  // Verifica se a célula adjacente tem a mesma cor
             }
         }
