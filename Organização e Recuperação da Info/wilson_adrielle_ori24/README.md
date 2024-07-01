@@ -1,5 +1,4 @@
 # How to use this code:
-# How to use this code:
 
 You can need of the application `extension in vscode with name: SQLite`
 And you need one file with filename.db extension to have one database with data;
