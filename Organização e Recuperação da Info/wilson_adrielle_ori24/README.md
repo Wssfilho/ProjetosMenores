@@ -1,8 +1,8 @@
 ## Getting Started
 ## How to use this code:
 
-    you can need of the application extension in vscode with name: SQLite
-    and you need one file with .db extension to have one database with data;
+# you can need of the application extension in vscode with name: SQLite
+# and you need one file with .db extension to have one database with data;
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
 
 ## Folder Structure
