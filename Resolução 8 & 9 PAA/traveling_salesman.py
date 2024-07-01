@@ -1,51 +1,49 @@
 def menor_custo(C, vertices, valores, orcamento):
-    r = range(len(C))
-    paths = {(vertices[i], vertices[j]): C[i][j] for i in r for j in r}
+    n = len(vertices)
+    dp = [[-1 for _ in range(orcamento + 1)] for _ in range(n)]
+    parent = [[-1 for _ in range(orcamento + 1)] for _ in range(n)]
     
+    # Inicialização: custo zero para o vértice inicial (vertice 'a')
+    dp[0][0] = valores[0]
+    
+    # Preenchendo a tabela dp
+    for u in range(n):
+        for b in range(orcamento + 1):
+            if dp[u][b] == -1:
+                continue
+            for v in range(n):
+                if u != v:
+                    custo = C[u][v]
+                    if b + custo <= orcamento:
+                        lucro = dp[u][b] + valores[v]
+                        if lucro > dp[v][b + custo]:
+                            dp[v][b + custo] = lucro
+                            parent[v][b + custo] = u
+    print(dp)
+    # Encontrar o melhor lucro possível
     melhor_lucro = 0
-    melhor_caminho = []
-    melhor_custo = float('inf')
-
-    for i in range(1, len(vertices)):
-        print()
-        vertice_inicial = vertices[i] #verticie recebe 1
-        caminhos = [[vertice_inicial]]
-        custos = [paths[(vertices[0], vertice_inicial)]]
-        lucros = [valores[vertices.index(vertice_inicial)]]
-        
-        while caminhos:
-            novo_caminho = []
-            novo_custo = []
-            novo_lucro = []
-            for j, caminho in enumerate(caminhos):
-                custo_atual = custos[j]
-                lucro_atual = lucros[j]
-                print(f'Caminho: {caminho}, Custo: {custo_atual}, Lucro: {lucro_atual}')
-                
-                custo_total = custo_atual + paths[(vertices[0], caminho[0])]
-                if custo_total <= orcamento:
-                    lucro = valores[0] + sum(valores[vertices.index(v)] for v in caminho)
-                    if lucro > melhor_lucro or (lucro == melhor_lucro and custo_total < melhor_custo):
-                        melhor_lucro = lucro
-                        melhor_caminho = caminho
-                        melhor_custo = custo_total
-                
-                for k in range(1, len(vertices)):
-                    vertice = vertices[k]
-                    if vertice not in caminho:
-                        custo = paths[(vertice, caminho[0])] + custo_atual
-                        if custo <= orcamento:
-                            novo_caminho.append([vertice] + caminho)
-                            novo_custo.append(custo)
-                            
-                            lucro = lucro_atual + valores[vertices.index(vertice)]
-                            novo_lucro.append(lucro)
-                            
-            caminhos = novo_caminho
-            custos = novo_custo
-            lucros = novo_lucro
-        print()
-    return melhor_lucro, melhor_caminho, melhor_custo
+    melhor_custo = 0
+    melhor_vertice_final = -1
+    for b in range(orcamento + 1):
+        if dp[0][b] >= melhor_lucro:
+            melhor_lucro = dp[0]][b]
+            melhor_custo = b
+            melhor_vertice_final = 0
+    
+    # Reconstrução do caminho
+    caminho = []
+    b = melhor_custo
+    v = melhor_vertice_final
+    while v != -1:
+        caminho.append(vertices[v])
+        u = parent[v][b]
+        if u == -1:
+            break
+        b -= C[u][v]
+        v = u
+    caminho.reverse()
+    
+    return melhor_lucro, caminho, melhor_custo
 
 def main():
     # Exemplo de uso
@@ -58,7 +56,7 @@ def main():
     orcamento = int(input("Digite o valor do orçamento: "))
 
     lucro, caminho, custo = menor_custo(C, vertices, valores, orcamento)
-    caminho_completo = ['a'] + caminho + ['a']  # Caminho incluindo a volta para 'a'
+    caminho_completo = caminho + ['a']  # Caminho incluindo a volta para 'a'
     print("Máximo lucro possível dentro do orçamento:", lucro)
     print("Melhor caminho:", ' -> '.join(caminho_completo))
     print("Custo:", custo)
