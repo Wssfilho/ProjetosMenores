@@ -11,7 +11,10 @@ public class sysfarm extends JFrame {
     private JRadioButton botaoag, botaosoma, botaocontar, butaoListCli, botaoListMed;
     JPanel panelRadio, panelEsquerdo;
     JTable table;
-
+        /**
+         *this function are the main function of the program, it will create the window and the buttons
+         @param none
+         */
     public sysfarm() {
         setSize(950, 600);
         setTitle("Consulta de Farmacia");
@@ -27,6 +30,7 @@ public class sysfarm extends JFrame {
         String[] opcoesMenu = { "Máx de Clientes", "Máx de Medicamentos" };
         JComboBox<String> comboBoxMenu = new JComboBox<>(opcoesMenu);
         // Definindo o tamanho preferido do comboBoxMenu
+       
         comboBoxMenu.setPreferredSize(new Dimension(128, 25));
         // Adicionando ActionListener ao JComboBox
         comboBoxMenu.addActionListener(new ActionListener() {
