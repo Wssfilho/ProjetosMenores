@@ -15,7 +15,8 @@ public class sysfarm extends JFrame {
          *this function are the main function of the program, it will create the window and the buttons
          @param none
          */
-    public sysfarm() {
+    public sysfarm() 
+    {
         setSize(950, 600);
         setTitle("Consulta de Farmacia");
         setLocationRelativeTo(null);
