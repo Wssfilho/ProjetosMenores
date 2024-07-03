@@ -6,73 +6,79 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class sysfarm extends JFrame {
+public class sysfarm extends JFrame 
+{
+    // Declaração dos componentes da interface gráfica
     private JTextArea contador, areadetexto;
     private JRadioButton botaoag, botaosoma, botaocontar, butaoListCli, botaoListMed;
     JPanel panelRadio, panelEsquerdo;
     JTable table;
-        /**
-         *this function are the main function of the program, it will create the window and the buttons
-         @param none
-         */
+
+    /**
+     * Função principal do programa, cria a janela e os botões
+     * @param none
+     */
     public sysfarm() 
     {
+        // Configuração inicial da janela
         setSize(950, 600);
         setTitle("Consulta de Farmacia");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        
+        // Criação dos botões de rádio
         butaoListCli = new JRadioButton("Listar todos clientes");
         botaoListMed = new JRadioButton("Listar todos medicamentos");
         botaoag = new JRadioButton("Agrupar & Ordenar");
         botaosoma = new JRadioButton("Somar");
         botaocontar = new JRadioButton("Contar");
-        // Criando o JComboBox com as opções de escolha
+        
+        // Criação do JComboBox com as opções de escolha
         String[] opcoesMenu = { "Máx de Clientes", "Máx de Medicamentos" };
         JComboBox<String> comboBoxMenu = new JComboBox<>(opcoesMenu);
-        // Definindo o tamanho preferido do comboBoxMenu
-       
         comboBoxMenu.setPreferredSize(new Dimension(128, 25));
-        // Adicionando ActionListener ao JComboBox
+        
+        // Adicionando ActionListener ao JComboBox para as opções de máximo
         comboBoxMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selecionado = (String) comboBoxMenu.getSelectedItem();
-                // Implementada a lógica baseada na seleção
                 if ("Máx de Clientes".equals(selecionado)) {
-                    // System.out.println("Calculando o máximo de clientes...");
                     infomaxcli();
                 } else if ("Máx de Medicamentos".equals(selecionado)) {
-                    // System.out.println("Calculando o máximo de medicamentos...");
                     infomaxmed();
                 }
             }
         });
+        
+        // Criação do JComboBox com as opções de mínimo
         String[] opcoesMenumin = { "Mín de Clientes", "Mín de Medicamentos" };
         JComboBox<String> comboBoxMenumin = new JComboBox<>(opcoesMenumin);
-        // Definindo o tamanho preferido do comboBoxMenu
         comboBoxMenumin.setPreferredSize(new Dimension(128, 25));
-        // Adicionando ActionListener ao JComboBox
+        
+        // Adicionando ActionListener ao JComboBox para as opções de mínimo
         comboBoxMenumin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selecionado = (String) comboBoxMenumin.getSelectedItem();
-                // Implementada a lógica baseada na seleção
                 if ("Mín de Clientes".equals(selecionado)) {
-                    // System.out.println("Calculando o máximo de clientes...");
                     infomincli();
                 } else if ("Mín de Medicamentos".equals(selecionado)) {
-                    // System.out.println("Calculando o máximo de medicamentos...");
                     infominmed();
                 }
             }
         });
+        
+        // Configuração dos componentes de texto
         contador = new JTextArea(2, 5);
         contador.setEditable(false);
         panelEsquerdo = new JPanel();
         panelEsquerdo.setLayout(new BoxLayout(panelEsquerdo, BoxLayout.X_AXIS));
         areadetexto = new JTextArea(30, 25);
         panelEsquerdo.add(new JScrollPane(areadetexto));
+        
+        // Configuração do painel de botões de rádio
         panelRadio = new JPanel();
         panelRadio.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 10));
         panelRadio.add(butaoListCli);
@@ -84,12 +90,16 @@ public class sysfarm extends JFrame {
         panelRadio.add(comboBoxMenumin);
         panelRadio.add(contador);
 
+        // Adicionando painéis ao contentPane
         Container contentPane = getContentPane();
         contentPane.add(panelRadio, BorderLayout.NORTH);
         contentPane.add(panelEsquerdo, BorderLayout.SOUTH);
 
+        // Configuração final da janela
         setVisible(true);
         setResizable(false);
+
+        // Adicionando ActionListeners aos botões de rádio
         butaoListCli.addActionListener(e -> vertodoscli());
         botaoListMed.addActionListener(e -> vertodosmed());
         botaoag.addActionListener(e -> agrupor());
@@ -97,6 +107,7 @@ public class sysfarm extends JFrame {
         botaocontar.addActionListener(e -> contarcli());
     }
 
+    // Método para contar o número de clientes
     protected void contarcli() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
@@ -112,6 +123,7 @@ public class sysfarm extends JFrame {
         }
     }
 
+    // Método para listar todos os clientes
     private void vertodoscli() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
@@ -125,10 +137,11 @@ public class sysfarm extends JFrame {
             }
             areadetexto.setText(sb.toString());
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
+    // Método para somar o ID dos clientes
     protected void sumcli() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
@@ -140,11 +153,11 @@ public class sysfarm extends JFrame {
             }
             contador.setText(sb.toString());
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
-
     }
 
+    // Método para listar todos os medicamentos
     private void vertodosmed() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
@@ -162,6 +175,7 @@ public class sysfarm extends JFrame {
         }
     }
 
+    // Método para obter o máximo ID de clientes
     private void infomaxcli() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
@@ -177,6 +191,7 @@ public class sysfarm extends JFrame {
         }
     }
 
+    // Método para obter o máximo código de medicamentos
     private void infomaxmed() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
@@ -192,6 +207,7 @@ public class sysfarm extends JFrame {
         }
     }
 
+    // Método para obter o mínimo código de medicamentos
     private void infominmed() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
@@ -207,6 +223,7 @@ public class sysfarm extends JFrame {
         }
     }
 
+    // Método para obter o mínimo ID de clientes
     private void infomincli() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
@@ -222,6 +239,7 @@ public class sysfarm extends JFrame {
         }
     }
 
+    // Método para agrupar e ordenar clientes e medicamentos
     private void agrupor() {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:BD_Farmacia.db");
@@ -267,6 +285,7 @@ public class sysfarm extends JFrame {
         }
     }
 
+    // Método main para iniciar a aplicação
     public static void main(String args[]) {
         new sysfarm();
     }
