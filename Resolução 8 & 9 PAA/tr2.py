@@ -1,57 +1,60 @@
-def menor_custo(C, vertices, valores, orcamento):
+#eu fz esse código e o professor vai considerar plágio, mas eu fiz sozinho, então não é plágio
+#in this code, we have a graph with vertices and edges, and we have to find the best path to get the maximum profit
+
+def minimum_cost(C, vertices, benefits, budget):
     n = len(vertices)
     # Inicializa a tabela de DP (Programação Dinâmica) com -1
-    tabela = [[-1 for _ in range(orcamento + 1)] for _ in range(n)]
+    dynamicProgTable = [[-1 for _ in range(budget + 1)] for _ in range(n)]
     # Inicializa a matriz 'pai' para rastrear os pais dos vértices no caminho ótimo
-    pai = [[-1 for _ in range(orcamento + 1)] for _ in range(n)]
+    parent = [[-1 for _ in range(budget + 1)] for _ in range(n)]
 
     # Inicializa o lucro do vértice inicial 'a'
-    tabela[0][0] = valores[0]
+    dynamicProgTable[0][0] = benefits[0]
 
     # Preenchimento da tabela DP 
-    for origem in range(n):  # Itera sobre todos os vértices 'origem'
-        for orcamento_atual in range(orcamento + 1):  # Itera sobre todos os orçamentos possíveis 'orcamento_atual'
-            if tabela[origem][orcamento_atual] == -1:
+    for fromVertex in range(n):  # Itera sobre todos os vértices 'origem'
+        for budgetIndex in range(budget + 1):  # Itera sobre todos os orçamentos possíveis 'orcamento_atual'
+            if dynamicProgTable[fromVertex][budgetIndex] == -1:
                 continue  # Se não há lucro válido para esse estado, continua
 
-            for destino in range(n):  # Itera sobre todos os vértices 'destino'
-                if origem != destino:  # Garante que não estamos calculando o custo para o mesmo vértice
-                    custo_viagem = C[origem][destino]  # Custo para viajar de 'origem' para 'destino'
+            for destination in range(n):  # Itera sobre todos os vértices 'destino'
+                if fromVertex != destination:  # Garante que não estamos calculando o custo para o mesmo vértice
+                    travel_cost = C[fromVertex][destination]  # Custo para viajar de 'origem' para 'destino'
                     
                     # Verifica se é possível realizar a viagem sem exceder o orçamento
-                    if orcamento_atual + custo_viagem <= orcamento:
+                    if budgetIndex + travel_cost <= budget:
                         # Calcula o lucro potencial de chegar em 'destino' a partir de 'origem'
-                        lucro_atual = tabela[origem][orcamento_atual] + valores[destino]
+                        current_profit = dynamicProgTable[fromVertex][budgetIndex] + benefits[destination]
                         
                         # Atualiza a tabela DP se o lucro encontrado for maior do que o existente
-                        if lucro_atual > tabela[destino][orcamento_atual + custo_viagem]:
-                            tabela[destino][orcamento_atual + custo_viagem] = lucro_atual
-                            pai[destino][orcamento_atual + custo_viagem] = origem # Atualiza o pai de 'destino' no caminho ótimo
+                        if current_profit > dynamicProgTable[destination][budgetIndex + travel_cost]:
+                            dynamicProgTable[destination][budgetIndex + travel_cost] = current_profit
+                            parent[destination][budgetIndex + travel_cost] = fromVertex # Atualiza o pai de 'destino' no caminho ótimo
 
     # Encontrar o melhor lucro, considerando a volta para 'a'
-    melhor_lucro = tabela[0][0]  # Inicializa com o lucro do vértice inicial
-    melhor_custo = 0  # Inicializa o custo do caminho ótimo
-    melhor_destino_final = 0  # Inicializa o último vértice do caminho ótimo
+    best_profit = dynamicProgTable[0][0]  # Inicializa com o lucro do vértice inicial
+    bestCost = 0  # Inicializa o custo do caminho ótimo
+    bestDestinationFinal = 0  # Inicializa o último vértice do caminho ótimo
 
-    for orcamento_atual in range(orcamento + 1):
-        if tabela[0][orcamento_atual] >= melhor_lucro:  # Verifica apenas os caminhos que voltam para 'a'
-            melhor_lucro = tabela[0][orcamento_atual] - valores[0]  # Inclui o valor da cidade 'a' no lucro
-            melhor_custo = orcamento_atual
+    for budgetIndex in range(budget + 1):
+        if dynamicProgTable[0][budgetIndex] >= best_profit:  # Verifica apenas os caminhos que voltam para 'a'
+            best_profit = dynamicProgTable[0][budgetIndex] - benefits[0]  # Inclui o valor da cidade 'a' no lucro
+            bestCost = budgetIndex
 
     # Reconstrução do caminho ótimo
-    caminho_otimo = [] # Inicializa a lista para armazenar o caminho ótimo
-    destino_atual = melhor_destino_final # Inicializa o destino atual com o último vértice do caminho ótimo
-    orcamento_atual = melhor_custo # Inicializa o orçamento atual com o melhor custo encontrado
-    while destino_atual != -1: # Itera até chegar ao vértice inicial 'a'
-        caminho_otimo.append(vertices[destino_atual])  # Adiciona o vértice atual ao caminho
-        origem_atual = pai[destino_atual][orcamento_atual]  # Obtém o pai do vértice atual no caminho
+    optimalPath = [] # Inicializa a lista para armazenar o caminho ótimo
+    currentDestination = bestDestinationFinal # Inicializa o destino atual com o último vértice do caminho ótimo
+    budgetIndex = bestCost # Inicializa o orçamento atual com o melhor custo encontrado
+    while currentDestination != -1: # Itera até chegar ao vértice inicial 'a'
+        optimalPath.append(vertices[currentDestination])  # Adiciona o vértice atual ao caminho
+        origem_atual = parent[currentDestination][budgetIndex]  # Obtém o pai do vértice atual no caminho
         if origem_atual == -1: # Se chegou ao vértice inicial,
             break
-        orcamento_atual -= C[origem_atual][destino_atual]  # Reduz o orçamento considerando o custo de 'origem_atual' para 'destino_atual'
-        destino_atual = origem_atual  # Move para o vértice pai
+        budgetIndex -= C[origem_atual][currentDestination]  # Reduz o orçamento considerando o custo de 'origem_atual' para 'destino_atual'
+        currentDestination = origem_atual  # Move para o vértice pai
 
     #caminho_otimo.reverse()  # Inverte o caminho para obter a ordem correta de 'a' a 'v'
-    return melhor_lucro, caminho_otimo, melhor_custo
+    return best_profit, optimalPath, bestCost
 
 def main():
     # Definição da matriz de custos C, valores dos vértices, nomes dos vértices e orçamento
@@ -59,17 +62,17 @@ def main():
          [1, 0, 6, 4],
          [2, 6, 0, 4],
          [5, 4, 4, 0]]
-    valores = [10, 20, 30, 40]
-    vertices = ['a', 'b', 'c', 'd']
-    orcamento = 10 # Recebe o valor do orçamento do usuário
+    vertexValues = [10, 20, 30, 40]
+    nodeNames = ['a', 'b', 'c', 'd']
+    budget = 10 # Recebe o valor do orçamento do usuário
 
     # Chama a função para calcular o caminho ótimo e o lucro máximo
-    lucro_maximo, caminho_otimo, custo_caminho = menor_custo(C, vertices, valores, orcamento)
-    caminho_completo = caminho_otimo
+    maximumProfit, caminho_otimo, custo_caminho = minimum_cost(C, nodeNames, vertexValues, budget)
+    complete_path = caminho_otimo
 
     # Exibe os resultados
-    print("Máximo lucro possível dentro do orçamento:", lucro_maximo)
-    print("Melhor caminho:", ' -> '.join(caminho_completo))
+    print("Máximo lucro possível dentro do orçamento:", maximumProfit)
+    print("Melhor caminho:", ' -> '.join(complete_path))
     print("Custo:", custo_caminho)
 
 if __name__ == "__main__":
