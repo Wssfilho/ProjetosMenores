@@ -10,7 +10,8 @@ public class colorir {
     
     // Função para adicionar um subtabuleiro 2x2 ao conjunto de subtabuleiros
     public static void adicionarSubgrade(int[][] grade, int linha, int coluna, Set<String> subgrades) {
-        if (linha > 0 && coluna > 0) {  // Verifica se a linha e a coluna são maiores que 0
+        if (linha > 0 && coluna > 0) 
+        {  // Verifica se a linha e a coluna são maiores que 0
             String subgrade = criarStringSubgrade(grade, linha, coluna);  // Cria uma string com o subtabuleiro 2x2
             subgrades.add(subgrade);  // Adiciona o subtabuleiro ao conjunto de subtabuleiros
         }
