@@ -38,7 +38,7 @@ public class Main { // Definindo a classe principal
             }
         }
     }
-
+    //this function was used to sort the array
     static void mergeSort(Sorte[] vetor, int p, int r) { // Definindo a função merge sort
         if (p < r) { // Se o array tiver mais de um elemento
             int q = (p + r) / 2; // Encontre o ponto médio do array
