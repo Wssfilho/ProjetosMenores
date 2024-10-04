@@ -9,7 +9,6 @@ class Sorte { // Definindo uma classe chamada Sorte
         this.segundo = segundo; // Atribuindo o valor de segundo à variável de instância
     }
 }
-
 public class Main { // Definindo a classe principal
     static void merge(Sorte[] vetor, int p, int q, int r) { // Definindo a função de mesclagem para o merge sort
         int n1 = q - p + 1; // Calculando o número de elementos na primeira metade (esquerda) do array
