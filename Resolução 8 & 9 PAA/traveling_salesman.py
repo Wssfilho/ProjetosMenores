@@ -26,7 +26,7 @@ def menor_custo(C, vertices, valores, orcamento):
     melhor_vertice_final = -1
     for b in range(orcamento + 1):
         if dp[0][b] >= melhor_lucro:
-            melhor_lucro = dp[0]][b]
+            melhor_lucro = dp[0][b]
             melhor_custo = b
             melhor_vertice_final = 0
     

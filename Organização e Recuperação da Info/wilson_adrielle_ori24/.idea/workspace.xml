@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8cce000-cc6d-4311-80f2-c4e89fe8228b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../.idea/copilot/chatSessions/blobs/version" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../.idea/copilot/chatSessions/xd.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Resolução do problema 5 &amp; 6 PAA/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Resolução do problema 5 &amp; 6 PAA/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Resolução 8 &amp; 9 PAA/build/Debug/outDebug.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../Resolução 8 &amp; 9 PAA/build/Debug/outDebug.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,9 +37,11 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.sysfarm.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/wilso/OneDrive/Documentos/NetBeansProjects/Trabalho&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -49,8 +49,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
       </set>
     </attachedChunks>
   </component>
@@ -66,6 +66,9 @@
       <workItem from="1721866050807" duration="9000" />
       <workItem from="1728072281151" duration="18000" />
       <workItem from="1728072506969" duration="79000" />
+      <workItem from="1731192038452" duration="66000" />
+      <workItem from="1732131779634" duration="33000" />
+      <workItem from="1739231626778" duration="17000" />
     </task>
     <servers />
   </component>
